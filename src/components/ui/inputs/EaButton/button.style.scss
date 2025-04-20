@@ -1,0 +1,17 @@
+.ea-button{
+    button{
+    @apply border select-none text-[.875rem] border-borderColor
+    shadow-md px-3 py-1 rounded-[8px] capitalize bg-[#fff] text-placeholder
+    hover:brightness-95 flex justify-between gap-1 items-center active:brightness-[80%];
+    }
+
+    button.small{
+    @apply  text-[.75rem] ;
+    }
+
+    button.large{
+    @apply text-[1rem];
+    }
+   
+}
+

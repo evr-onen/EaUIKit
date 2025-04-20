@@ -1,0 +1,47 @@
+// :root {
+//     --primary-50: 235 239 252;
+//     --primary-100: 196 207 245;
+//     --primary-200: 156 175 238;
+//     --primary-300: 117 143 231;
+//     --primary-400: 77 111 224;
+//     --primary-500: 38 79 217;
+//     --primary-600: 31 65 178;
+//     --primary-700: 24 50 138;
+//     --primary-800: 17 36 99;
+//     --primary-900: 10 22 59;
+//     --primary-950: 3 7 20;
+//     --surface-0: 3 7 20;
+//     --surface-50: 10 22 59;
+//     --surface-100: 17 36 99;
+//     --surface-200: 24 50 138;
+//     --surface-300: 31 65 178;
+//     --surface-400: 38 79 217;
+//     --surface-500: 77 111 224;
+//     --surface-600: 117 143 231;
+//     --surface-700: 156 175 238;
+//     --surface-800: 196 207 245;
+//     --surface-900: 235 239 252;
+// }
+
+@layer utilities {
+    .scrollbar-custom {
+      @apply overflow-auto;
+    }
+    .scrollbar-custom::-webkit-scrollbar {
+      width: 12px;
+      height: 12px;
+    }
+    .scrollbar-custom::-webkit-scrollbar-track {
+      background: #c5ccc1;
+      border-radius: 10px;
+    }
+    .scrollbar-custom::-webkit-scrollbar-thumb {
+      background: #888;
+      border-radius: 10px;
+      border: 1px solid #f0f0f0;
+    }
+    .scrollbar-custom::-webkit-scrollbar-thumb:hover {
+      background: #555;
+    }
+  }
+
