@@ -27,6 +27,11 @@
         @apply border-placeholder;
     }
     
+    // Range selection info
+    .ea-datepicker__range-info {
+        @apply bg-bgSecondary rounded-md py-1 px-2 mb-2;
+    }
+    
     // Datepicker panel
     .ea-datepicker__panel {
         @apply bg-white rounded-lg p-3 shadow-lg border border-borderColor;
@@ -79,6 +84,46 @@
                 
                 &.today:not(.selected) {
                     @apply border border-primary text-primary;
+                }
+                
+                &.range-start, &.range-end {
+                    @apply bg-primary text-white font-medium;
+                    position: relative;
+                    z-index: 2;
+                }
+                
+                &.in-range {
+                    @apply bg-primary/20 text-textPrimary rounded-none;
+                }
+                
+                &.hover-range {
+                    @apply bg-primary/10 text-textPrimary rounded-none;
+                }
+                
+                &.hover-end {
+                    @apply bg-primary/40 text-textPrimary rounded-r-full;
+                    position: relative;
+                    z-index: 1;
+                }
+                
+                &.range-start {
+                    @apply rounded-r-none;
+                    
+                    &:after {
+                        content: '';
+                        @apply absolute right-0 top-0 h-full w-1/2 bg-primary/20;
+                        z-index: -1;
+                    }
+                }
+                
+                &.range-end {
+                    @apply rounded-l-none;
+                    
+                    &:before {
+                        content: '';
+                        @apply absolute left-0 top-0 h-full w-1/2 bg-primary/20;
+                        z-index: -1;
+                    }
                 }
             }
         }

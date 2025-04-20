@@ -2,15 +2,22 @@
   <div class=" w-full flex flex-col justify-between items-center">
     <div class="flex gap-2  " >
       <div class="w-80 ">
-        <EaDatePicker />
+        <EaDatePicker label="Single"  v-model="date" range />
       </div>
-
+      <div class="w-80 ">
+        <EaDatePicker label="Range"  v-model="rangeDate" range />
+      </div>
+      {{ date }}
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
 import EaDatePicker from '@/components/ui/inputs/datepicker/index.vue';
+import { ref } from 'vue';
+
+const date = ref<Date | null>(null);
+const rangeDate = ref<Date | null>(null);
 </script>
 
 <style scoped>

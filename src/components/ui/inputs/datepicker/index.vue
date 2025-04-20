@@ -8,19 +8,19 @@
           @click="() => openPanel(true)"
           :class="size"
         >
-
           <input
-          class="ea-datepicker__placeholder flex justify-between items-center py-1 w-full"
-          :class="size"
-          tabindex="0"
-          :value="formatDisplayDate(modelValue!)"
-          :placeholder="placeholder || 'Select date'"
-        >
+            class="ea-datepicker__placeholder flex justify-between items-center py-1 w-full"
+            :class="size"
+            tabindex="0"
+            :value="displayValue"
+            :placeholder="placeholder || (range ? 'Select date range' : 'Select date')"
+            readonly
+          >
           <ChavronDown class="size-6 text-placeholder absolute right-2" />
         </div>
       </template>
 
-      <template #panelContent="{ closePanel }">
+      <template #panelContent>
         <div class="ea-datepicker__panel">
           <div class="ea-datepicker__header">
             <button @click="prevMonth" class="ea-datepicker__nav-btn">
@@ -44,12 +44,10 @@
               v-for="(day, index) in calendarDays"
               :key="index"
               class="ea-datepicker__day"
-              :class="{
-                'disabled': !day.currentMonth,
-                'selected': isSelectedDate(day.date),
-                'today': isToday(day.date)
-              }"
-              @click="day.currentMonth && selectDate(day.date, closePanel)"
+              :class="getDayClasses(day.date, day.currentMonth)"
+              @click="day.currentMonth && handleDateSelection(day.date, day.currentMonth)"
+              @mouseenter="day.currentMonth && props.range && handleHover(day.date)"
+              @mouseleave="resetHoverState"
             >
               {{ day.dayNumber }}
             </div>
@@ -58,14 +56,14 @@
           <div class="ea-datepicker__footer">
             <button
               class="ea-datepicker__today-btn"
-              @click="selectToday(closePanel)"
+              @click="selectToday()"
             >
               Today
             </button>
             <button
-              v-if="modelValue"
+              v-if="hasValue"
               class="ea-datepicker__clear-btn"
-              @click="clearDate(closePanel)"
+              @click="clearDate()"
             >
               Clear
             </button>
@@ -86,23 +84,55 @@ import type { IDatepickerProps } from './datepicker.types';
 const props = withDefaults(defineProps<IDatepickerProps>(), {
   size: 'normal',
   format: 'DD/MM/YYYY',
-  placeholder: 'Select date'
+  placeholder: 'Select date',
+  range: false
 });
 
-const modelValue = defineModel<Date | null>();
+const modelValue = defineModel<Date | [Date, Date] | null>();
+
+// Range selection temporary state
+const tempRangeStart = ref<Date | null>(null);
+const isRangeSelectionActive = ref(false);
+const hoverDate = ref<Date | null>(null);
+
+// Computed value that displays in the input field
+const displayValue = computed((): string => {
+  if (!modelValue.value) return '';
+
+  if (props.range && Array.isArray(modelValue.value)) {
+    const [start, end] = modelValue.value;
+    if (!start) return '';
+    if (!end) return formatDate(start);
+    return `${formatDate(start)} - ${formatDate(end)}`;
+  }
+
+  // Single date mode
+  if (!Array.isArray(modelValue.value)) {
+    return formatDate(modelValue.value);
+  }
+
+  return '';
+});
+
+// Check if there's any selected value
+const hasValue = computed((): boolean => {
+  return modelValue.value !== null;
+});
 
 // Calendar state
 const currentDate = ref(new Date());
 
-// Format functions
-const formatDisplayDate = (date: Date): string => {
+// Format date according to format prop
+const formatDate = (date: Date): string => {
   if (!date) return '';
+
   if (props.format === 'DD/MM/YYYY') {
     const day = date.getDate().toString().padStart(2, '0');
     const month = (date.getMonth() + 1).toString().padStart(2, '0');
     const year = date.getFullYear();
     return `${day}/${month}/${year}`;
   }
+
   return date.toLocaleDateString('tr-TR');
 };
 
@@ -177,38 +207,154 @@ const calendarDays = computed(() => {
   return days;
 });
 
-// Date selection functions
-const isSelectedDate = (date: Date): boolean => {
-  if (!modelValue.value) return false;
+// Helper function to compare dates
+const isSameDate = (date1: Date, date2: Date): boolean => {
   return (
-    date.getDate() === modelValue.value.getDate() &&
-    date.getMonth() === modelValue.value.getMonth() &&
-    date.getFullYear() === modelValue.value.getFullYear()
+    date1.getDate() === date2.getDate() &&
+    date1.getMonth() === date2.getMonth() &&
+    date1.getFullYear() === date2.getFullYear()
   );
 };
 
-const isToday = (date: Date): boolean => {
+// Get classes for a calendar day
+const getDayClasses = (date: Date, isCurrentMonth: boolean) => {
+  if (!isCurrentMonth) {
+    return { 'disabled': true };
+  }
+
+  const classes: Record<string, boolean> = {
+    'disabled': false,
+    'today': isSameDate(date, new Date())
+  };
+
+  // Single date selection
+  if (!props.range && modelValue.value && !Array.isArray(modelValue.value)) {
+    classes['selected'] = isSameDate(date, modelValue.value);
+  }
+
+  // Range selection
+  if (props.range && Array.isArray(modelValue.value)) {
+    const [start, end] = modelValue.value;
+
+    if (start && isSameDate(date, start)) {
+      classes['range-start'] = true;
+      classes['selected'] = true;
+    }
+
+    if (end && isSameDate(date, end)) {
+      classes['range-end'] = true;
+      classes['selected'] = true;
+    }
+
+    if (start && end && date > start && date < end) {
+      classes['in-range'] = true;
+    }
+  }
+
+  // Temporary selection during range selection
+  if (props.range && isRangeSelectionActive.value && tempRangeStart.value) {
+    const start = tempRangeStart.value;
+
+    if (isSameDate(date, start)) {
+      classes['range-start'] = true;
+      classes['selected'] = true;
+    }
+
+    // Hover effect for potential end date
+    if (hoverDate.value && date > start && date <= hoverDate.value) {
+      classes['hover-range'] = true;
+    }
+
+    if (hoverDate.value && date >= hoverDate.value && date < start) {
+      classes['hover-range'] = true;
+    }
+
+    // Mark hovered date as potential end
+    if (hoverDate.value && isSameDate(date, hoverDate.value)) {
+      classes['hover-end'] = true;
+    }
+  }
+
+  return classes;
+};
+
+// Handle date selection
+const handleDateSelection = (date: Date, isCurrentMonth: boolean) => {
+  if (!isCurrentMonth) return;
+
+  if (props.range) {
+    handleRangeSelection(date);
+  } else {
+    // Single date selection
+    modelValue.value = new Date(date);
+    // Panel stays open after selection
+  }
+};
+
+// Handle range selection
+const handleRangeSelection = (date: Date) => {
+  const newDate = new Date(date);
+
+  if (!isRangeSelectionActive.value) {
+    // Start selecting range
+    tempRangeStart.value = newDate;
+    isRangeSelectionActive.value = true;
+    modelValue.value = [newDate, null] as unknown as [Date, Date];
+    // Panel stays open for selecting end date
+  } else {
+    // Finish selecting range
+    const start = tempRangeStart.value;
+
+    if (start) {
+      let rangeStart = start;
+      let rangeEnd = newDate;
+
+      // Swap if end date is before start date
+      if (newDate < start) {
+        rangeStart = newDate;
+        rangeEnd = start;
+      }
+
+      modelValue.value = [rangeStart, rangeEnd] as [Date, Date];
+    }
+
+    // Reset temporary state
+    tempRangeStart.value = null;
+    isRangeSelectionActive.value = false;
+    // Panel stays open after selection
+  }
+};
+
+// Select today
+const selectToday = () => {
   const today = new Date();
-  return (
-    date.getDate() === today.getDate() &&
-    date.getMonth() === today.getMonth() &&
-    date.getFullYear() === today.getFullYear()
-  );
-};
 
-const selectDate = (date: Date, closePanel: () => void) => {
-  modelValue.value = new Date(date);
-  closePanel();
-};
+  if (props.range) {
+    modelValue.value = [today, today] as [Date, Date];
+  } else {
+    modelValue.value = today;
+  }
 
-const selectToday = (closePanel: () => void) => {
-  modelValue.value = new Date();
   currentDate.value = new Date();
-  closePanel();
+  // Panel stays open after selecting today
 };
 
-const clearDate = (closePanel: () => void) => {
+// Clear selected date
+const clearDate = () => {
   modelValue.value = null;
-  closePanel();
+  tempRangeStart.value = null;
+  isRangeSelectionActive.value = false;
+  // Panel stays open after clearing
+};
+
+// Hover states for range selection
+const handleHover = (date: Date) => {
+  if (props.range && isRangeSelectionActive.value && tempRangeStart.value) {
+    hoverDate.value = new Date(date);
+  }
+};
+
+const resetHoverState = () => {
+  hoverDate.value = null;
 };
 </script>
