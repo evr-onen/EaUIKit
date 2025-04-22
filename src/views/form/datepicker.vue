@@ -2,10 +2,10 @@
   <div class=" w-full flex flex-col justify-between items-center">
     <div class="flex gap-2  " >
       <div class="w-80 ">
-        <EaDatePicker label="Single"  v-model="date" />
+        <EaDatePicker label="Single"  v-model="date" date-format="DD/MM/YYYY" />
       </div>
       <div class="w-80 ">
-        <EaDatePicker label="Range"  v-model="rangeDate" range />
+        <EaDatePicker label="Range"  v-model="rangeDate" range date-format="DD/MM/YYYY" />
       </div>
       {{ date }}
       {{ rangeDate }}

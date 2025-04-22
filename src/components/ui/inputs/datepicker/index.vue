@@ -5,7 +5,7 @@
       <template #default="{ openPanel }">
         <div
           class="flex justify-between items-center rounded-lg  relative"
-          @click="() => openPanel(true)"
+          @click="() => openPanel()"
           :class="size"
         >
           <input
@@ -22,7 +22,7 @@
         </div>
       </template>
 
-      <template #panelContent>
+      <template #panelContent="{ closePanel }">
         <div class="ea-datepicker__panel">
           <div class="ea-datepicker__header">
             <button @click="prevMonth" class="ea-datepicker__nav-btn">
@@ -47,7 +47,7 @@
               :key="index"
               class="ea-datepicker__day"
               :class="getDayClasses(day.date, day.currentMonth)"
-              @click="day.currentMonth && handleDateSelection(day.date, day.currentMonth)"
+              @click="day.currentMonth && handleDateSelection(day.date, day.currentMonth, closePanel)"
               @mouseenter="day.currentMonth && props.range && handleHover(day.date)"
               @mouseleave="resetHoverState"
             >
@@ -520,7 +520,7 @@ const getDayClasses = (date: Date, isCurrentMonth: boolean) => {
 };
 
 // Handle range selection
-const handleRangeSelection = (date: Date) => {
+const handleRangeSelection = (date: Date, closePanel: () => void) => {
   // Create a date at noon UTC to avoid timezone issues
   const noonDate = createDateAtNoonUTC(date);
 
@@ -552,7 +552,9 @@ const handleRangeSelection = (date: Date) => {
     // Reset temporary state
     tempRangeStart.value = null;
     isRangeSelectionActive.value = false;
-    // Panel stays open after selection
+
+    // Paneli kapat - ikinci tarih seçildiğinde
+    closePanel();
   }
 };
 
@@ -569,16 +571,17 @@ const createDateAtNoonUTC = (date: Date): Date => {
 };
 
 // Handle date selection
-const handleDateSelection = (date: Date, isCurrentMonth: boolean) => {
+const handleDateSelection = (date: Date, isCurrentMonth: boolean, closePanel: () => void) => {
   if (!isCurrentMonth) return;
 
   if (props.range) {
-    handleRangeSelection(date);
+    handleRangeSelection(date, closePanel);
   } else {
     // Single date selection with UTC noon time to avoid timezone issues
     const noonDate = createDateAtNoonUTC(date);
     modelValue.value = noonDate;
     inputValue.value = formatDate(noonDate);
+    closePanel()
     // Panel stays open after selection
   }
 };
