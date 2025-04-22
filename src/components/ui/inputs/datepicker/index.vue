@@ -14,7 +14,7 @@
             tabindex="0"
             :value="displayValue"
             :placeholder="placeholder || (range ? 'Select date range' : 'Select date')"
-            readonly
+            
           >
           <ChavronDown class="size-6 text-placeholder absolute right-2" />
         </div>

@@ -2,12 +2,13 @@
   <div class=" w-full flex flex-col justify-between items-center">
     <div class="flex gap-2  " >
       <div class="w-80 ">
-        <EaDatePicker label="Single"  v-model="date" range />
+        <EaDatePicker label="Single"  v-model="date" />
       </div>
       <div class="w-80 ">
         <EaDatePicker label="Range"  v-model="rangeDate" range />
       </div>
       {{ date }}
+      {{ rangeDate }}
     </div>
   </div>
 </template>
