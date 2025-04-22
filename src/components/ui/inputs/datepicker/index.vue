@@ -14,7 +14,9 @@
             tabindex="0"
             :value="displayValue"
             :placeholder="placeholder || (range ? 'Select date range' : 'Select date')"
-
+            @input="handleInputChange"
+            @keydown="handleKeyDown"
+            @blur="validateInput"
           >
           <ChavronDown class="size-6 text-placeholder absolute right-2" />
         </div>
@@ -22,13 +24,18 @@
 
       <template #panelContent>
         <div class="ea-datepicker__panel">
+          <!-- <div v-if="range && isRangeSelectionActive" class="ea-datepicker__range-info mb-2 text-center text-sm">
+            <span v-if="tempRangeStart" class="text-primary">Lütfen bitiş tarihini seçin</span>
+            <span v-else>Lütfen başlangıç tarihini seçin</span>
+          </div> -->
+
           <div class="ea-datepicker__header">
             <button @click="prevMonth" class="ea-datepicker__nav-btn">
               <ChavronDown class="size-5 rotate-90" />
             </button>
             <div class="ea-datepicker__header-text">
-              <span class="month">{{ currentMonthName }}</span>
               <span class="year">{{ currentYear }}</span>
+              <span class="month">{{ currentMonthName }}</span>
             </div>
             <button @click="nextMonth" class="ea-datepicker__nav-btn">
               <ChavronDown class="size-5 -rotate-90" />
@@ -85,7 +92,8 @@ const props = withDefaults(defineProps<IDatepickerProps>(), {
   size: 'normal',
   format: 'DD/MM/YYYY',
   placeholder: 'Select date',
-  range: false
+  range: false,
+  dateFormat: 'DD/MM/YYYY'
 });
 
 const modelValue = defineModel<Date | [Date, Date] | null>();
@@ -94,14 +102,15 @@ const modelValue = defineModel<Date | [Date, Date] | null>();
 const tempRangeStart = ref<Date | null>(null);
 const isRangeSelectionActive = ref(false);
 const hoverDate = ref<Date | null>(null);
+const inputValue = ref('');
 
 // Computed value that displays in the input field
 const displayValue = computed((): string => {
-  if (!modelValue.value) return '';
+  if (!modelValue.value) return inputValue.value;
 
   if (props.range && Array.isArray(modelValue.value)) {
     const [start, end] = modelValue.value;
-    if (!start) return '';
+    if (!start) return inputValue.value;
     if (!end) return formatDate(start);
     return `${formatDate(start)} - ${formatDate(end)}`;
   }
@@ -111,7 +120,7 @@ const displayValue = computed((): string => {
     return formatDate(modelValue.value);
   }
 
-  return '';
+  return inputValue.value;
 });
 
 // Check if there's any selected value
@@ -129,7 +138,7 @@ const currentMonthName = computed(() => {
   return new Date(currentYear.value, currentMonth.value).toLocaleString('tr-TR', { month: 'long' });
 });
 
-// Format date according to format prop
+// Format date according to the selected format
 const formatDate = (date: Date): string => {
   if (!date) return '';
 
@@ -138,12 +147,135 @@ const formatDate = (date: Date): string => {
   const month = (date.getMonth() + 1).toString().padStart(2, '0');
   const year = date.getFullYear();
 
-  if (props.format === 'DD/MM/YYYY') {
-    return `${day}/${month}/${year}`;
+  let result = props.dateFormat;
+  result = result.replace('DD', day);
+  result = result.replace('MM', month);
+  result = result.replace('YYYY', year.toString());
+
+  return result;
+};
+
+// Parse date string based on the dateFormat
+const parseDate = (dateStr: string): Date | null => {
+  if (!dateStr) return null;
+
+  const format = props.dateFormat;
+  let day = 1, month = 0, year = new Date().getFullYear();
+
+  // Extract day, month, year based on the format
+  if (format.includes('DD')) {
+    const dayIndex = format.indexOf('DD');
+    day = parseInt(dateStr.substring(dayIndex, dayIndex + 2));
   }
 
-  // Use custom formatting instead of toLocaleDateString which can be affected by timezone
-  return `${day}.${month}.${year}`;
+  if (format.includes('MM')) {
+    const monthIndex = format.indexOf('MM');
+    month = parseInt(dateStr.substring(monthIndex, monthIndex + 2)) - 1; // JS months are 0-indexed
+  }
+
+  if (format.includes('YYYY')) {
+    const yearIndex = format.indexOf('YYYY');
+    year = parseInt(dateStr.substring(yearIndex, yearIndex + 4));
+  }
+
+  // Validate date components
+  if (isNaN(day) || isNaN(month) || isNaN(year)) return null;
+  if (day < 1 || day > 31) return null;
+  if (month < 0 || month > 11) return null;
+  if (year < 1900 || year > 2100) return null;
+
+  // Create and return the date
+  return createDateAtNoonUTC(new Date(year, month, day));
+};
+
+// Parse date range string (format: "date - date")
+const parseDateRange = (rangeStr: string): [Date, Date] | null => {
+  if (!rangeStr.includes('-')) return null;
+
+  const [startStr, endStr] = rangeStr.split('-').map(s => s.trim());
+  const startDate = parseDate(startStr);
+  const endDate = parseDate(endStr);
+
+  if (!startDate || !endDate) return null;
+  return [startDate, endDate];
+};
+
+// Apply mask to input
+const applyMask = (value: string): string => {
+  const format = props.dateFormat;
+  let result = '';
+  let valueIndex = 0;
+
+  for (let i = 0; i < format.length; i++) {
+    if (valueIndex >= value.length) break;
+
+    const formatChar = format[i];
+    const valueChar = value[valueIndex];
+
+    if (formatChar === 'D' || formatChar === 'M' || formatChar === 'Y') {
+      // If the format character expects a digit
+      if (/\d/.test(valueChar)) {
+        result += valueChar;
+        valueIndex++;
+      } else {
+        valueIndex++; // Skip non-digit character
+      }
+    } else {
+      // For separators, add them automatically
+      result += formatChar;
+      // Skip the separator in input if it matches
+      if (valueChar === formatChar) {
+        valueIndex++;
+      }
+    }
+  }
+
+  return result;
+};
+
+// Handle input change
+const handleInputChange = (e: Event) => {
+  const target = e.target as HTMLInputElement;
+  const value = target.value;
+
+  if (props.range) {
+    inputValue.value = value;
+    // For range, we'll validate on blur to allow typing the full range
+  } else {
+    // Apply mask as user types
+    inputValue.value = applyMask(value);
+    target.value = inputValue.value;
+  }
+};
+
+// Validate input on blur
+const validateInput = () => {
+  if (!inputValue.value) {
+    modelValue.value = null;
+    return;
+  }
+
+  if (props.range) {
+    const dateRange = parseDateRange(inputValue.value);
+    if (dateRange) {
+      modelValue.value = dateRange;
+      // Update the input with formatted date range
+      inputValue.value = `${formatDate(dateRange[0])} - ${formatDate(dateRange[1])}`;
+    }
+  } else {
+    const date = parseDate(inputValue.value);
+    if (date) {
+      modelValue.value = date;
+      inputValue.value = formatDate(date);
+    }
+  }
+};
+
+// Handle keyboard navigation
+const handleKeyDown = (e: KeyboardEvent) => {
+  if (e.key === 'Enter') {
+    validateInput();
+  }
 };
 
 const prevMonth = () => {
@@ -313,6 +445,7 @@ const handleRangeSelection = (date: Date) => {
     tempRangeStart.value = noonDate;
     isRangeSelectionActive.value = true;
     modelValue.value = [noonDate, null] as unknown as [Date, Date];
+    inputValue.value = formatDate(noonDate);
     // Panel stays open for selecting end date
   } else {
     // Second click - Finish selecting range
@@ -329,6 +462,7 @@ const handleRangeSelection = (date: Date) => {
       }
 
       modelValue.value = [rangeStart, rangeEnd] as [Date, Date];
+      inputValue.value = `${formatDate(rangeStart)} - ${formatDate(rangeEnd)}`;
     }
 
     // Reset temporary state
@@ -360,6 +494,7 @@ const handleDateSelection = (date: Date, isCurrentMonth: boolean) => {
     // Single date selection with UTC noon time to avoid timezone issues
     const noonDate = createDateAtNoonUTC(date);
     modelValue.value = noonDate;
+    inputValue.value = formatDate(noonDate);
     // Panel stays open after selection
   }
 };
@@ -373,8 +508,10 @@ const selectToday = () => {
 
   if (props.range) {
     modelValue.value = [noonToday, noonToday] as [Date, Date];
+    inputValue.value = `${formatDate(noonToday)} - ${formatDate(noonToday)}`;
   } else {
     modelValue.value = noonToday;
+    inputValue.value = formatDate(noonToday);
   }
 
   // Update current date for calendar view
@@ -389,6 +526,7 @@ const selectToday = () => {
 // Clear selected date
 const clearDate = () => {
   modelValue.value = null;
+  inputValue.value = '';
   tempRangeStart.value = null;
   isRangeSelectionActive.value = false;
   // Panel stays open after clearing
