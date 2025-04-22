@@ -24,11 +24,6 @@
 
       <template #panelContent>
         <div class="ea-datepicker__panel">
-          <!-- <div v-if="range && isRangeSelectionActive" class="ea-datepicker__range-info mb-2 text-center text-sm">
-            <span v-if="tempRangeStart" class="text-primary">Lütfen bitiş tarihini seçin</span>
-            <span v-else>Lütfen başlangıç tarihini seçin</span>
-          </div> -->
-
           <div class="ea-datepicker__header">
             <button @click="prevMonth" class="ea-datepicker__nav-btn">
               <ChavronDown class="size-5 rotate-90" />
@@ -90,7 +85,6 @@ import type { IDatepickerProps } from './datepicker.types';
 
 const props = withDefaults(defineProps<IDatepickerProps>(), {
   size: 'normal',
-  format: 'DD/MM/YYYY',
   placeholder: 'Select date',
   range: false,
   dateFormat: 'DD/MM/YYYY'
@@ -155,6 +149,22 @@ const formatDate = (date: Date): string => {
   return result;
 };
 
+// Validate and correct date parts
+const validateAndCorrectDate = (day: number, month: number, year: number): [number, number, number] => {
+  // Validate year (keep as is if reasonable)
+
+  // Correct month (1-12)
+  const correctedMonth = Math.min(Math.max(1, month), 12);
+
+  // Get max days for the corrected month and year
+  const daysInMonth = new Date(year, correctedMonth, 0).getDate();
+
+  // Correct day based on the month
+  const correctedDay = Math.min(Math.max(1, day), daysInMonth);
+
+  return [correctedDay, correctedMonth, year];
+};
+
 // Parse date string based on the dateFormat
 const parseDate = (dateStr: string): Date | null => {
   if (!dateStr) return null;
@@ -178,14 +188,14 @@ const parseDate = (dateStr: string): Date | null => {
     year = parseInt(dateStr.substring(yearIndex, yearIndex + 4));
   }
 
-  // Validate date components
+  // Check if any part is NaN
   if (isNaN(day) || isNaN(month) || isNaN(year)) return null;
-  if (day < 1 || day > 31) return null;
-  if (month < 0 || month > 11) return null;
-  if (year < 1900 || year > 2100) return null;
 
-  // Create and return the date
-  return createDateAtNoonUTC(new Date(year, month, day));
+  // Validate and correct the date parts
+  const [correctedDay, correctedMonth, correctedYear] = validateAndCorrectDate(day, month + 1, year);
+
+  // Create and return the date (adjust month back to 0-indexed)
+  return createDateAtNoonUTC(new Date(correctedYear, correctedMonth - 1, correctedDay));
 };
 
 // Parse date range string (format: "date - date")
@@ -233,18 +243,86 @@ const applyMask = (value: string): string => {
   return result;
 };
 
+// Apply mask to range input
+const applyRangeMask = (value: string): string => {
+  if (!value.includes('-')) {
+    // If no range separator yet, just mask the first date
+    const maskedValue = applyMask(value);
+
+    // Automatically add range separator if first date is complete
+    if (maskedValue.length === props.dateFormat.length) {
+      return `${maskedValue} - `;
+    }
+
+    return maskedValue;
+  }
+
+  // Split by dash and mask both parts
+  const [startStr, ...endParts] = value.split('-');
+  const maskedStart = applyMask(startStr.trim());
+
+  // Handle the end part if it exists
+  if (endParts.length > 0) {
+    const endStr = endParts.join('-').trim(); // Rejoin in case there were multiple dashes
+    const maskedEnd = applyMask(endStr);
+    return `${maskedStart} - ${maskedEnd}`;
+  }
+
+  // If there's just a dash with no end date yet
+  return `${maskedStart} -`;
+};
+
+// Position cursor at the end of input
+const positionCursorAtEnd = (input: HTMLInputElement) => {
+  setTimeout(() => {
+    const len = input.value.length;
+    input.setSelectionRange(len, len);
+  }, 0);
+};
+
 // Handle input change
 const handleInputChange = (e: Event) => {
   const target = e.target as HTMLInputElement;
   const value = target.value;
 
   if (props.range) {
-    inputValue.value = value;
-    // For range, we'll validate on blur to allow typing the full range
+    const oldValue = inputValue.value;
+    // Apply mask for range input
+    inputValue.value = applyRangeMask(value);
+    target.value = inputValue.value;
+
+    // Set cursor position to after dash if first date was just completed
+    if (oldValue.length < props.dateFormat.length &&
+        inputValue.value.length > props.dateFormat.length &&
+        inputValue.value.includes(' - ')) {
+      const newPosition = inputValue.value.indexOf('-') + 2;
+      setTimeout(() => {
+        target.setSelectionRange(newPosition, newPosition);
+      }, 0);
+    } else {
+      // Retain cursor position if it wasn't an auto-format
+      if (oldValue.length !== inputValue.value.length) {
+        positionCursorAtEnd(target);
+      }
+    }
+
+    // If we have a complete range format, validate immediately
+    if (inputValue.value.includes('-')) {
+      const [startStr, endStr] = inputValue.value.split('-').map(s => s.trim());
+      if (startStr.length === props.dateFormat.length &&
+          endStr && endStr.length === props.dateFormat.length) {
+        validateInput();
+      }
+    }
   } else {
     // Apply mask as user types
     inputValue.value = applyMask(value);
     target.value = inputValue.value;
+
+    // If we have a complete date format, validate immediately
+    if (inputValue.value.length === props.dateFormat.length) {
+      validateInput();
+    }
   }
 };
 
@@ -261,12 +339,18 @@ const validateInput = () => {
       modelValue.value = dateRange;
       // Update the input with formatted date range
       inputValue.value = `${formatDate(dateRange[0])} - ${formatDate(dateRange[1])}`;
+
+      // Update calendar view to show first date in the range
+      currentDate.value = new Date(dateRange[0].getFullYear(), dateRange[0].getMonth(), 1);
     }
   } else {
     const date = parseDate(inputValue.value);
     if (date) {
       modelValue.value = date;
       inputValue.value = formatDate(date);
+
+      // Update calendar view to show the selected date
+      currentDate.value = new Date(date.getFullYear(), date.getMonth(), 1);
     }
   }
 };
