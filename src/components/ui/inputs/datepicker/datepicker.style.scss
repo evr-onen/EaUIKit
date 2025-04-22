@@ -107,7 +107,7 @@
                 }
                 
                 &.range-start {
-                    @apply rounded-r-none;
+                    @apply rounded-r-none rounded-l-full;
                     
                     &:after {
                         content: '';
@@ -117,7 +117,7 @@
                 }
                 
                 &.range-end {
-                    @apply rounded-l-none;
+                    @apply rounded-l-none rounded-r-full;
                     
                     &:before {
                         content: '';

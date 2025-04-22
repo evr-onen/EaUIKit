@@ -14,7 +14,7 @@
             tabindex="0"
             :value="displayValue"
             :placeholder="placeholder || (range ? 'Select date range' : 'Select date')"
-            
+
           >
           <ChavronDown class="size-6 text-placeholder absolute right-2" />
         </div>
@@ -122,26 +122,29 @@ const hasValue = computed((): boolean => {
 // Calendar state
 const currentDate = ref(new Date());
 
-// Format date according to format prop
-const formatDate = (date: Date): string => {
-  if (!date) return '';
-
-  if (props.format === 'DD/MM/YYYY') {
-    const day = date.getDate().toString().padStart(2, '0');
-    const month = (date.getMonth() + 1).toString().padStart(2, '0');
-    const year = date.getFullYear();
-    return `${day}/${month}/${year}`;
-  }
-
-  return date.toLocaleDateString('tr-TR');
-};
-
-// Calendar navigation
+// Calendar navigation computed properties
 const currentYear = computed(() => currentDate.value.getFullYear());
 const currentMonth = computed(() => currentDate.value.getMonth());
 const currentMonthName = computed(() => {
   return new Date(currentYear.value, currentMonth.value).toLocaleString('tr-TR', { month: 'long' });
 });
+
+// Format date according to format prop
+const formatDate = (date: Date): string => {
+  if (!date) return '';
+
+  // Get date components directly to avoid timezone issues
+  const day = date.getDate().toString().padStart(2, '0');
+  const month = (date.getMonth() + 1).toString().padStart(2, '0');
+  const year = date.getFullYear();
+
+  if (props.format === 'DD/MM/YYYY') {
+    return `${day}/${month}/${year}`;
+  }
+
+  // Use custom formatting instead of toLocaleDateString which can be affected by timezone
+  return `${day}.${month}.${year}`;
+};
 
 const prevMonth = () => {
   currentDate.value = new Date(currentYear.value, currentMonth.value - 1, 1);
@@ -207,12 +210,18 @@ const calendarDays = computed(() => {
   return days;
 });
 
-// Helper function to compare dates
+// Helper function to normalize date (removes time component and sets to noon UTC)
+const normalizeDate = (date: Date): Date => {
+  return createDateAtNoonUTC(date);
+};
+
+// Helper function to compare dates (ignores time)
 const isSameDate = (date1: Date, date2: Date): boolean => {
+  // Compare only year, month, and day components
   return (
-    date1.getDate() === date2.getDate() &&
+    date1.getFullYear() === date2.getFullYear() &&
     date1.getMonth() === date2.getMonth() &&
-    date1.getFullYear() === date2.getFullYear()
+    date1.getDate() === date2.getDate()
   );
 };
 
@@ -246,8 +255,16 @@ const getDayClasses = (date: Date, isCurrentMonth: boolean) => {
       classes['selected'] = true;
     }
 
-    if (start && end && date > start && date < end) {
-      classes['in-range'] = true;
+    if (start && end) {
+      // Convert all dates to comparable timestamps at noon UTC
+      const dateTime = normalizeDate(date).getTime();
+      const startTime = normalizeDate(start).getTime();
+      const endTime = normalizeDate(end).getTime();
+
+      // Check if date is between start and end (not inclusive)
+      if (dateTime > startTime && dateTime < endTime) {
+        classes['in-range'] = true;
+      }
     }
   }
 
@@ -261,57 +278,53 @@ const getDayClasses = (date: Date, isCurrentMonth: boolean) => {
     }
 
     // Hover effect for potential end date
-    if (hoverDate.value && date > start && date <= hoverDate.value) {
-      classes['hover-range'] = true;
-    }
+    if (hoverDate.value) {
+      // Convert all dates to comparable timestamps at noon UTC
+      const hoveredTime = normalizeDate(hoverDate.value).getTime();
+      const startTime = normalizeDate(start).getTime();
+      const dateTime = normalizeDate(date).getTime();
 
-    if (hoverDate.value && date >= hoverDate.value && date < start) {
-      classes['hover-range'] = true;
-    }
+      // Check if date is in hover range
+      if (startTime < hoveredTime && dateTime > startTime && dateTime <= hoveredTime) {
+        classes['hover-range'] = true;
+      }
 
-    // Mark hovered date as potential end
-    if (hoverDate.value && isSameDate(date, hoverDate.value)) {
-      classes['hover-end'] = true;
+      if (startTime > hoveredTime && dateTime >= hoveredTime && dateTime < startTime) {
+        classes['hover-range'] = true;
+      }
+
+      // Mark hovered date as potential end
+      if (isSameDate(date, hoverDate.value)) {
+        classes['hover-end'] = true;
+      }
     }
   }
 
   return classes;
 };
 
-// Handle date selection
-const handleDateSelection = (date: Date, isCurrentMonth: boolean) => {
-  if (!isCurrentMonth) return;
-
-  if (props.range) {
-    handleRangeSelection(date);
-  } else {
-    // Single date selection
-    modelValue.value = new Date(date);
-    // Panel stays open after selection
-  }
-};
-
 // Handle range selection
 const handleRangeSelection = (date: Date) => {
-  const newDate = new Date(date);
+  // Create a date at noon UTC to avoid timezone issues
+  const noonDate = createDateAtNoonUTC(date);
 
   if (!isRangeSelectionActive.value) {
-    // Start selecting range
-    tempRangeStart.value = newDate;
+    // First click - Start selecting range
+    tempRangeStart.value = noonDate;
     isRangeSelectionActive.value = true;
-    modelValue.value = [newDate, null] as unknown as [Date, Date];
+    modelValue.value = [noonDate, null] as unknown as [Date, Date];
     // Panel stays open for selecting end date
   } else {
-    // Finish selecting range
+    // Second click - Finish selecting range
     const start = tempRangeStart.value;
 
     if (start) {
       let rangeStart = start;
-      let rangeEnd = newDate;
+      let rangeEnd = noonDate;
 
       // Swap if end date is before start date
-      if (newDate < start) {
-        rangeStart = newDate;
+      if (noonDate.getTime() < start.getTime()) {
+        rangeStart = noonDate;
         rangeEnd = start;
       }
 
@@ -325,17 +338,51 @@ const handleRangeSelection = (date: Date) => {
   }
 };
 
-// Select today
-const selectToday = () => {
-  const today = new Date();
+// Create a Date object set to noon UTC for the given date
+const createDateAtNoonUTC = (date: Date): Date => {
+  // Extract the date components in local time
+  const year = date.getFullYear();
+  const month = date.getMonth();
+  const day = date.getDate();
+
+  // Create a new date at noon UTC
+  const utcDate = new Date(Date.UTC(year, month, day, 12, 0, 0, 0));
+  return utcDate;
+};
+
+// Handle date selection
+const handleDateSelection = (date: Date, isCurrentMonth: boolean) => {
+  if (!isCurrentMonth) return;
 
   if (props.range) {
-    modelValue.value = [today, today] as [Date, Date];
+    handleRangeSelection(date);
   } else {
-    modelValue.value = today;
+    // Single date selection with UTC noon time to avoid timezone issues
+    const noonDate = createDateAtNoonUTC(date);
+    modelValue.value = noonDate;
+    // Panel stays open after selection
+  }
+};
+
+// Select today
+const selectToday = () => {
+  const now = new Date();
+
+  // Create today at noon UTC
+  const noonToday = createDateAtNoonUTC(now);
+
+  if (props.range) {
+    modelValue.value = [noonToday, noonToday] as [Date, Date];
+  } else {
+    modelValue.value = noonToday;
   }
 
-  currentDate.value = new Date();
+  // Update current date for calendar view
+  currentDate.value = new Date(
+    now.getFullYear(),
+    now.getMonth(),
+    1
+  );
   // Panel stays open after selecting today
 };
 
@@ -350,7 +397,8 @@ const clearDate = () => {
 // Hover states for range selection
 const handleHover = (date: Date) => {
   if (props.range && isRangeSelectionActive.value && tempRangeStart.value) {
-    hoverDate.value = new Date(date);
+    // Use noon UTC for hover date
+    hoverDate.value = createDateAtNoonUTC(date);
   }
 };
 
