@@ -1,0 +1,83 @@
+.ea-timepicker {
+    *:focus {
+        @apply outline-none;
+    }
+
+    // label section
+    .ea-timepicker__label {
+        @apply block mb-1;
+    } 
+
+    // Container with positioning context
+    .ea-timepicker__container {
+        @apply relative rounded-lg;
+    }
+
+    // input field
+    .ea-timepicker__input {
+        @apply px-3 py-1 capitalize bg-white w-full cursor-pointer text-[.875rem];
+    }
+    
+    .ea-timepicker__input.small {
+        @apply text-[.75rem];
+    }
+    
+    .ea-timepicker__input.large {
+        @apply text-[1rem];
+    }
+    
+    .ea-timepicker__icon {
+        @apply absolute right-2 top-1/2 transform -translate-y-1/2 text-placeholder;
+    }
+    
+    // Dropdowns wrapper
+    .ea-timepicker__dropdowns {
+        @apply flex gap-2 p-2 bg-white rounded-lg shadow-md;
+        min-width: 200px;
+        
+        // Columns for hours and minutes
+        .ea-timepicker__column {
+            @apply flex-1 flex flex-col;
+            
+            // Column headers
+            .ea-timepicker__column-header {
+                @apply text-xs font-medium text-textSecondary mb-1 text-center py-1;
+            }
+            
+            // Lists of time options
+            .ea-timepicker__time-list {
+                @apply flex flex-col gap-1 max-h-60 overflow-y-auto scrollbar-thin;
+                
+                // Individual time items
+                .ea-timepicker__time-item {
+                    @apply text-center py-1 px-2 rounded-md text-sm cursor-pointer hover:bg-gray-100;
+                    
+                    &.selected {
+                        @apply bg-primary text-white hover:bg-primary;
+                    }
+                }
+            }
+        }
+    }
+}
+
+.ea-timepicker:focus {
+    @apply outline-none border-placeholder rounded-[8px];
+} 
+
+// Fix for scrollbars
+.scrollbar-thin {
+    scrollbar-width: thin;
+    
+    &::-webkit-scrollbar {
+        @apply w-1;
+    }
+    
+    &::-webkit-scrollbar-track {
+        @apply bg-transparent;
+    }
+    
+    &::-webkit-scrollbar-thumb {
+        @apply bg-gray-300 rounded-full;
+    }
+} 

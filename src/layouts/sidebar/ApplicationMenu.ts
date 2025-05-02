@@ -111,6 +111,24 @@ export const ApplicationContentMenu = () => {
           },
           visibility: true
         },
+        {
+          label: 'DateTimePicker',
+          path: '/form/dateTimePicker',
+          icon: '',
+          meta: {
+            title: 'DatePicker'
+          },
+          visibility: true
+        },
+        {
+          label: 'TimePicker',
+          path: '/form/timePicker',
+          icon: '',
+          meta: {
+            title: 'TimePicker'
+          },
+          visibility: true
+        }
       ]
     },
 

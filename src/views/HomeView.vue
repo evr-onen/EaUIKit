@@ -26,12 +26,14 @@
       <p>Card</p>
       <p>Menu</p>
     </div>
-    <!-- <Icon name="chavron-down" class="text-red-400  border" size="100px" /> -->
+    <EaIcons name="bars" class="text-red-100  border" size="100px" />
   </div>
 </template>
 
 
 <script setup lang="ts">
+import EaIcons from '@/components/ui/EaIcons.vue';
+
 // import Icon from '@/components/ui/inputs/index.vue';
 
 </script>

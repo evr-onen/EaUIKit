@@ -59,6 +59,21 @@ const router = createRouter({
       name: 'datepicker',
       component: () => import('@/views/form/datepicker.vue'),
     },
+    {
+      path: '/form/dateTimePicker',
+      name: 'dateTimePicker',
+      component: () => import('@/views/form/dateTimePicker.vue'),
+    },
+    {
+      path: '/file-management',
+      name: 'file-management',
+      component: () => import('@/views/file-management.vue'),
+    },
+    {
+      path: '/form/timePicker',
+      name: 'timePicker',
+      component: () => import('@/views/form/timepicker.vue'),
+    },
   ],
 })
 
