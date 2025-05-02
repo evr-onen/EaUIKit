@@ -1,4 +1,6 @@
 .ea-timepicker {
+    width: 100%;
+
     *:focus {
         @apply outline-none;
     }
@@ -15,7 +17,7 @@
 
     // input field
     .ea-timepicker__input {
-        @apply px-3 py-1 capitalize bg-white w-full cursor-pointer text-[.875rem];
+        @apply px-3 py-1 capitalize bg-white w-full cursor-pointer text-[.875rem] ;
     }
     
     .ea-timepicker__input.small {
@@ -32,8 +34,7 @@
     
     // Dropdowns wrapper
     .ea-timepicker__dropdowns {
-        @apply flex gap-2 p-2 bg-white rounded-lg shadow-md;
-        min-width: 200px;
+        @apply flex gap-2 p-2 bg-white rounded-lg shadow-md border border-gray-200;
         
         // Columns for hours and minutes
         .ea-timepicker__column {

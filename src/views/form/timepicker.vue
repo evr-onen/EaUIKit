@@ -1,7 +1,7 @@
 <template>
   <div class=" w-full flex flex-col justify-between items-center">
     <div class="flex gap-2" >
-      <div class="w-80 ">
+      <div class="w-40 ">
         <EaTimePicker label="Time Picker" v-model="date" />
       </div>
 

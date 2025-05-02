@@ -4,14 +4,13 @@
     <Dropdown class="ea-timepicker__container w-full h-8 border" >
       <template #default="{ openPanel }" >
         <input
-          class="ea-timepicker__input"
+          class="ea-timepicker__input rounded-lg"
           :class="size"
           ref="inputRef"
           type="text"
           v-model="displayValue"
           @focus="openPanel(true)"
           :placeholder="placeholder"
-          readonly
         >
         <ChavronDown class="ea-timepicker__icon size-6" />
       </template>
@@ -20,13 +19,14 @@
           <!-- Saat Kolonu -->
           <div class="ea-timepicker__column">
             <div class="ea-timepicker__column-header">Hours</div>
-            <div class="ea-timepicker__time-list">
+            <div class="ea-timepicker__time-list" ref="hoursListRef">
               <div
                 v-for="hour in hours"
                 :key="hour.value"
                 class="ea-timepicker__time-item"
                 :class="{'selected': selectedHour === hour.value}"
                 @click="selectHour(hour.value)"
+                :ref="(el) => { if (selectedHour === hour.value && el) selectedHourRef = el as HTMLElement }"
               >
                 {{ hour.display }}
               </div>
@@ -36,13 +36,14 @@
           <!-- Dakika Kolonu -->
           <div class="ea-timepicker__column">
             <div class="ea-timepicker__column-header">Minutes</div>
-            <div class="ea-timepicker__time-list">
+            <div class="ea-timepicker__time-list" ref="minutesListRef">
               <div
                 v-for="minute in minutes"
                 :key="minute.value"
                 class="ea-timepicker__time-item"
                 :class="{'selected': selectedMinute === minute.value}"
                 @click="selectMinute(minute.value)"
+                :ref="(el) => { if (selectedMinute === minute.value && el) selectedMinuteRef = el as HTMLElement }"
               >
                 {{ minute.display }}
               </div>
@@ -55,7 +56,7 @@
 </template>
 
 <script setup lang="ts">
-import { defineProps, defineModel, withDefaults, computed, ref, watch, onMounted } from 'vue';
+import { defineProps, defineModel, withDefaults, computed, ref, watch, onMounted, nextTick } from 'vue';
 import ChavronDown from '@/components/icons/chavron-down.vue';
 import Dropdown from '@/components/ui/inputs/dropdown/index.vue';
 import './timePicker.style.scss';
@@ -71,6 +72,10 @@ const modelValue = defineModel<Date | null>();
 const selectedHour = ref<number | null>(null);
 const selectedMinute = ref<number | null>(null);
 const inputRef = ref<HTMLInputElement | null>(null);
+const hoursListRef = ref<HTMLElement | null>(null);
+const minutesListRef = ref<HTMLElement | null>(null);
+const selectedHourRef = ref<HTMLElement | null>(null);
+const selectedMinuteRef = ref<HTMLElement | null>(null);
 
 // Gösterilebilir değer
 const displayValue = computed(() => {
@@ -111,12 +116,34 @@ const minutes = computed(() => {
 const selectHour = (hour: number) => {
   selectedHour.value = hour;
   updateModelValue();
+
+  // Seçilen saatin görünür olması için scroll pozisyonunu ayarla
+  nextTick(() => {
+    scrollToSelectedItem(hoursListRef.value, selectedHourRef.value);
+  });
 };
 
 // Dakika seçme fonksiyonu
 const selectMinute = (minute: number) => {
   selectedMinute.value = minute;
   updateModelValue();
+
+  // Seçilen dakikanın görünür olması için scroll pozisyonunu ayarla
+  nextTick(() => {
+    scrollToSelectedItem(minutesListRef.value, selectedMinuteRef.value);
+  });
+};
+
+// Seçilen öğeye scroll yapma fonksiyonu
+const scrollToSelectedItem = (containerEl: HTMLElement | null, selectedEl: HTMLElement | null) => {
+  if (!containerEl || !selectedEl) return;
+
+  const containerHeight = containerEl.clientHeight;
+  const itemHeight = selectedEl.clientHeight;
+  const itemTop = selectedEl.offsetTop;
+
+  // Seçili öğeyi ortaya konumlandır
+  containerEl.scrollTop = itemTop - (containerHeight / 2) + (itemHeight / 2);
 };
 
 // Model değerini güncelleme
@@ -133,33 +160,6 @@ const updateModelValue = () => {
 
   modelValue.value = date;
 };
-
-// Min/max zaman sınırlamaları için yardımcı fonksiyonlar
-// İleride saat ve dakika sınırlamaları ekleyeceksek kullanılabilir
-/*
-const parseTimeString = (timeStr: string | undefined): Date | null => {
-  if (!timeStr) return null;
-
-  const [hoursStr, minutesStr] = timeStr.split(':');
-  if (!hoursStr || !minutesStr) return null;
-
-  const hours = parseInt(hoursStr, 10);
-  const minutes = parseInt(minutesStr, 10);
-
-  if (isNaN(hours) || isNaN(minutes) || hours < 0 || hours > 23 || minutes < 0 || minutes > 59) {
-    return null;
-  }
-
-  const date = new Date();
-  date.setHours(hours, minutes, 0, 0);
-  return date;
-};
-*/
-
-// Bu değişkenler daha sonra kullanılmak üzere burada tanımlanmıştır
-// Eğer saat ve dakika sınırlamaları eklemek istersek kullanılabilir
-// const minTime = computed(() => parseTimeString(props.minTime));
-// const maxTime = computed(() => parseTimeString(props.maxTime));
 
 // Modelden değerleri başlatma
 const initializeFromModel = () => {
@@ -178,6 +178,12 @@ const initializeFromModel = () => {
 
   selectedHour.value = hours;
   selectedMinute.value = roundedMinutes >= 60 ? 0 : roundedMinutes;
+
+  // DOM güncellemesi sonrası seçilen değerlere scroll
+  nextTick(() => {
+    scrollToSelectedItem(hoursListRef.value, selectedHourRef.value);
+    scrollToSelectedItem(minutesListRef.value, selectedMinuteRef.value);
+  });
 };
 
 // Bileşen başlatıldığında değerleri ayarla
@@ -188,5 +194,13 @@ onMounted(() => {
 // Model değeri değişirse yeniden başlat
 watch(modelValue, () => {
   initializeFromModel();
+});
+
+// İzleyici ekle - dropdown paneli açıldığında seçili elemana scroll
+watch([hoursListRef, minutesListRef], () => {
+  nextTick(() => {
+    scrollToSelectedItem(hoursListRef.value, selectedHourRef.value);
+    scrollToSelectedItem(minutesListRef.value, selectedMinuteRef.value);
+  });
 });
 </script>
