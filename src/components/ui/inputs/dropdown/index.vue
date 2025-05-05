@@ -22,7 +22,8 @@ import type { IDropdownProps } from './dropdown.types';
 const props = withDefaults(defineProps<IDropdownProps>(), {
   panelHeight: 300,
   closeOnSelect: true,
-  optionLabel : 'name'
+  optionLabel : 'name',
+  widthType: 'full'
 })
 
 const openPanel = (isToggle: boolean = false) => isOpen.value = isToggle ? !isOpen.value : true

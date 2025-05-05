@@ -1,7 +1,7 @@
 <template>
-  <div class="ea-date-time-picker">
-    <EaDatePicker label="Date" v-model="date" class="ea-date-time-picker__date" />
-    <EaTimePicker label="Time" v-model="time" class="ea-date-time-picker__time" :minute-interval="minuteInterval" />
+  <div class="ea-date-time-picker relative ">
+    <EaDatePicker label="Date" v-model="date" class="ea-date-time-picker__date w-full pr-2"/>
+    <EaTimePicker label="Time" v-model="time" class="ea-date-time-picker__time w-1/3 absolute right-0" :minute-interval="minuteInterval" />
   </div>
 </template>
 
@@ -21,8 +21,7 @@ const time = ref<Date | null>(model.value ? new Date(model.value) : null);
 
 // DatePicker ve TimePicker'da değişiklik olduğunda model değerini güncelle
 watch([date, time], ([newDate, newTime]) => {
-  if (!newTime) return;
-
+  if (!newTime || !newDate) return;
   const combinedDate = new Date(
     newDate.getFullYear(),
     newDate.getMonth(),
@@ -35,12 +34,12 @@ watch([date, time], ([newDate, newTime]) => {
 });
 
 // Model değiştiğinde bileşen değerlerini güncelle
-watch(model, (newValue) => {
-  if (!newValue) return;
+// watch(model, (newValue) => {
+//   if (!newValue) return;
 
-  date.value = new Date(newValue);
-  time.value = new Date(newValue);
-});
+//   date.value = new Date(newValue);
+//   time.value = new Date(newValue);
+// });
 </script>
 
 <style scoped lang="scss">

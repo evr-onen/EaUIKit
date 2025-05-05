@@ -14,4 +14,5 @@ export interface IDatepickerProps {
    * Default: 'DD/MM/YYYY'
    */
   dateFormat?: string;
+  panelWidth?: number;
 }

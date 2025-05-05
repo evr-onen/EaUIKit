@@ -1,7 +1,7 @@
 <template>
   <div class="ea-datepicker">
     <small v-if="label" class="ea-datepicker__label capitalize text-textPrimary">{{ label }}</small>
-    <Dropdown class="w-full" typeCode="ea-datepicker" :panelHeight="390">
+    <Dropdown class="w-full" typeCode="ea-datepicker" :panelHeight="390" :panel-width="panelWidth">
       <template #default="{ openPanel }">
         <div
           class="flex justify-between items-center rounded-lg  relative"
@@ -23,7 +23,7 @@
       </template>
 
       <template #panelContent="{ closePanel }">
-        <div class="ea-datepicker__panel">
+        <div class="ea-datepicker__panel min-w-[300px]">
           <div class="ea-datepicker__header">
             <button @click="prevMonth" class="ea-datepicker__nav-btn">
               <ChavronDown class="size-5 rotate-90" />
@@ -41,7 +41,7 @@
             <span v-for="day in daysOfWeek" :key="day">{{ day }}</span>
           </div>
 
-          <div class="ea-datepicker__calendar">
+          <div class="ea-datepicker__calendar ">
             <div
               v-for="(day, index) in calendarDays"
               :key="index"
@@ -87,7 +87,8 @@ const props = withDefaults(defineProps<IDatepickerProps>(), {
   size: 'normal',
   placeholder: 'Select date',
   range: false,
-  dateFormat: 'DD/MM/YYYY'
+  dateFormat: 'DD/MM/YYYY',
+  panelWidth: 300
 });
 
 const modelValue = defineModel<Date | [Date, Date] | null>();

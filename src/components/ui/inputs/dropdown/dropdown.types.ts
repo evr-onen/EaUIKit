@@ -6,6 +6,7 @@ export interface IDropdownProps{
   typeCode         ?: string
   panelProc        ?: number
   resultCount      ?: number
+  widthType        ?: 'full' | 'fit'
 }
 
 type OptionsType = {
