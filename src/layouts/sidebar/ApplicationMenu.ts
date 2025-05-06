@@ -128,6 +128,15 @@ export const ApplicationContentMenu = () => {
             title: 'TimePicker'
           },
           visibility: true
+        },
+        {
+          label: 'File Management',
+          path: '/file-management',
+          icon: '',
+          meta: {
+            title: 'File Management'
+          },
+          visibility: true
         }
       ]
     },

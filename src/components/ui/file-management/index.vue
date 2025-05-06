@@ -2,22 +2,6 @@
   <div class="file-management">
     <div class="file-management__header">
       <h3 class="file-management__title">{{ title }}</h3>
-      <div class="file-management__actions">
-        <button
-          v-if="selectedFiles.length > 0"
-          class="px-2 py-1 bg-red-500 text-white rounded text-sm"
-          @click="removeSelected"
-        >
-          Seçilenleri Sil ({{ selectedFiles.length }})
-        </button>
-        <button
-          v-if="files.length > 0"
-          class="px-2 py-1 bg-blue-500 text-white rounded text-sm ml-2"
-          @click="fileInput.click()"
-        >
-          Dosya Ekle
-        </button>
-      </div>
     </div>
 
     <div
@@ -34,14 +18,14 @@
       <svg xmlns="http://www.w3.org/2000/svg" class="w-12 h-12 text-gray-400 mb-3" viewBox="0 0 24 24" fill="currentColor">
         <path fill-rule="evenodd" d="M11.47 2.47a.75.75 0 011.06 0l4.5 4.5a.75.75 0 01-1.06 1.06l-3.22-3.22V16.5a.75.75 0 01-1.5 0V4.81L8.03 8.03a.75.75 0 01-1.06-1.06l4.5-4.5zM3 15.75a.75.75 0 01.75.75v2.25a1.5 1.5 0 001.5 1.5h13.5a1.5 1.5 0 001.5-1.5V16.5a.75.75 0 011.5 0v2.25a3 3 0 01-3 3H5.25a3 3 0 01-3-3V16.5a.75.75 0 01.75-.75z" clip-rule="evenodd" />
       </svg>
-      <p class="text-gray-800 font-medium">Dosyaları buraya sürükleyin veya</p>
+      <p class="text-gray-800 font-medium">Drag and drop files here or</p>
       <button
         class="px-4 py-2 mt-2 bg-blue-500 text-white rounded-md"
         @click="fileInput.click()"
       >
-        Bilgisayardan Seçin
+        Select From Your Computer
       </button>
-      <p class="file-management__message" v-if="dragError">Yalnızca izin verilen dosya türleri: {{ allowedFileTypesDisplay }}</p>
+      <p class="file-management__message" v-if="dragError">Only allowed file types: {{ allowedFileTypesDisplay }}</p>
     </div>
 
     <div class="file-management__file-list" v-else>
@@ -53,25 +37,44 @@
         @remove="removeFile"
         @select="handleFileSelect"
       />
+      <!-- &:hover, &--active {
+      @apply bg-gray-50 border-blue-400;
+    } -->
+      <div
+        class="flex justify-center items-center file-management__file hover:bg-gray-50 hover:border-blue-400 active:!bg-gray-500 !active:border-blue-400"
+        @click="fileInput.click()"
+        @dragover.prevent="handleDragOver"
+        @dragleave.prevent="handleDragLeave"
+        @drop.prevent="handleDrop"
+      >
+        <EaIcons name="plus" class="text-5xl text-gray-500" />
+      </div>
     </div>
 
     <div class="file-management__footer" v-if="files.length > 0">
       <div class="file-management__footer-info">
-        {{ files.length }} dosya | Toplam boyut: {{ totalSizeFormatted }}
+        {{ files.length }} file{{ files.length > 1 ? 's' : '' }} | Total size: {{ totalSizeFormatted }}
       </div>
       <div class="file-management__actions">
         <button
           class="px-2 py-1 bg-gray-200 text-gray-700 rounded text-sm"
-          @click="selectAll"
-        >
-          Tümünü Seç
+          @click="() => selectAll()"
+          >
+          Select All
         </button>
         <button
           v-if="selectedFiles.length > 0"
           class="px-2 py-1 bg-gray-200 text-gray-700 rounded text-sm ml-2"
           @click="clearSelection"
         >
-          Seçimi Temizle
+          Clear Selection
+        </button>
+        <button
+          v-if="selectedFiles.length > 0"
+          class="px-2 py-1 bg-red-500 text-white rounded text-sm"
+          @click="removeSelected"
+        >
+          Remove Selected Files ({{ selectedFiles.length }})
         </button>
       </div>
     </div>
@@ -89,8 +92,10 @@
 
 <script setup lang="ts">
 import { ref, computed, onMounted } from 'vue';
-import { useFileManagement, FileData } from './useFileManagement';
+import { useFileManagement } from './useFileManagement';
+import type { FileData } from './useFileManagement';
 import FileItem from './FileItem.vue';
+import EaIcons from '../EaIcons.vue';
 
 const props = withDefaults(defineProps<{
   modelValue?: FileData[]
@@ -101,7 +106,7 @@ const props = withDefaults(defineProps<{
 }>(), {
   modelValue: () => [],
   title: 'Dosya Yönetimi',
-  allowedFileTypes: () => ['image/*', 'application/pdf'],
+  allowedFileTypes: () => ['.pdf', '.doc', '.docx', '.xls', '.xlsx', '.ppt', '.pptx'],
   maxFileSize: 10,
   multiple: true
 });
@@ -141,7 +146,7 @@ const totalSizeFormatted = computed(() => {
 
 const allowedFileTypesDisplay = computed(() => {
   return props.allowedFileTypes
-    .map(type => type.replace('*', ''))
+    .map(type => type.startsWith('.') ? type.substring(1).toUpperCase() : type.toUpperCase())
     .join(', ');
 });
 
@@ -200,14 +205,33 @@ const handleFileSelect = (id: string) => {
   }
 };
 
-const isFileTypeAllowed = (fileType: string): boolean => {
-  return props.allowedFileTypes.some(allowedType => {
-    if (allowedType.includes('*')) {
-      const prefix = allowedType.split('*')[0];
-      return fileType.startsWith(prefix);
+const isFileTypeAllowed = (fileType: string, fileName?: string): boolean => {
+  // Eğer MIME tipi varsa
+  if (fileType) {
+    // Bilinen MIME tiplerini uzantılara eşleştir
+    const mimeToExt: Record<string, string[]> = {
+      'application/pdf': ['.pdf'],
+      'application/msword': ['.doc'],
+      'application/vnd.openxmlformats-officedocument.wordprocessingml.document': ['.docx'],
+      'application/vnd.ms-excel': ['.xls'],
+      'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet': ['.xlsx'],
+      'application/vnd.ms-powerpoint': ['.ppt'],
+      'application/vnd.openxmlformats-officedocument.presentationml.presentation': ['.pptx']
+    };
+
+    // MIME tipine karşılık gelen uzantılar
+    const extensions = mimeToExt[fileType];
+    if (extensions) {
+      return extensions.some(ext => props.allowedFileTypes.includes(ext));
     }
-    return allowedType === fileType;
-  });
+  }
+
+  // Dosya adını kontrol et (MIME tipi yoksa veya tanımlanmamışsa)
+  if (fileName) {
+    return props.allowedFileTypes.some(ext => fileName.toLowerCase().endsWith(ext));
+  }
+
+  return false;
 };
 
 const isFileSizeAllowed = (fileSize: number): boolean => {
@@ -217,8 +241,8 @@ const isFileSizeAllowed = (fileSize: number): boolean => {
 const processFiles = (newFiles: File[]) => {
   // Filter for allowed types and sizes
   const validFiles = newFiles.filter(file => {
-    if (!isFileTypeAllowed(file.type)) {
-      emits('error', `Dosya türü kabul edilmiyor: ${file.type}`);
+    if (!isFileTypeAllowed(file.type, file.name)) {
+      emits('error', `Dosya türü kabul edilmiyor: ${file.name}`);
       return false;
     }
 

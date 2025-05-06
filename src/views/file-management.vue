@@ -1,6 +1,10 @@
 <template>
   <div>
-    <FileManagement />
+    <FileManagement
+      title="File Management x"
+      :allowedFileTypes="['pdf','doc','docx','xls','xlsx','ppt','pptx', 'png']"
+      :maxFileSize="1"
+      :multiple="true"/>
   </div>
 </template>
 

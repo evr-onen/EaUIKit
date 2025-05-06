@@ -35,14 +35,14 @@
   }
 
   &__file {
-    @apply relative border border-gray-200 rounded-lg p-2 flex flex-col transition-all;
+    @apply relative border border-gray-200 ring-2 ring-transparent rounded-lg p-2 flex flex-col transition-all;
     
     &:hover {
       @apply shadow-md;
     }
 
     &--selected {
-      @apply ring-2 ring-blue-500 bg-blue-50;
+      @apply  ring-blue-500 bg-blue-50;
     }
   }
 

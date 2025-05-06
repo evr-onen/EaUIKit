@@ -15,7 +15,7 @@
       </span>
       <ChevronDownIcon v-if="item.children.length > 0" class="duration-500" :class="{ 'rotate-180': isOpen }" />
       </div>
-    <div class="max-h-[0px] overflow-hidden duration-500" :class="{ 'max-h-[500px]': isOpen }" >
+    <div class="max-h-[0px] overflow-hidden duration-500" :class="{ 'max-h-[1550px]': isOpen }" >
       <NavLinkItem v-for="child in item.children" class="pl-7 text-nowrap" :key="child.label" :item="child" linkType="child"/>
     </div>
   </div>
