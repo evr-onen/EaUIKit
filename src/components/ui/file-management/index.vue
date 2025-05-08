@@ -25,7 +25,7 @@
       >
         Select From Your Computer
       </button>
-      <p class="file-management__message" v-if="dragError">Only allowed file types: {{ allowedFileTypesDisplay }}</p>
+      <p v-if="dragError" class="file-management__message" > {{errorMessage}}</p>
     </div>
 
     <div class="file-management__file-list" v-else>
@@ -34,14 +34,11 @@
         :key="file.id"
         :file="file"
         @toggle-select="toggleSelection"
-        @remove="removeFile"
+        @remove="handleRemoveFile"
         @select="handleFileSelect"
       />
-      <!-- &:hover, &--active {
-      @apply bg-gray-50 border-blue-400;
-    } -->
       <div
-        class="flex justify-center items-center file-management__file hover:bg-gray-50 hover:border-blue-400 active:!bg-gray-500 !active:border-blue-400"
+        class="file-management__file"
         @click="fileInput.click()"
         @dragover.prevent="handleDragOver"
         @dragleave.prevent="handleDragLeave"
@@ -54,6 +51,9 @@
     <div class="file-management__footer" v-if="files.length > 0">
       <div class="file-management__footer-info">
         {{ files.length }} file{{ files.length > 1 ? 's' : '' }} | Total size: {{ totalSizeFormatted }}
+      </div>
+      <div class="file-management__footer-info !text-red-500 text-sm font-bold" v-if="dragError">
+        {{ errorMessage }}
       </div>
       <div class="file-management__actions">
         <button
@@ -91,28 +91,27 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted } from 'vue';
+import { ref, computed, onMounted, watch } from 'vue';
 import { useFileManagement } from './useFileManagement';
 import type { FileData } from './useFileManagement';
 import FileItem from './FileItem.vue';
 import EaIcons from '../EaIcons.vue';
 
 const props = withDefaults(defineProps<{
-  modelValue?: FileData[]
   title?: string
   allowedFileTypes?: string[]
   maxFileSize?: number // in MB
   multiple?: boolean
 }>(), {
-  modelValue: () => [],
   title: 'Dosya Yönetimi',
-  allowedFileTypes: () => ['.pdf', '.doc', '.docx', '.xls', '.xlsx', '.ppt', '.pptx'],
+  allowedFileTypes: () => ['pdf', 'doc', 'docx', 'xls', 'xlsx', 'ppt', 'pptx'],
   maxFileSize: 10,
   multiple: true
 });
 
+const modelValue = defineModel<FileData[]>('modelValue', { default: () => [] });
+
 const emits = defineEmits<{
-  'update:modelValue': [files: FileData[]]
   'files-added': [files: FileData[]]
   'file-removed': [file: FileData]
   'error': [message: string]
@@ -135,6 +134,7 @@ const fileInputRef = ref<HTMLInputElement | null>(null);
 const fileInput = computed(() => fileInputRef.value!);
 const isDragging = ref(false);
 const dragError = ref(false);
+const errorMessage = ref('');
 
 const totalSize = computed(() => {
   return files.value.reduce((total, file) => total + file.size, 0);
@@ -144,15 +144,10 @@ const totalSizeFormatted = computed(() => {
   return formatFileSize(totalSize.value);
 });
 
-const allowedFileTypesDisplay = computed(() => {
-  return props.allowedFileTypes
-    .map(type => type.startsWith('.') ? type.substring(1).toUpperCase() : type.toUpperCase())
-    .join(', ');
-});
-
 const handleDragOver = (event: DragEvent) => {
   isDragging.value = true;
   dragError.value = false;
+  errorMessage.value = '';
 
   // Check if all files are allowed
   if (event.dataTransfer?.items) {
@@ -162,6 +157,7 @@ const handleDragOver = (event: DragEvent) => {
         dragError.value = true;
         break;
       }
+
     }
   }
 };
@@ -172,6 +168,14 @@ const handleDragLeave = () => {
 };
 
 const handleDrop = (event: DragEvent) => {
+  if(event.dataTransfer?.files && Array.from(event.dataTransfer.files).some(file => !isFileTypeAllowed(file.type))){
+    dragError.value = true;
+    return false
+  }
+  if(event.dataTransfer?.files && Array.from(event.dataTransfer.files).some(file => !isFileSizeAllowed(file.size))){
+    dragError.value = true;
+    return false
+  }
   isDragging.value = false;
   dragError.value = false;
 
@@ -182,6 +186,7 @@ const handleDrop = (event: DragEvent) => {
 
 const handleFileChange = (event: Event) => {
   const target = event.target as HTMLInputElement;
+
   if (target.files) {
     processFiles(Array.from(target.files));
     // Clear the file input so the same file can be selected again
@@ -197,60 +202,42 @@ const handleFileSelect = (id: string) => {
       toggleSelection(id);
     } else {
       // If not holding shift, clear selection first
-      if (!event || !(event as KeyboardEvent).shiftKey) {
-        clearSelection();
-      }
+      // if (!event || !(event as KeyboardEvent).shiftKey) {
+      //   clearSelection();
+      // }
       selectFile(id);
     }
   }
 };
 
-const isFileTypeAllowed = (fileType: string, fileName?: string): boolean => {
-  // Eğer MIME tipi varsa
-  if (fileType) {
-    // Bilinen MIME tiplerini uzantılara eşleştir
-    const mimeToExt: Record<string, string[]> = {
-      'application/pdf': ['.pdf'],
-      'application/msword': ['.doc'],
-      'application/vnd.openxmlformats-officedocument.wordprocessingml.document': ['.docx'],
-      'application/vnd.ms-excel': ['.xls'],
-      'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet': ['.xlsx'],
-      'application/vnd.ms-powerpoint': ['.ppt'],
-      'application/vnd.openxmlformats-officedocument.presentationml.presentation': ['.pptx']
-    };
-
-    // MIME tipine karşılık gelen uzantılar
-    const extensions = mimeToExt[fileType];
-    if (extensions) {
-      return extensions.some(ext => props.allowedFileTypes.includes(ext));
-    }
+const isFileTypeAllowed = (fileType: string): boolean => {
+  if(props.allowedFileTypes.some(ext => fileType.endsWith(ext))){
+    return true
   }
-
-  // Dosya adını kontrol et (MIME tipi yoksa veya tanımlanmamışsa)
-  if (fileName) {
-    return props.allowedFileTypes.some(ext => fileName.toLowerCase().endsWith(ext));
-  }
-
-  return false;
+  errorMessage.value = `The file type is not allowed: ${fileType}`;
+  return false
 };
 
 const isFileSizeAllowed = (fileSize: number): boolean => {
-  return fileSize <= props.maxFileSize * 1024 * 1024; // Convert MB to bytes
+  if(fileSize <= props.maxFileSize * 1024 * 1024){
+    return true
+  }
+  errorMessage.value = `The file size is too large: ${formatFileSize(fileSize)}`;
+  return false
 };
 
 const processFiles = (newFiles: File[]) => {
   // Filter for allowed types and sizes
   const validFiles = newFiles.filter(file => {
-    if (!isFileTypeAllowed(file.type, file.name)) {
-      emits('error', `Dosya türü kabul edilmiyor: ${file.name}`);
+    if (!isFileTypeAllowed(file.type)) {
+      emits('error', `The file type is not allowed: ${file.name}`);
       return false;
     }
 
     if (!isFileSizeAllowed(file.size)) {
-      emits('error', `Dosya boyutu çok büyük: ${formatFileSize(file.size)}`);
+      emits('error', `The file size is too large: ${formatFileSize(file.size)}`);
       return false;
     }
-
     return true;
   });
 
@@ -270,18 +257,29 @@ const processFiles = (newFiles: File[]) => {
     const addedFiles = addFiles(validFiles);
     emits('files-added', addedFiles);
   }
-
   // Update model value
-  emits('update:modelValue', [...files.value]);
+  modelValue.value = [...files.value];
 };
 
 // Initialize with provided model value if any
 onMounted(() => {
-  if (props.modelValue && props.modelValue.length > 0) {
+  if (modelValue.value && modelValue.value.length > 0) {
     // We only use the IDs from the model as our files are managed internally
-    files.value = [...props.modelValue];
+    files.value = [...modelValue.value];
   }
 });
+
+watch(files, (newVal, oldVal) => {
+  if(newVal.length <  oldVal.length){
+    modelValue.value = [...newVal];
+  }
+}, { deep: true });
+
+const handleRemoveFile = (id: string) => {
+  removeFile(id);
+  // removeFile işlemi sonrası model güncellemesi
+  modelValue.value = [...files.value];
+};
 </script>
 
 <style scoped lang="scss">

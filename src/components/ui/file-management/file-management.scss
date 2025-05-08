@@ -35,10 +35,10 @@
   }
 
   &__file {
-    @apply relative border border-gray-200 ring-2 ring-transparent rounded-lg p-2 flex flex-col transition-all;
+    @apply relative border border-gray-200 ring-2 ring-transparent rounded-lg p-2 flex flex-col transition-all justify-center items-center;
     
     &:hover {
-      @apply shadow-md;
+      @apply shadow-md bg-gray-50 border-blue-400;
     }
 
     &--selected {

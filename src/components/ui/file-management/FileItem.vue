@@ -71,6 +71,7 @@ import AudioIcon from './icons/audioIcon.vue';
 import VideoIcon from './icons/videoIcon.vue';
 import DocumentIcon from './icons/documentIcon.vue';
 import FileIcon from './icons/fileIcon.vue';
+import PdfIcon from './icons/pdfIcon.vue';
 
 const props = defineProps<{
   file: FileData
