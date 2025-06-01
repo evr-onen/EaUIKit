@@ -12,7 +12,7 @@
 </template>
 
 <script setup lang="ts">
-import EAFileUploader from '@/components/ui/inputs/EaUploadImage/EaUploadImage.vue';
+import EAFileUploader from '@/components/ui/form/EaUploadImage/EaUploadImage.vue';
 import { ref } from 'vue';
 
 interface FileData {

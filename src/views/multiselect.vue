@@ -2,13 +2,13 @@
   <div class="h-full w-full flex flex-col justify-between items-center">
     <div class="flex gap-2" >
       <div class="w-80 ">
-        <EAMultiselect placeholder="Seciniz" v-model="dropdownValue" :options="optionsDummy" label="Example Label" size="large" :multiselect="true"/>
+        <EaMultiselect placeholder="Seciniz" v-model="dropdownValue" :options="optionsDummy" label="Example Label" size="large" :multiselect="true"/>
       </div>
       <div class="w-80">
-        <EAMultiselect placeholder="Seciniz" v-model="dropdownValue" :options="optionsDummy" label="Example Label" />
+        <EaMultiselect placeholder="Seciniz" v-model="dropdownValue" :options="optionsDummy" label="Example Label" />
       </div>
       <div class="w-80">
-        <EAMultiselect placeholder="Seciniz" v-model="dropdownValue" :options="optionsDummy" label="Example Label" size="small" />
+        <EaMultiselect placeholder="Seciniz" v-model="dropdownValue" :options="optionsDummy" label="Example Label" size="small" />
       </div>
     </div>
 
@@ -19,7 +19,7 @@
 
 <script setup lang="ts">
 
-import EAMultiselect from '@/components/ui/inputs/EAMultiselect/EAMultiselect.vue';
+import EaMultiselect from '@/components/ui/form/EaMultiselect/EaMultiselect.vue';
 import { ref } from 'vue';
 
 

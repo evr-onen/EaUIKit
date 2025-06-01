@@ -40,7 +40,7 @@
 
 <script setup lang="ts">
 import IconCross from '@/components/icons/icon-cross.vue';
-import EaButton from '@/components/ui/inputs/EaButton/EaButton.vue';
+import EaButton from '@/components/ui/form/EaButton/EaButton.vue';
 </script>
 
 <style scoped></style>

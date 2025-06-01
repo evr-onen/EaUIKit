@@ -2,13 +2,13 @@
   <div class="w-full flex flex-col justify-between items-center ">
     <div class="flex gap-2" >
       <div class="w-80 ">
-        <EaSelect placeholder="Seciniz" v-model="dropdownValue" :options="optionsDummy" label="Example Label" size="large" :multiselect="true"/>
+        <EaSelect placeholder="Seciniz" v-model="singleValue" :options="optionsDummy" label="Example Label" size="large"/>
       </div>
       <div class="w-80">
-        <EaSelect placeholder="Seciniz" v-model="dropdownValue" :options="optionsDummy" label="Example Label" />
+        <EaSelect placeholder="Seciniz" v-model="singleValue" :options="optionsDummy" label="Example Label" />
       </div>
       <div class="w-80">
-        <EaSelect placeholder="Seciniz" v-model="dropdownValue" :options="optionsDummy" label="Example Label" size="small" />
+        <EaSelect placeholder="Seciniz" v-model="singleValue" :options="optionsDummy" label="Example Label" size="small" />
       </div>
     </div>
 
@@ -19,11 +19,10 @@
 
 <script setup lang="ts">
 
-import EaSelect from '@/components/ui/inputs/EaSelect/EaSelect.vue';
+import EaSelect from '@/components/ui/form/EaSelect/EaSelect.vue';
 import { ref } from 'vue';
 
-
-const dropdownValue = ref([])
+const singleValue = ref(null)
 
 // watch([dropdownValue, dropdownValue2, dropdownValue3], () => {
 //   console.log(dropdownValue.value)
@@ -35,7 +34,7 @@ const optionsDummy = [
   {
     id: 1,
     name: 'Evren',
-    family: [{ name: 'asdasd' }, { name: 'asdasd' }, { name: 'asdasd' }, { name: 'asdasd' },]
+    family: [{ name: 'asdasd1' }, { name: 'asdasd2' }, { name: 'asdasd3' }, { name: 'asdasd4' },]
   },
   {
     id: 2,

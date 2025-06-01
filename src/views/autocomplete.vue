@@ -27,7 +27,7 @@
 
 <script setup lang="ts">
 
-import EaAutocomplete from '@/components/ui/inputs/EaAutocomplete/EaAutocomplete.vue';
+import EaAutocomplete from '@/components/ui/form/EaAutocomplete/EaAutocomplete.vue';
 import { ref } from 'vue';
 
 

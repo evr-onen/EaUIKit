@@ -1,4 +1,4 @@
-<template>
+<!-- <template>
   <div class="container mx-auto p-4 max-w-5xl">
     <h1 class="text-2xl font-bold mb-6">Dosya Yönetim Paneli Örneği</h1>
 
@@ -80,4 +80,4 @@ const handleError = (message: string) => {
     errorMessage.value = null;
   }, 3000);
 };
-</script>
+</script> -->

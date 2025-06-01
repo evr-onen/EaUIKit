@@ -18,7 +18,7 @@
         :alt="file.name"
       />
       <div v-else-if="file.type === 'application/pdf' && file.url" class="bg-red-50 w-full h-full flex items-center justify-center">
-        <PdfIcon />
+        <PdfIcon class="w-10 h-10" />
       </div>
       <div v-else class="w-full h-full flex items-center justify-center">
         <template v-if="fileIcon === 'file'">
@@ -73,6 +73,7 @@ import DocumentIcon from './icons/documentIcon.vue';
 import FileIcon from './icons/fileIcon.vue';
 import PdfIcon from './icons/pdfIcon.vue';
 
+// Initialize
 const props = defineProps<{
   file: FileData
 }>();
@@ -83,6 +84,8 @@ const emits = defineEmits<{
   'select': [id: string]
 }>();
 
+
+// Computed Propertise
 const fileIcon = computed(() => {
   if (props.file.type.startsWith('image/')) {
     return 'image';
@@ -103,6 +106,7 @@ const fileIcon = computed(() => {
   }
 });
 
+// Handlers
 const formatFileSize = (bytes: number) => {
   if (bytes === 0) return '0 Bytes';
 
@@ -114,7 +118,6 @@ const formatFileSize = (bytes: number) => {
 };
 
 const onClick = (event: MouseEvent) => {
-  // Only trigger select if not clicking on actions or checkbox
   const target = event.target as HTMLElement;
   if (!target.closest('.file-management__file-actions') && !target.closest('.file-management__checkbox')) {
     emits('select', props.file.id);

@@ -12,9 +12,8 @@ export const ApplicationContentMenu = () => {
         },
         visibility: true
     },
-
     {
-      label: 'Form Inputs',
+      label: 'Form',
       icon: 'inputs',
       meta: {
         title: 'Form Inputs'
@@ -27,15 +26,6 @@ export const ApplicationContentMenu = () => {
           icon: '',
           meta: {
             title: 'Button'
-          },
-          visibility: true
-        },
-        {
-          label: 'Dropdown',
-          path: '/form/dropdown',
-          icon: '',
-          meta: {
-            title: 'Dropdown'
           },
           visibility: true
         },
@@ -129,15 +119,26 @@ export const ApplicationContentMenu = () => {
           },
           visibility: true
         },
+      ]
+    },
+    {
+      label: 'Panels',
+      icon: 'inputs',
+      meta: {
+        title: 'Form Inputs'
+      },
+      visibility: true,
+      children: [
         {
-          label: 'File Management',
-          path: '/file-management',
+          label: 'Example',
+          path: '/form/button',
           icon: '',
           meta: {
-            title: 'File Management'
+            title: 'Button'
           },
           visibility: true
-        }
+        },
+
       ]
     },
 

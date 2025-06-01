@@ -97,13 +97,15 @@ import type { FileData } from './useFileManagement';
 import FileItem from './FileItem.vue';
 import EaIcons from '../EaIcons.vue';
 
+
+// Initialize
 const props = withDefaults(defineProps<{
   title?: string
   allowedFileTypes?: string[]
   maxFileSize?: number // in MB
   multiple?: boolean
 }>(), {
-  title: 'Dosya Yönetimi',
+  title: '',
   allowedFileTypes: () => ['pdf', 'doc', 'docx', 'xls', 'xlsx', 'ppt', 'pptx'],
   maxFileSize: 10,
   multiple: true
@@ -130,12 +132,15 @@ const {
   formatFileSize
 } = useFileManagement();
 
+// Vars
 const fileInputRef = ref<HTMLInputElement | null>(null);
 const fileInput = computed(() => fileInputRef.value!);
 const isDragging = ref(false);
 const dragError = ref(false);
 const errorMessage = ref('');
 
+
+// Computed Propertise
 const totalSize = computed(() => {
   return files.value.reduce((total, file) => total + file.size, 0);
 });
@@ -144,6 +149,7 @@ const totalSizeFormatted = computed(() => {
   return formatFileSize(totalSize.value);
 });
 
+// Handlers
 const handleDragOver = (event: DragEvent) => {
   isDragging.value = true;
   dragError.value = false;
@@ -189,22 +195,16 @@ const handleFileChange = (event: Event) => {
 
   if (target.files) {
     processFiles(Array.from(target.files));
-    // Clear the file input so the same file can be selected again
     target.value = '';
   }
 };
 
 const handleFileSelect = (id: string) => {
-  // Toggle selection if already selected, otherwise select only this file
   const file = files.value.find(f => f.id === id);
   if (file) {
     if (file.isSelected) {
       toggleSelection(id);
     } else {
-      // If not holding shift, clear selection first
-      // if (!event || !(event as KeyboardEvent).shiftKey) {
-      //   clearSelection();
-      // }
       selectFile(id);
     }
   }
@@ -227,7 +227,6 @@ const isFileSizeAllowed = (fileSize: number): boolean => {
 };
 
 const processFiles = (newFiles: File[]) => {
-  // Filter for allowed types and sizes
   const validFiles = newFiles.filter(file => {
     if (!isFileTypeAllowed(file.type)) {
       emits('error', `The file type is not allowed: ${file.name}`);
@@ -242,10 +241,8 @@ const processFiles = (newFiles: File[]) => {
   });
 
   if (!props.multiple && files.value.length + validFiles.length > 1) {
-    // If multiple is false, only use the last valid file
     const lastFile = validFiles[validFiles.length - 1];
     if (lastFile) {
-      // Remove existing files
       while (files.value.length > 0) {
         removeFile(files.value[0].id);
       }
@@ -253,18 +250,16 @@ const processFiles = (newFiles: File[]) => {
       emits('files-added', addedFiles);
     }
   } else {
-    // Add all valid files
     const addedFiles = addFiles(validFiles);
     emits('files-added', addedFiles);
   }
-  // Update model value
   modelValue.value = [...files.value];
 };
 
-// Initialize with provided model value if any
+
+// Lifecycle Hooks
 onMounted(() => {
   if (modelValue.value && modelValue.value.length > 0) {
-    // We only use the IDs from the model as our files are managed internally
     files.value = [...modelValue.value];
   }
 });
@@ -277,7 +272,6 @@ watch(files, (newVal, oldVal) => {
 
 const handleRemoveFile = (id: string) => {
   removeFile(id);
-  // removeFile işlemi sonrası model güncellemesi
   modelValue.value = [...files.value];
 };
 </script>

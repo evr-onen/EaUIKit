@@ -1,6 +1,7 @@
 import { ref, computed } from 'vue';
 
 export interface FileData {
+  
   id: string;
   file: File | null;
   name: string;
