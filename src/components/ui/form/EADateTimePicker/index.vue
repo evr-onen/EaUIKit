@@ -6,7 +6,7 @@
 </template>
 
 <script setup lang="ts">
-import EaDatePicker from '@/components/ui/form/EADatePicker/index.vue';
+import EaDatePicker from '@/components/ui/form/EADatePicker/datePicker.vue';
 import EaTimePicker from '@/components/ui/form/EATimePicker/index.vue';
 import { ref, watch, defineProps, withDefaults } from 'vue';
 import type { IDateTimePickerProps } from './dateTimePicker.types';
@@ -19,7 +19,6 @@ const model = defineModel<Date>({ required: true });
 const date = ref<Date>(new Date(model.value));
 const time = ref<Date | null>(model.value ? new Date(model.value) : null);
 
-// DatePicker ve TimePicker'da değişiklik olduğunda model değerini güncelle
 watch([date, time], ([newDate, newTime]) => {
   if (!newTime || !newDate) return;
   const combinedDate = new Date(

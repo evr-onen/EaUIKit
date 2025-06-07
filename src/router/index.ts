@@ -9,11 +9,11 @@ const router = createRouter({
       name: 'home',
       component: HomeView,
     },
-    {
-      path: '/form/dropdown',
-      name: 'about',
-      component: () => import('@/views/dropdown.vue'),
-    },
+    // {
+    //   path: '/form/dropdown',
+    //   name: 'about',
+    //   component: () => import('@/views/dropdown.vue'),
+    // },
     {
       path: '/form/select',
       name: 'select',
