@@ -6,8 +6,8 @@
 </template>
 
 <script setup lang="ts">
-import EaDatePicker from '@/components/ui/form/EADatePicker/datePicker.vue';
-import EaTimePicker from '@/components/ui/form/EATimePicker/index.vue';
+import EaDatePicker from '@/components/ui/form/EaDatePicker/datePicker.vue';
+import EaTimePicker from '@/components/ui/form/EaTimePicker/index.vue';
 import { ref, watch, defineProps, withDefaults } from 'vue';
 import type { IDateTimePickerProps } from './dateTimePicker.types';
 

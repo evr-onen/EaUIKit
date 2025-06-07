@@ -130,15 +130,126 @@ export const ApplicationContentMenu = () => {
       visibility: true,
       children: [
         {
-          label: 'Example',
-          path: '/form/button',
+          label: 'Accordion',
+          path: '/panels/accordion',
           icon: '',
           meta: {
-            title: 'Button'
+            title: 'Accordion'
+          },
+          visibility: true
+        },
+        {
+          label: 'Card',
+          path: '/panels/card',
+          icon: '',
+          meta: {
+            title: 'Card'
+          },
+          visibility: true
+        },
+        {
+          label: 'Tabs',
+          path: '/panels/tabs',
+          icon: '',
+          meta: {
+            title: 'Tabs'
           },
           visibility: true
         },
 
+      ]
+    },
+    {
+      label: 'Messages',
+      icon: 'inputs',
+      meta: {
+        title: 'Messages'
+      },
+      visibility: true,
+      children: [
+        {
+          label: 'Message',
+          path: '/messages/message',
+          icon: '',
+          meta: {
+            title: 'Message'
+          },
+          visibility: true
+        },
+        {
+          label: 'Toast',
+          path: '/messages/toast',
+          icon: '',
+          meta: {
+            title: 'Toast'
+          },
+          visibility: true
+        },
+
+      ]
+    },
+    {
+      label: 'Overlay',
+      icon: 'inputs',
+      meta: {
+        title: 'Form Inputs'
+      },
+      visibility: true,
+      children: [
+        {
+          label: 'Dialog',
+          path: '/overlay/dialog',
+          icon: '',
+          meta: {
+            title: 'Dialog'
+          },
+          visibility: true
+        },
+        {
+          label: 'Drawer',
+          path: '/overlay/drawer',
+          icon: '',
+          meta: {
+            title: 'Drawer'
+          },
+          visibility: true
+        },
+        {
+          label: 'Popover',
+          path: '/overlay/popover',
+          icon: '',
+          meta: {
+            title: 'Popover'
+          },
+          visibility: true
+        },
+        {
+          label: 'Tooltip',
+          path: '/overlay/tooltip',
+          icon: '',
+          meta: {
+            title: 'Tooltip'
+          },
+          visibility: true
+        },
+        {
+          label: 'Modal',
+          path: '/overlay/modal',
+          icon: '',
+          meta: {
+            title: 'Modal'
+          },
+          visibility: true
+        },
+        {
+          label: 'Confirm Popup',
+          path: '/overlay/confirm-popup',
+          icon: '',
+          meta: {
+            title: 'Confirm Popup'
+          },
+          visibility: true
+        },
       ]
     },
 

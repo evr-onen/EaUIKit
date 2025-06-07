@@ -10,7 +10,7 @@
 </template>
 
 <script setup lang="ts">
-import EARadioButtons from '@/components/ui/form/EARadioButtons/EARadioButtons.vue';
+import EARadioButtons from '@/components/ui/form/EaRadioButtons/EARadioButtons.vue';
 import { ref } from 'vue';
 
 const options = [

@@ -74,6 +74,68 @@ const router = createRouter({
       name: 'timePicker',
       component: () => import('@/views/form/timepicker.vue'),
     },
+    {
+      path: '/messages/message',
+      name: 'Message',
+      component: () => import('@/views/message/message.vue'),
+    },
+    {
+      path: '/messages/toast',
+      name: 'Toast',
+      component: () => import('@/views/message/toast.vue'),
+    },
+    {
+      path: '/overlay/modal',
+      name: 'Confirm Dialog',
+      component: () => import('@/views/overlay/modal.vue'),
+    },
+    {
+      path: '/overlay/confirm-popup',
+      name: 'Confirm Popup',
+      component: () => import('@/views/overlay/confirmPopup.vue'),
+    },
+    {
+      path: '/overlay/dialog',
+      name: 'Dialog',
+      component: () => import('@/views/overlay/dialog.vue'),
+    },
+    {
+      path: '/overlay/drawer',
+      name: 'Drawer',
+      component: () => import('@/views/overlay/drawer.vue'),
+    },
+    {
+      path: '/overlay/popover',
+      name: 'Popover',
+      component: () => import('@/views/overlay/popover.vue'),
+    },
+    {
+      path: '/overlay/tooltip',
+      name: 'Tooltip',
+      component: () => import('@/views/overlay/tooltip.vue'),
+    },
+    {
+      path: '/panels/accordion',
+      name: 'Accordion',
+      component: () => import('@/views/panels/accordion.vue'),
+    },
+    {
+      path: '/panels/card',
+      name: 'Card',
+      component: () => import('@/views/panels/card.vue'),
+    },
+    {
+      path: '/panels/tabs',
+      name: 'Tabs',
+      component: () => import('@/views/panels/tabs.vue'),
+    },
+    {
+      path: '/directives/scroll-on-reveal',
+      name: 'Scroll On Reveal',
+      component: () => import('@/views/directives/scrollOnReveal.vue'),
+    },
+
+
   ],
 })
 

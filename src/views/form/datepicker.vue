@@ -14,7 +14,7 @@
 </template>
 
 <script setup lang="ts">
-import EaDatePicker from '@/components/ui/form/EADatePicker/datePicker.vue';
+import EaDatePicker from '@/components/ui/form/EaDatePicker/datePicker.vue';
 import { ref } from 'vue';
 
 const date = ref<Date | null>(null);

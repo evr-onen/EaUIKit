@@ -20,7 +20,7 @@
 </template>
 
 <script setup lang="ts">
-import EACheckbox from '@/components/ui/form/EACheckbox/EaCheckbox.vue';
+import EACheckbox from '@/components/ui/form/EaCheckbox/EaCheckbox.vue';
 import { ref } from 'vue';
 
 const check1 = ref(false);
