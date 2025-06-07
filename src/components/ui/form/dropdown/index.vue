@@ -3,7 +3,7 @@
     <div ref="slotRef" class="" >
       <slot name="default" :openPanel="openPanel" />
     </div>
-    <div v-if="isOpen && (resultCount !==0)" ref="dropdownPanelRef" class="dropdownPanelWrapper scrollbar-custom flex flex-col"  :class="{'justify-end':isPanelOverflowing }"
+    <div v-if="isOpen && (resultCount !==0)" ref="dropdownPanelRef" class="dropdownPanelWrapper fixed scrollbar-custom flex flex-col"  :class="{'justify-end':isPanelOverflowing }"
       :style="{ top: `${panelPosition.y}px`, left: `${panelPosition.x}px`, width: `${panelWidth ?? panelPosition.width}px`, height: `${panelHeight}px` }"
       @click.self="handleOutsideClick">
       <div >

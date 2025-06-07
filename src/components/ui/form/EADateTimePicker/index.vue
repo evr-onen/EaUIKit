@@ -12,7 +12,7 @@ import { ref, watch, defineProps, withDefaults } from 'vue';
 import type { IDateTimePickerProps } from './dateTimePicker.types';
 
 withDefaults(defineProps<IDateTimePickerProps>(), {
-  minuteInterval: 5
+  minuteInterval: 5,
 });
 
 const model = defineModel<Date>({ required: true });
@@ -43,15 +43,16 @@ watch([date, time], ([newDate, newTime]) => {
 
 <style scoped lang="scss">
 .ea-date-time-picker {
-  @apply flex gap-2 w-full;
+  @apply flex gap-2 min-w-80;
+  width: 100%;
 }
 
 .ea-date-time-picker__date {
-  @apply w-3/5;
+  @apply  w-[calc(100%-7rem)];
 }
 
 .ea-date-time-picker__time {
-  @apply w-2/5;
+  @apply w-28;
 }
 
 

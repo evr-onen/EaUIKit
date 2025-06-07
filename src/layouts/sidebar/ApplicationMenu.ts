@@ -252,6 +252,26 @@ export const ApplicationContentMenu = () => {
         },
       ]
     },
+    {
+      label: 'Directives',
+      icon: 'inputs',
+      meta: {
+        title: 'Directives'
+      },
+      visibility: true,
+      children: [
+        {
+          label: 'Scroll On Reveal',
+          path: '/directives/scroll-on-reveal',
+          icon: '',
+          meta: {
+            title: 'Scroll On Reveal'
+          },
+          visibility: true
+        },
+
+      ]
+    },
 
     ]
     return items;

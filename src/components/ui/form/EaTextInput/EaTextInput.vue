@@ -17,6 +17,7 @@
 </template>
 
 <script setup lang="ts">
+import './textinput.style.scss';
 import { ref } from 'vue';
 import type { ITextinputProps } from './textinput.types';
 import Icon from '@/components/ui/EaIcons.vue';
