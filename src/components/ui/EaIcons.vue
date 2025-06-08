@@ -28,7 +28,7 @@ const updateSvgAttributes = () => {
       svgElement.setAttribute("height", size.value!);
     }
     if (props.color) {
-      svgElement.setAttribute("fill", props.color); 
+      svgElement.setAttribute("fill", props.color);
     }
   }
 };

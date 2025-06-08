@@ -1,0 +1,213 @@
+// Toast Demo Page - BEM Block
+.toast-demo {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 40px 20px;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+
+  // Toast Demo Header - BEM Element
+  &__header {
+    text-align: center;
+    margin-bottom: 48px;
+  }
+
+  // Toast Demo Title - BEM Element
+  &__title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 12px;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+
+  // Toast Demo Description - BEM Element
+  &__description {
+    font-size: 1.125rem;
+    color: rgba(255, 255, 255, 0.8);
+    margin: 0;
+    font-weight: 400;
+  }
+
+  // Toast Demo Buttons Container - BEM Element
+  &__buttons {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 16px;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  // Toast Demo Button - BEM Element
+  &__button {
+    padding: 16px 24px;
+    border: none;
+    border-radius: 12px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-align: center;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    position: relative;
+    overflow: hidden;
+    
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 255, 255, 0.2),
+        transparent
+      );
+      transition: left 0.5s ease;
+    }
+
+    &:hover::before {
+      left: 100%;
+    }
+
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+    }
+
+    &:active {
+      transform: translateY(0);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    &:focus {
+      outline: 3px solid rgba(255, 255, 255, 0.5);
+      outline-offset: 2px;
+    }
+
+    // Button Type Modifiers - BEM Modifiers
+    &--success {
+      background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+      color: #ffffff;
+
+      &:hover {
+        background: linear-gradient(135deg, #059669 0%, #047857 100%);
+      }
+    }
+
+    &--error {
+      background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+      color: #ffffff;
+
+      &:hover {
+        background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
+      }
+    }
+
+    &--warning {
+      background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+      color: #ffffff;
+
+      &:hover {
+        background: linear-gradient(135deg, #d97706 0%, #b45309 100%);
+      }
+    }
+
+    &--info {
+      background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+      color: #ffffff;
+
+      &:hover {
+        background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+      }
+    }
+
+    &--clear {
+      background: linear-gradient(135deg, #6b7280 0%, #4b5563 100%);
+      color: #ffffff;
+
+      &:hover {
+        background: linear-gradient(135deg, #4b5563 0%, #374151 100%);
+      }
+    }
+  }
+}
+
+// Responsive Design
+@media (max-width: 768px) {
+  .toast-demo {
+    padding: 20px 16px;
+    
+    &__title {
+      font-size: 2rem;
+    }
+    
+    &__description {
+      font-size: 1rem;
+    }
+    
+    &__buttons {
+      grid-template-columns: 1fr;
+      gap: 12px;
+    }
+    
+    &__button {
+      padding: 14px 20px;
+      font-size: 0.9rem;
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .toast-demo {
+    padding: 16px 12px;
+    
+    &__title {
+      font-size: 1.75rem;
+    }
+    
+    &__header {
+      margin-bottom: 32px;
+    }
+  }
+}
+
+// Dark Mode Support
+@media (prefers-color-scheme: dark) {
+  .toast-demo {
+    background: linear-gradient(135deg, #1f2937 0%, #111827 100%);
+  }
+}
+
+// High Contrast Mode
+@media (prefers-contrast: high) {
+  .toast-demo {
+    &__button {
+      border: 2px solid currentColor;
+      
+      &:focus {
+        outline: 4px solid #ffffff;
+      }
+    }
+  }
+}
+
+// Reduced Motion Support
+@media (prefers-reduced-motion: reduce) {
+  .toast-demo {
+    &__button {
+      transition: none;
+      
+      &::before {
+        display: none;
+      }
+      
+      &:hover {
+        transform: none;
+      }
+    }
+  }
+} 
