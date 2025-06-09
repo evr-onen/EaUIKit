@@ -1,11 +1,23 @@
-import { ref, type Ref } from "vue";
+import { ref, computed, type Ref } from "vue";
 import type { ISelectProps, OptionsType } from "./select.types";
 
 const useSelect = (props: ISelectProps, selectValue: Ref<OptionsType | null>) => {
 
   const optionsContentRef = ref<HTMLUListElement | null>(null);
-
   const hoverIndex = ref<number | null>(null)
+  const internalLoading = ref(false)
+  const loadedOptions = ref<OptionsType[]>([])
+
+  // Computed for final options (either props.options or loaded options)
+  const finalOptions = computed(() => {
+    if (props.onLoad && loadedOptions.value.length > 0) {
+      return loadedOptions.value
+    }
+    return props.options || []
+  })
+
+  // Computed for loading state (either prop or internal loading)
+  const isLoadingState = computed(() => props.isLoading || internalLoading.value)
 
   const isSame = (option: OptionsType) => {
     if (selectValue.value) {
@@ -19,29 +31,55 @@ const useSelect = (props: ISelectProps, selectValue: Ref<OptionsType | null>) =>
     if(target){
       target.focus()
     }
-  hoverIndex.value = index
+    hoverIndex.value = index
   }
 
   const optionClickHandler = (option: OptionsType, close: () => void) => {
-    selectValue.value = option
-    close()
+    if (!props.disabled && !isLoadingState.value) {
+      selectValue.value = option
+      close()
+    }
+  }
+
+  // Async data loading function
+  const loadAsyncData = async (openPanel: () => void) => {
+    if (!props.onLoad || props.disabled) return
+
+    try {
+      internalLoading.value = true
+      isLoadingState.value = true
+
+      // Open panel to show loading state
+      openPanel()
+
+      // Fetch data
+      const fetchedOptions = await props.onLoad()
+      loadedOptions.value = fetchedOptions
+
+    } catch (error) {
+      console.error('Error loading select options:', error)
+      loadedOptions.value = []
+    } finally {
+      internalLoading.value = false
+    }
   }
 
   const handleKeyDown = (e: KeyboardEvent, close: () => void) => {
-    if (props.options.length === 0) return;
+    const currentOptions = finalOptions.value
+    if (currentOptions.length === 0 || props.disabled || isLoadingState.value) return;
+
     e.preventDefault();
-    console.log(e.key)
     if (e.key === "ArrowDown") {
       e.preventDefault();
-      hoverIndex.value = (hoverIndex.value! + 1) % props.options.length;
+      hoverIndex.value = (hoverIndex.value! + 1) % currentOptions.length;
     } else if (e.key === "ArrowUp") {
       e.preventDefault();
       hoverIndex.value =
-        (hoverIndex.value! - 1 + props.options.length) % props.options.length;
+        (hoverIndex.value! - 1 + currentOptions.length) % currentOptions.length;
     } else if (e.key === "Enter" || e.key === " ") {
       e.preventDefault();
       if (hoverIndex.value !== null && hoverIndex.value >= 0) {
-        selectValue.value = props.options[hoverIndex.value];
+        selectValue.value = currentOptions[hoverIndex.value];
         close();
       }
     } else if (e.key === "Escape") {
@@ -53,10 +91,13 @@ const useSelect = (props: ISelectProps, selectValue: Ref<OptionsType | null>) =>
   return {
     optionsContentRef,
     hoverIndex,
+    finalOptions,
+    isLoadingState,
     isSame,
     onHover,
     optionClickHandler,
-    handleKeyDown
+    handleKeyDown,
+    loadAsyncData
   }
 }
 

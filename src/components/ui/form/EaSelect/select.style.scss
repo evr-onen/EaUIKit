@@ -13,6 +13,23 @@
     .ea-select__placeholder{
             @apply px-[.625rem] border border-borderColor hover:border-placeholder rounded-lg  flex justify-between items-center capitalize bg-white;
     }
+    
+    .ea-select__placeholder--disabled{
+        @apply opacity-50 cursor-not-allowed border-gray-300 hover:border-gray-300 bg-gray-50;
+    }
+    
+    .ea-select__placeholder--error{
+        @apply border-red-500 hover:border-red-600;
+    }
+    
+    .ea-select__placeholder--loading{
+        @apply cursor-wait;
+    }
+    
+    .ea-select__clear-btn{
+        @apply p-1 rounded hover:bg-gray-100 transition-colors;
+    }
+    
     &.contentPanelOpen .ea-select__placeholder{
         @apply border-placeholder;
     }
@@ -37,4 +54,18 @@
 
 .ea-Select:focus{
     @apply outline-none border-placeholder rounded-[8px];
+}
+
+.ea-select--disabled{
+    @apply pointer-events-none;
+}
+
+.ea-select--error{
+    .ea-select__label{
+        @apply text-red-500;
+    }
+}
+
+.ea-select__error-message{
+    @apply text-xs text-red-500 mt-1 block;
 }

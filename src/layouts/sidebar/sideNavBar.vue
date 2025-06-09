@@ -13,11 +13,11 @@
         <NavItem :item="item" />
       </div>
     </div>
-    <div class="content w-full flex flex-col items-center justify-center gap-2">
-      <div class="flex items-center justify-start w-full h-[56px] p-2 bg-white shadow-md">
+    <div class="content w-full flex flex-col items-center justify-center gap-2 z-50">
+      <div class="flex items-center justify-start w-full h-[56px] p-2 bg-white shadow-md z-50">
         <div class="menu-icon " @click="toggleMenu"><BarsIcon /></div>
       </div>
-      <div class="bg-[#FFF] rounded-lg shadow-md h-[calc(100vh-2rem)] w-[calc(100vw-270px)] overflow-auto">
+      <div class="bg-[#FFF] rounded-lg shadow-md h-[calc(100vh-2rem)] w-[calc(100vw-270px)] overflow-auto ">
         <slot />
       </div>
     </div>

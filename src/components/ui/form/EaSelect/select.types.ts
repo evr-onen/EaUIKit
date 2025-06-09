@@ -1,9 +1,15 @@
 export interface ISelectProps{
-options       : OptionsType[]
-placeholder  ?: string
-optionLabel  ?: string
-label        ?: string
-size         ?: sizeType
+options         : OptionsType[]
+placeholder    ?: string
+optionLabel    ?: string
+label          ?: string
+size           ?: sizeType
+disabled       ?: boolean
+error          ?: boolean
+errorMessage   ?: string
+clearable      ?: boolean
+isLoading      ?: boolean
+onLoad         ?: () => Promise<OptionsType[]>
 }
 
 export type OptionsType = {

@@ -36,25 +36,13 @@ const {
   scrollY,
   panelProcComputed,
   handleOutsideClick,
+  updatePosition,
   openPanel
   } = useDropdown(props)
 
 watch([isOpen, scrollY, panelProcComputed], async() => {
   await nextTick()
-  if (isOpen.value === true && slotRef.value) {
-    const rect = slotRef.value.getBoundingClientRect()
-    const screenBottom = window.innerHeight + window.scrollY
-    isPanelOverflowing.value = (rect.top + window.scrollY + rect.height + props.panelHeight!) > screenBottom
-
-    if (!isPanelOverflowing.value) {
-      panelPosition.value.y = rect.top + rect.height
-    } else {
-      panelPosition.value.y = rect.top - props.panelHeight!
-    }
-    panelPosition.value.x = rect.left + window.scrollX
-    panelPosition.value.width = rect.width
-  }
-
+  updatePosition()
 })
 
 //NOTE - eger body disinda bir yerde overflow varsa ve o overflow olan yer scroll ise ve onun scrolly degeri degisirse kapanacak panel.
