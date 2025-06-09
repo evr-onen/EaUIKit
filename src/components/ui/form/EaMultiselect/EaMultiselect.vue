@@ -35,6 +35,8 @@
       </template>
 
     </Dropdown>
+    <small v-if="error && errorMessage" class="ea-multiselect__error-message text-red-500 mt-1">{{ errorMessage }}</small>
+    <small v-if="hint && !error" class="ea-multiselect__hint text-gray-500 mt-1">{{ hint }}</small>
   </div>
 </template>
 
@@ -50,7 +52,14 @@ import useMultiselect from './useMultiselect';
 const props = withDefaults(defineProps<IMultiselectProps>(), {
   optionLabel : 'name',
   size        : 'normal',
-  limit       : 3
+  limit       : 3,
+  disabled    : false,
+  error       : false,
+  clearable   : false,
+  isLoading   : false,
+  multiselect : true,
+  searchable  : false,
+  required    : false
 })
 
 const selectValues = defineModel<OptionsType[]>();
