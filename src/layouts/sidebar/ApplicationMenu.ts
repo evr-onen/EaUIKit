@@ -241,15 +241,6 @@ export const ApplicationContentMenu = () => {
           },
           visibility: true
         },
-        {
-          label: 'Confirm Popup',
-          path: '/overlay/confirm-popup',
-          icon: '',
-          meta: {
-            title: 'Confirm Popup'
-          },
-          visibility: true
-        },
       ]
     },
     {

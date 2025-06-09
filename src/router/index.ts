@@ -90,11 +90,6 @@ const router = createRouter({
       component: () => import('@/views/overlay/modal.vue'),
     },
     {
-      path: '/overlay/confirm-popup',
-      name: 'Confirm Popup',
-      component: () => import('@/views/overlay/confirmPopup.vue'),
-    },
-    {
       path: '/overlay/dialog',
       name: 'Dialog',
       component: () => import('@/views/overlay/dialog.vue'),
