@@ -1,49 +1,153 @@
-.ea-textinput{
+.ea-textinput {
+  @apply relative w-full;
 
-    *:focus{
-        @apply outline-none;
+  *:focus {
+    @apply outline-none;
+  }
+
+  // Label styles
+  &__label {
+    @apply block text-sm font-medium text-gray-700 mb-1;
+  }
+
+  // Input container styles
+  &__input-container {
+    @apply border border-gray-300 rounded-md bg-white transition-all duration-200 ease-in-out;
+    
+    &.size-sm {
+      @apply px-3 py-1.5 h-8 text-sm;
     }
-
-    // label section
-    .ea-multiselect__label{
-      
-    } 
-
-    // placeholder section
-    .ea-multiselect__placeholder{
-        @apply px-[.625rem] border border-borderColor hover:border-placeholder rounded-lg  flex justify-between items-center capitalize
-        bg-white h-[2.0625rem]  text-[.875rem];
+    
+    &.size-md {
+      @apply px-3 py-2 h-10 text-base;
     }
-
-    .ea-multiselect__placeholder.small{
-        @apply h-[1.7188rem] text-[.75rem];
+    
+    &.size-lg {
+      @apply px-4 py-2.5 h-12 text-lg;
     }
+  }
 
-    .ea-multiselect__placeholder.large{
-        @apply h-[2.4375rem] text-[1rem];
+  // Input styles
+  &__input {
+    @apply flex-1 bg-transparent border-none outline-none placeholder-gray-400;
+    
+    &:disabled {
+      @apply cursor-not-allowed text-gray-400;
+    }
+    
+    &:read-only {
+      @apply cursor-default;
+    }
+  }
 
-    }
+  // Icon styles
+  &__prefix-icon,
+  &__suffix-icon {
+    @apply text-gray-400 flex-shrink-0;
+  }
 
-    &.contentPanelOpen .ea-multiselect__placeholder{
-        @apply border-placeholder;
+  &__prefix-icon {
+    @apply mr-2;
+  }
+
+  &__suffix-icon {
+    @apply ml-2;
+  }
+
+  &__loading-icon {
+    @apply text-blue-500 mr-2 flex-shrink-0;
+  }
+
+  // Button styles
+  &__clear-btn,
+  &__toggle-password {
+    @apply ml-2 p-1 text-gray-400 hover:text-gray-600 transition-colors duration-200 
+           rounded-sm hover:bg-gray-100 flex-shrink-0;
+  }
+
+  &__clear-btn {
+    @apply hover:text-red-500;
+  }
+
+  // Footer styles
+  &__footer {
+    @apply flex justify-between items-start mt-1 text-xs;
+  }
+
+  &__messages {
+    @apply flex-1;
+  }
+
+  &__error-message {
+    @apply text-red-600;
+  }
+
+  &__helper-text {
+    @apply text-gray-500;
+  }
+
+  &__counter {
+    @apply text-gray-400 ml-2 flex-shrink-0;
+  }
+
+  // State modifiers
+  &--focus &__input-container {
+    @apply border-blue-500 ring-1 ring-blue-500 ring-opacity-50;
+  }
+
+  &--invalid &__input-container {
+    @apply border-red-500;
+  }
+
+  &--invalid.ea-textinput--focus &__input-container {
+    @apply border-red-500 ring-1 ring-red-500 ring-opacity-50;
+  }
+
+  &--disabled &__input-container {
+    @apply bg-gray-50 border-gray-200 cursor-not-allowed;
+  }
+
+  &--disabled &__label {
+    @apply text-gray-400;
+  }
+
+  &--readonly &__input-container {
+    @apply bg-gray-50;
+  }
+
+  &--loading &__input {
+    @apply cursor-wait;
+  }
+
+  // Required field indicator
+  &--required &__label::after {
+    content: ' *';
+    @apply text-red-500 ml-1;
+  }
+
+  // Character counter color states
+  &__counter {
+    &.warning {
+      @apply text-orange-500;
     }
-    // dropdown section
-    .dropdownPanelWrapper{
-        @apply fixed w-full text-placeholder ;
-        
-        ul{
-            @apply flex flex-col gap-1 p-1 bg-white  my-1 shadow-lg border border-borderColor overflow-auto rounded-lg;
-            li{
-                @apply h-[1.9375rem] px-[.625rem] bg-white  flex items-center rounded-[.25rem];
-            } 
-            li.selectedOption, li.selectedOption.hoverOption{
-                @apply bg-optionSelectedBg/80 text-white hover:text-white hover:bg-optionSelectedBg/70;
-            }
-            li.hoverOption{
-                @apply text-textPrimary bg-bgSecondary;
-            }
-        }
+    
+    &.error {
+      @apply text-red-500;
     }
+  }
+
+  // Hover states
+  &:not(.ea-textinput--disabled):not(.ea-textinput--readonly) &__input-container:hover {
+    @apply border-gray-400;
+  }
+
+  &--focus:not(.ea-textinput--invalid):not(.ea-textinput--disabled) &__input-container:hover {
+    @apply border-blue-500;
+  }
+
+  &--invalid:not(.ea-textinput--disabled) &__input-container:hover {
+    @apply border-red-600;
+  }
 }
 
 .ea-Select:focus{
