@@ -15,7 +15,7 @@
 </template>
 
 <script setup lang="ts">
-import EaTextInput from '@/components/ui/form/EaTextInput/EaTextInput.vue';
+import EaTextInput from '@/components/ui/form/EaTextInput/index.vue';
 </script>
 
 <style scoped>
