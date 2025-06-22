@@ -306,10 +306,12 @@ const useDatePicker = (props: IDatepickerProps, modelValue: Ref<Date | [Date, Da
       'today': isSameDate(date, new Date())
     };
 
+    // Single date selection
     if (!props.range && modelValue.value && !Array.isArray(modelValue.value)) {
       classes['selected'] = isSameDate(date, modelValue.value);
     }
 
+    // Range selection - completed range
     if (props.range && Array.isArray(modelValue.value)) {
       const [start, end] = modelValue.value;
 
@@ -334,27 +336,33 @@ const useDatePicker = (props: IDatepickerProps, modelValue: Ref<Date | [Date, Da
       }
     }
 
+    // Range selection - active selection (first date selected, waiting for second)
     if (props.range && isRangeSelectionActive.value && tempRangeStart.value) {
       const start = tempRangeStart.value;
 
+      // Highlight the selected start date
       if (isSameDate(date, start)) {
         classes['range-start'] = true;
         classes['selected'] = true;
       }
 
+      // Show hover preview for potential end date
       if (hoverDate.value) {
         const hoveredTime = normalizeDate(hoverDate.value).getTime();
         const startTime = normalizeDate(start).getTime();
         const dateTime = normalizeDate(date).getTime();
 
+        // Forward range (start < hover)
         if (startTime < hoveredTime && dateTime > startTime && dateTime <= hoveredTime) {
           classes['hover-range'] = true;
         }
 
+        // Backward range (hover < start)
         if (startTime > hoveredTime && dateTime >= hoveredTime && dateTime < startTime) {
           classes['hover-range'] = true;
         }
 
+        // Highlight the hovered end date
         if (isSameDate(date, hoverDate.value)) {
           classes['hover-end'] = true;
         }
@@ -368,17 +376,20 @@ const useDatePicker = (props: IDatepickerProps, modelValue: Ref<Date | [Date, Da
     const noonDate = createDateAtNoonUTC(date);
 
     if (!isRangeSelectionActive.value) {
+      // First date selection - start range selection mode
       tempRangeStart.value = noonDate;
       isRangeSelectionActive.value = true;
-      modelValue.value = [noonDate, null] as unknown as [Date, Date];
+      // Don't update modelValue yet, just show the start date
       inputValue.value = formatDate(noonDate);
     } else {
+      // Second date selection - complete the range
       const start = tempRangeStart.value;
 
       if (start) {
         let rangeStart = start;
         let rangeEnd = noonDate;
 
+        // Ensure start date is before end date
         if (noonDate.getTime() < start.getTime()) {
           rangeStart = noonDate;
           rangeEnd = start;
@@ -388,8 +399,10 @@ const useDatePicker = (props: IDatepickerProps, modelValue: Ref<Date | [Date, Da
         inputValue.value = `${formatDate(rangeStart)} - ${formatDate(rangeEnd)}`;
       }
 
+      // Reset range selection state
       tempRangeStart.value = null;
       isRangeSelectionActive.value = false;
+      hoverDate.value = null;
 
       closePanel();
     }
@@ -442,6 +455,7 @@ const useDatePicker = (props: IDatepickerProps, modelValue: Ref<Date | [Date, Da
     inputValue.value = '';
     tempRangeStart.value = null;
     isRangeSelectionActive.value = false;
+    hoverDate.value = null;
   };
 
   const handleHover = (date: Date) => {

@@ -15,4 +15,5 @@ export interface IDatepickerProps {
    */
   dateFormat?: string;
   panelWidth?: number;
+  required?: boolean;
 }

@@ -7,6 +7,10 @@
     // label section
     .ea-datepicker__label{
         @apply block mb-1;
+    }
+
+    .ea-datepicker__required-asterisk{
+        @apply text-red-500 ml-1 font-bold;
     } 
 
     // placeholder section

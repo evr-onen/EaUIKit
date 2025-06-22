@@ -1,6 +1,9 @@
 <template>
-  <div class="ea-datepicker">
-    <small v-if="label" class="ea-datepicker__label capitalize text-textPrimary">{{ label }}</small>
+  <div class="ea-datepicker" :class="{ 'ea-datepicker--required': required }">
+    <small v-if="label" class="ea-datepicker__label capitalize text-textPrimary">
+      {{ label }}
+      <span v-if="required" class="ea-datepicker__required-asterisk">*</span>
+    </small>
     <Dropdown class="w-full" typeCode="ea-datepicker" :panelHeight="390" :panel-width="panelWidth">
       <template #default="{ openPanel }">
         <div
@@ -89,7 +92,8 @@ const props = withDefaults(defineProps<IDatepickerProps>(), {
   placeholder: 'Select date',
   range: false,
   dateFormat: 'DD/MM/YYYY',
-  panelWidth: 300
+  panelWidth: 300,
+  required: false
 });
 
 const modelValue = defineModel<Date | [Date, Date] | null>({ default: null });
