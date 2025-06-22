@@ -20,7 +20,7 @@
     >
       <!-- Icon -->
       <div class="ea-message__icon" v-if="showIcon">
-        <EaIcons :name="iconName" class="w-5 h-5" :class="iconClass" />
+        <EaIcons :name="iconName" :size="iconSize" :class="iconClass" />
       </div>
 
       <!-- Content -->
@@ -88,12 +88,21 @@ const timer = ref<number | null>(null)
 // Computed
 const iconName = computed(() => {
   const iconMap = {
-    success: 'check',
-    error: 'cross',
-    warning: 'dot',
-    info: 'dashboard'
+    success: 'success-message',
+    error: 'error-message',
+    warning: 'warning-message',
+    info: 'info-message'
   }
   return iconMap[props.type]
+})
+
+const iconSize = computed(() => {
+  const sizeMap = {
+    small: '24px',
+    medium: '28px',
+    large: '32px'
+  }
+  return sizeMap[props.size]
 })
 
 // Methods
@@ -135,7 +144,7 @@ defineExpose({
 <style scoped lang="scss">
 .ea-message {
   display: flex;
-  align-items: flex-center;
+  align-items: center;
   gap: 0.75rem;
   padding: 1rem;
   border-radius: 0.5rem;
@@ -147,7 +156,11 @@ defineExpose({
 
   &__icon {
     flex-shrink: 0;
-    margin-top: 0.125rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
   }
 
   &__content {
@@ -197,6 +210,7 @@ defineExpose({
 
       .ea-message__icon {
         color: #16a34a;
+        margin: auto 0;
       }
 
       .ea-message__close:hover {
@@ -323,10 +337,8 @@ defineExpose({
     font-size: 0.8rem;
 
     .ea-message__icon {
-      .w-5 {
-        width: 1rem;
-        height: 1rem;
-      }
+      width: 24px;
+      height: 24px;
     }
 
     .ea-message__title {
@@ -339,10 +351,8 @@ defineExpose({
     font-size: 1rem;
 
     .ea-message__icon {
-      .w-5 {
-        width: 1.5rem;
-        height: 1.5rem;
-      }
+      width: 32px;
+      height: 32px;
     }
 
     .ea-message__title {
