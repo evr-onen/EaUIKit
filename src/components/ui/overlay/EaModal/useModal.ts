@@ -4,7 +4,7 @@ export interface ModalState {
   isOpen: boolean
   title?: string
   content?: string
-  size?: 'sm' | 'md' | 'lg' | 'xl'
+  size?: 'auto' | 'sm' | 'md' | 'lg' | 'xl' | 'full'
   closable?: boolean
   maskClosable?: boolean
   showFooter?: boolean
@@ -21,7 +21,7 @@ const modalState = ref<ModalState>({
   isOpen: false,
   title: '',
   content: '',
-  size: 'md',
+  size: 'auto',
   closable: true,
   maskClosable: true,
   showFooter: false
@@ -81,7 +81,7 @@ export const useModal = () => {
     return openModal({
       title,
       content,
-      size: 'md',
+      size: 'auto',
       closable: true,
       maskClosable: false,
       showFooter: true,
@@ -98,7 +98,7 @@ export const useModal = () => {
     return openModal({
       title,
       content,
-      size: 'sm',
+      size: 'auto',
       closable: true,
       maskClosable: true,
       showFooter: true,

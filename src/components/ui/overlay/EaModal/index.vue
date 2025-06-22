@@ -74,7 +74,7 @@ interface Props {
   content?: string
 
   // Size options
-  size?: 'sm' | 'md' | 'lg' | 'xl'
+  size?: 'auto' | 'sm' | 'md' | 'lg' | 'xl' | 'full'
 
   // Behavior options
   closable?: boolean
@@ -107,7 +107,7 @@ interface Emits {
 
 const props = withDefaults(defineProps<Props>(), {
   modelValue: false,
-  size: 'md',
+  size: 'auto',
   closable: true,
   maskClosable: true,
   showHeader: true,
@@ -140,7 +140,14 @@ const isOpen = computed(() => {
 })
 const title = computed(() => props.title || globalTitle.value)
 const content = computed(() => props.content || globalContent.value)
-const size = computed(() => props.size || globalSize.value || 'md')
+const size = computed(() => {
+  // If using global modal (programmatic), use global size
+  if (globalIsOpen.value) {
+    return globalSize.value || 'auto'
+  }
+  // Otherwise use local prop (if explicitly set, use it; otherwise auto)
+  return props.size
+})
 const closable = computed(() => {
   // If using global modal (programmatic), use global closable
   if (globalIsOpen.value) {
@@ -266,6 +273,6 @@ watch(isOpen, (newValue) => {
 })
 </script>
 
-<style scoped lang="scss">
+<style lang="scss">
 @import './style.scss';
 </style>

@@ -61,14 +61,16 @@
       <section class="demo-section">
         <h2>Size Variants</h2>
         <p class="section-description">
-          EaModal supports four different size options: sm, md, lg, and xl.
+          EaModal supports six different size options: auto (default), sm, md, lg, xl, and full. Each size is optimized for different use cases.
         </p>
 
         <div class="demo-group">
+          <button @click="openSizeModal('auto')" class="btn btn--secondary">Auto (auto)</button>
           <button @click="openSizeModal('sm')" class="btn btn--secondary">Small (sm)</button>
           <button @click="openSizeModal('md')" class="btn btn--secondary">Medium (md)</button>
           <button @click="openSizeModal('lg')" class="btn btn--secondary">Large (lg)</button>
           <button @click="openSizeModal('xl')" class="btn btn--secondary">Extra Large (xl)</button>
+          <button @click="openSizeModal('full')" class="btn btn--secondary">Full Screen (full)</button>
         </div>
 
         <CodeBlock
@@ -215,8 +217,8 @@
               </tr>
               <tr>
                 <td><code>size</code></td>
-                <td>'sm' | 'md' | 'lg' | 'xl'</td>
-                <td><code>'md'</code></td>
+                <td>'auto' | 'sm' | 'md' | 'lg' | 'xl' | 'full'</td>
+                <td><code>'auto'</code></td>
                 <td>Size variant of the modal</td>
               </tr>
               <tr>
@@ -461,7 +463,7 @@ This is a basic modal demonstration with default settings. It includes:
 The modal is built with Vue 3 and TypeScript, providing excellent developer experience and type safety.
 
 You can customize every aspect of this modal using props, slots, and event handlers.`,
-    size: 'md',
+    size: 'auto',
     showFooter: true
   })
 }
@@ -550,57 +552,187 @@ Benefits:
 • Complex button interactions
 • Conditional rendering based on state
 • Integration with form validation`,
-    size: 'md',
+    size: 'auto',
     showFooter: true
   })
 }
 
-const openSizeModal = (size: 'sm' | 'md' | 'lg' | 'xl') => {
-  const sizeInfo = {
+const openSizeModal = (size: 'auto' | 'sm' | 'md' | 'lg' | 'xl' | 'full') => {
+  const modalConfigs = {
+    auto: {
+      title: 'AUTO Size Modal',
+      content: `Automatic Content-Based Sizing
+
+This modal automatically sizes itself based on the content length.
+
+📐 Size Properties:
+• Width: Automatic based on content
+• Minimum width: 320px
+• Maximum width: 90vw
+• Height: Automatic based on content
+
+🎯 Use Cases:
+• Dynamic content
+• Variable text lengths
+• Responsive layouts
+• Content-driven sizing
+
+✨ Features:
+• Smart sizing algorithm
+• Responsive design
+• Content adaptation
+• Minimum and maximum constraints`
+    },
     sm: {
-      description: 'Small modals are perfect for simple confirmations, alerts, and quick actions.',
-      useCases: ['Confirmation dialogs', 'Simple alerts', 'Quick settings', 'Delete confirmations'],
-      dimensions: 'Max-width: 400px'
+      title: 'SMALL Size Modal',
+      content: `Small Size Modal
+
+This modal is optimized for simple confirmations and quick actions.
+
+📐 Size: 400px width
+
+🎯 Ideal Usage:
+• Confirmation dialogs
+• Simple alerts
+• Quick settings
+• Delete confirmations
+
+✅ Features:
+• Compact design
+• Fast interaction
+• Minimal space usage
+
+This is a small modal with limited content to demonstrate the 400px width constraint.`
     },
     md: {
-      description: 'Medium modals provide balanced space for most common use cases.',
-      useCases: ['Contact forms', 'Login/signup', 'Basic settings', 'Content preview'],
-      dimensions: 'Max-width: 600px'
+      title: 'MEDIUM Size Modal',
+      content: `Medium Size Modal
+
+Provides balanced space for most common use cases.
+
+📐 Size: 600px width
+
+🎯 Ideal Usage:
+• Contact forms
+• Login/signup forms
+• Basic settings
+• Content preview
+• User profile editing
+
+✅ Features:
+• Balanced space distribution
+• Common usage scenarios
+• Optimal user experience
+• Suitable for forms and content
+
+This medium modal provides more space than the small modal, allowing for more detailed content and better user interaction. The 600px width gives enough room for forms, detailed text, and multiple UI elements while maintaining good readability and user experience.`
     },
     lg: {
-      description: 'Large modals offer extensive space for complex content and forms.',
-      useCases: ['Detailed forms', 'Data tables', 'Rich content', 'Multi-step wizards'],
-      dimensions: 'Max-width: 800px'
+      title: 'LARGE Size Modal',
+      content: `Large Size Modal
+
+Offers extensive space for complex content and forms.
+
+📐 Size: 800px width
+
+🎯 Ideal Usage:
+• Detailed forms
+• Data tables
+• Rich content
+• Multi-step wizards
+• Advanced settings panels
+• Report viewing
+
+✅ Features:
+• Wide content area
+• Suitable for complex structures
+• Multi-component support
+• Detailed information presentation
+• Professional appearance
+
+This large modal is designed for comprehensive content that requires significant horizontal space. With 800px width, it can accommodate complex layouts, detailed forms with multiple columns, data tables, rich text content, and advanced user interfaces. The increased width allows for better organization of information and improved user workflow in professional applications.
+
+Perfect for enterprise applications, detailed reporting interfaces, and complex data entry forms where screen real estate is crucial for productivity and user experience.`
     },
     xl: {
-      description: 'Extra large modals provide maximum space for comprehensive interfaces.',
-      useCases: ['Complex dashboards', 'Full-featured editors', 'Detailed reports', 'Media galleries'],
-      dimensions: 'Max-width: 1200px'
+      title: 'EXTRA LARGE Size Modal',
+      content: `Extra Large Size Modal
+
+Provides maximum space for comprehensive interfaces.
+
+📐 Size: 1000px width
+
+🎯 Ideal Usage:
+• Complex control panels
+• Full-featured editors
+• Detailed reports
+• Media galleries
+• Dashboard views
+• Advanced data analysis
+• Multi-tab structures
+
+✅ Features:
+• Maximum content area
+• Professional applications
+• Complex data structures
+• Multi-panel support
+• Advanced user interface
+• Enterprise-level features
+
+This extra large modal represents the pinnacle of modal sizing for standard desktop applications. With a generous 1000px width, it provides ample space for the most demanding user interfaces and complex workflows.
+
+The XL modal is ideal for:
+• Comprehensive dashboard interfaces with multiple data panels
+• Advanced text editors with toolbars and side panels
+• Complex form builders with drag-and-drop functionality
+• Detailed reporting interfaces with charts and tables
+• Media management systems with preview capabilities
+• Multi-step configuration wizards with extensive options
+• Enterprise-level control panels with numerous settings
+
+This size ensures that even the most complex applications can provide an optimal user experience without feeling cramped or requiring excessive scrolling. It's perfect for power users and professional applications where productivity and comprehensive feature access are paramount.`
+    },
+    full: {
+      title: 'FULL SCREEN Modal',
+      content: `Full Screen Modal
+
+Utilizes the entire viewport to provide maximum experience.
+
+📐 Size: Full screen (100vw - 32px)
+
+🎯 Ideal Usage:
+• Complex applications
+• Full-screen editors
+• Immersive experiences
+• Mobile-first designs
+• Game interfaces
+• Media players
+• Comprehensive dashboards
+
+✅ Features:
+• Full screen experience
+• Maximum space utilization
+• Immersive design
+• Mobile compatible
+• Focused workspace
+• Professional application feel
+• Advanced user interaction
+
+🚀 Advantages:
+• Eliminates distracting elements
+• Provides maximum productivity
+• Modern application experience
+• Complete control and focus`
     }
   }
 
-  const info = sizeInfo[size]
+  const config = modalConfigs[size]
 
   openModal({
-    title: `${size.toUpperCase()} Size Modal`,
-    content: `${size.toUpperCase()} Modal Demonstration
-
-${info.description}
-
-📐 Dimensions: ${info.dimensions}
-
-Perfect for:
-${info.useCases.map(useCase => `• ${useCase}`).join('\n')}
-
-Features:
-✅ Responsive design across all devices
-✅ Consistent spacing and typography
-✅ Smooth animations and transitions
-✅ Accessibility-compliant structure
-✅ Customizable styling options
-
-All size variants maintain the same functionality while providing different amounts of content space.`,
-    size: size
+    title: config.title,
+    content: config.content,
+    size: size,
+    showFooter: true
   })
 }
 
@@ -624,7 +756,8 @@ Use Cases:
 • Loading states and progress indicators
 
 This configuration prevents accidental closure while maintaining accessibility and user control through alternative methods.`,
-    closable: false,
+      size: 'auto',
+      closable: false,
       maskClosable: true
     },
     maskClosable: {
@@ -645,8 +778,9 @@ Use Cases:
 • Complex data entry that shouldn't be lost
 
 This prevents accidental closure from background clicks while keeping the close button available.`,
+      size: 'auto',
       closable: true,
-    maskClosable: false
+      maskClosable: false
     },
     both: {
       title: 'Locked Modal',
@@ -666,6 +800,7 @@ Use Cases:
 • Security confirmations and warnings
 
 This provides maximum control over modal dismissal while maintaining keyboard accessibility for screen readers and assistive technologies.`,
+      size: 'auto',
       closable: false,
       maskClosable: false
     }
@@ -700,7 +835,7 @@ Use Cases for Lifecycle Events:
 • Validation before allowing close
 
 Each event provides the perfect hook for your custom logic and integrations.`,
-    size: 'md',
+    size: 'auto',
     showFooter: true,
     onBeforeOpen: () => logEvent('onBeforeOpen callback'),
     onOpen: () => logEvent('onOpen callback'),
@@ -740,7 +875,7 @@ This modal was opened using the useModal composable, demonstrating programmatic 
 • Custom modal types and templates
 
 Check the browser console to see the lifecycle events being logged!`,
-    size: 'md',
+    size: 'auto',
     showFooter: true,
     onOpen: () => console.log('Modal opened!'),
     onClose: () => console.log('Modal closed!')
@@ -884,21 +1019,23 @@ const openLargeModal = () => {
 `
 
 const sizeVariantsCode = `<template>
+  <button @click="openModal('auto')">Auto</button>
   <button @click="openModal('sm')">Small</button>
   <button @click="openModal('md')">Medium</button>
   <button @click="openModal('lg')">Large</button>
   <button @click="openModal('xl')">Extra Large</button>
+  <button @click="openModal('full')">Full Screen</button>
 
   <EaModal />
 </template>
 
-
+// JavaScript kodu için useModal composable kullanın
 import { useModal } from '@/components/ui/overlay/EaModal/useModal'
 
-const { openModal: open } = useModal()
+const { openModal } = useModal()
 
-const openModal = (size) => {
-  open({
+const openSizeModal = (size) => {
+  openModal({
     title: \`\${size.toUpperCase()} Modal\`,
     content: \`This is a \${size} sized modal.\`,
     size: size
