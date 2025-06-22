@@ -1,7 +1,8 @@
 <template>
   <div class="dialog-demo">
-    <!-- Header Section -->
-    <div class="demo-header">
+    <div class="container">
+      <!-- Header Section -->
+      <div class="demo-header">
       <h1 class="demo-title">EaDialog Component</h1>
       <p class="demo-subtitle">
         A flexible and customizable dialog component for Vue 3 applications.
@@ -31,14 +32,6 @@
               Show Basic Confirm
             </button>
           </div>
-
-          <div class="code-example">
-            <div class="code-header">
-              <span class="code-title">Code Example</span>
-              <button class="copy-btn" @click="copyCode(basicConfirmCode)">Copy</button>
-            </div>
-            <pre><code>{{ basicConfirmCode }}</code></pre>
-          </div>
         </div>
 
         <!-- Delete Confirmation Example -->
@@ -52,14 +45,6 @@
             <button class="demo-btn demo-btn-danger" @click="showDeleteConfirm">
               Show Delete Confirm
             </button>
-          </div>
-
-          <div class="code-example">
-            <div class="code-header">
-              <span class="code-title">Code Example</span>
-              <button class="copy-btn" @click="copyCode(deleteConfirmCode)">Copy</button>
-            </div>
-            <pre><code>{{ deleteConfirmCode }}</code></pre>
           </div>
         </div>
 
@@ -75,14 +60,6 @@
               Show Warning
             </button>
           </div>
-
-          <div class="code-example">
-            <div class="code-header">
-              <span class="code-title">Code Example</span>
-              <button class="copy-btn" @click="copyCode(warningCode)">Copy</button>
-            </div>
-            <pre><code>{{ warningCode }}</code></pre>
-          </div>
         </div>
 
         <!-- Custom Dialog Example -->
@@ -97,15 +74,12 @@
               Show Custom Dialog
             </button>
           </div>
-
-          <div class="code-example">
-            <div class="code-header">
-              <span class="code-title">Code Example</span>
-              <button class="copy-btn" @click="copyCode(customDialogCode)">Copy</button>
-            </div>
-            <pre><code>{{ customDialogCode }}</code></pre>
-          </div>
         </div>
+      </div>
+
+      <!-- Combined Code Examples -->
+      <div class="combined-examples">
+        <CodeBlock :code="allExamplesCode" title="All Examples Code" language="javascript" />
       </div>
     </div>
 
@@ -130,21 +104,8 @@
           </button>
         </div>
 
-        <div class="code-example">
-          <div class="code-header">
-            <span class="code-title">Template Code</span>
-            <button class="copy-btn" @click="copyCode(componentTemplateCode)">Copy</button>
-          </div>
-          <pre><code>{{ componentTemplateCode }}</code></pre>
-        </div>
-
-        <div class="code-example">
-          <div class="code-header">
-            <span class="code-title">Script Code</span>
-            <button class="copy-btn" @click="copyCode(componentScriptCode)">Copy</button>
-          </div>
-          <pre><code>{{ componentScriptCode }}</code></pre>
-        </div>
+        <CodeBlock :code="componentTemplateCode" title="Template Code" language="html" />
+        <CodeBlock :code="componentScriptCode" title="Script Code" language="javascript" />
       </div>
     </div>
 
@@ -262,6 +223,7 @@
       @confirm="handleComponentConfirm"
       @cancel="handleComponentCancel"
     />
+    </div>
   </div>
 </template>
 
@@ -269,6 +231,7 @@
 import { ref } from 'vue';
 import EaDialog from '@/components/ui/overlay/EaDialog/EaDialog.vue';
 import { useDialog } from '@/components/ui/overlay/EaDialog/useDialog';
+import CodeBlock from '@/components/general/CodeBlock.vue';
 
 const { confirm, deleteConfirm, warning, show } = useDialog();
 
@@ -279,10 +242,11 @@ const lastResult = ref<{
   message: string;
 } | null>(null);
 
-// Code examples
-const basicConfirmCode = `const { confirm } = useDialog();
+// Combined code examples
+const allExamplesCode = `const { confirm, deleteConfirm, warning, show } = useDialog();
 
-const handleConfirm = async () => {
+// Basic Confirmation
+const handleBasicConfirm = async () => {
   const result = await confirm('Are you sure you want to proceed?');
 
   if (result.confirmed) {
@@ -292,10 +256,9 @@ const handleConfirm = async () => {
     console.log('User cancelled');
     // Handle cancellation
   }
-};`;
+};
 
-const deleteConfirmCode = `const { deleteConfirm } = useDialog();
-
+// Delete Confirmation
 const handleDelete = async () => {
   const result = await deleteConfirm('This item will be permanently deleted.');
 
@@ -303,10 +266,9 @@ const handleDelete = async () => {
     console.log('Deleting item...');
     // Perform delete operation
   }
-};`;
+};
 
-const warningCode = `const { warning } = useDialog();
-
+// Warning Dialog
 const showWarning = async () => {
   const result = await warning(
     'This action may have side effects.',
@@ -317,10 +279,9 @@ const showWarning = async () => {
     console.log('User acknowledged warning');
     // Continue with action
   }
-};`;
+};
 
-const customDialogCode = `const { show } = useDialog();
-
+// Custom Dialog
 const showCustom = async () => {
   const result = await show({
     title: 'Custom Title',
@@ -431,14 +392,7 @@ const handleComponentCancel = () => {
   };
 };
 
-const copyCode = async (code: string) => {
-  try {
-    await navigator.clipboard.writeText(code);
-    // Could add a toast notification here
-  } catch (err) {
-    console.error('Failed to copy code:', err);
-  }
-};
+
 
 const getResultIcon = (type: string) => {
   const icons = {
@@ -454,11 +408,15 @@ const getResultIcon = (type: string) => {
 
 <style scoped>
 .dialog-demo {
+  min-height: 100vh;
+  background: #f8fafc;
+  padding: 2rem 0;
+}
+
+.container {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 2rem;
-  font-family: system-ui, -apple-system, sans-serif;
-  line-height: 1.6;
+  padding: 0 1rem;
 }
 
 /* Header */
@@ -468,9 +426,9 @@ const getResultIcon = (type: string) => {
 }
 
 .demo-title {
-  font-size: 3rem;
-  font-weight: 800;
-  color: #1f2937;
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #1e293b;
   margin-bottom: 1rem;
   letter-spacing: -0.025em;
 }
@@ -517,6 +475,11 @@ const getResultIcon = (type: string) => {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
   gap: 2rem;
+  margin-bottom: 2rem;
+}
+
+.combined-examples {
+  margin-top: 2rem;
 }
 
 .example-card {
@@ -612,56 +575,7 @@ const getResultIcon = (type: string) => {
   background: #4b5563;
 }
 
-/* Code Examples */
-.code-example {
-  background: #1f2937;
-  border-radius: 0.5rem;
-  overflow: hidden;
-  margin-bottom: 1rem;
-}
 
-.code-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0.75rem 1rem;
-  background: #374151;
-  border-bottom: 1px solid #4b5563;
-}
-
-.code-title {
-  font-size: 0.875rem;
-  font-weight: 500;
-  color: #f9fafb;
-}
-
-.copy-btn {
-  padding: 0.25rem 0.75rem;
-  background: #4b5563;
-  color: #f9fafb;
-  border: none;
-  border-radius: 0.375rem;
-  font-size: 0.75rem;
-  cursor: pointer;
-  transition: background 0.2s ease;
-}
-
-.copy-btn:hover {
-  background: #6b7280;
-}
-
-.code-example pre {
-  margin: 0;
-  padding: 1rem;
-  overflow-x: auto;
-}
-
-.code-example code {
-  font-family: 'JetBrains Mono', 'Fira Code', monospace;
-  font-size: 0.875rem;
-  color: #e5e7eb;
-  white-space: pre;
-}
 
 /* API Documentation */
 .api-grid {
