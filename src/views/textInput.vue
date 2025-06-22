@@ -313,6 +313,125 @@
       </div>
 
       <div class="code-example">
+        <h4>Custom Validation Code Example:</h4>
+        <pre><code>&lt;EaTextInput
+  v-model="validationExample"
+  label="Custom Validation"
+  placeholder="Type 'hello'"
+  :is-invalid="validationExample && validationExample !== 'hello'"
+  :error-message="validationExample && validationExample !== 'hello' ? 'Must type hello' : ''"
+  helper-text="Type 'hello' to see validation"
+/&gt;</code></pre>
+      </div>
+    </section>
+
+    <!-- Advanced Custom Validation -->
+    <section class="demo-section">
+      <h2 class="section-title">Advanced Custom Validation Examples</h2>
+      <div class="example-grid">
+        <div class="example-item">
+          <h3>Email Validation</h3>
+          <EaTextInput
+            v-model="emailValidation"
+            label="Email Address"
+            placeholder="Enter your email"
+            type="email"
+            :is-invalid="emailValidation && !isValidEmail(emailValidation)"
+            :error-message="emailValidation && !isValidEmail(emailValidation) ? 'Please enter a valid email address' : ''"
+            helper-text="Must be a valid email format"
+          />
+        </div>
+
+        <div class="example-item">
+          <h3>Password Strength</h3>
+          <EaTextInput
+            v-model="passwordValidation"
+            label="Strong Password"
+            placeholder="Enter a strong password"
+            type="password"
+            :is-invalid="passwordValidation && !isStrongPassword(passwordValidation)"
+            :error-message="getPasswordError(passwordValidation)"
+            helper-text="Must be 8+ chars with uppercase, lowercase, number and special char"
+            :maxlength="50"
+            show-counter
+          />
+        </div>
+
+        <div class="example-item">
+          <h3>Phone Number</h3>
+          <EaTextInput
+            v-model="phoneValidation"
+            label="Phone Number"
+            placeholder="(555) 123-4567"
+            :is-invalid="phoneValidation && !isValidPhone(phoneValidation)"
+            :error-message="phoneValidation && !isValidPhone(phoneValidation) ? 'Please enter a valid phone number' : ''"
+            helper-text="Format: (555) 123-4567"
+            @input="formatPhoneNumber"
+          />
+        </div>
+
+        <div class="example-item">
+          <h3>Username Availability</h3>
+          <EaTextInput
+            v-model="usernameValidation"
+            label="Username"
+            placeholder="Enter username"
+            :is-invalid="usernameValidation && !isUsernameAvailable(usernameValidation)"
+            :error-message="getUsernameError(usernameValidation)"
+            helper-text="3-20 chars, letters and numbers only"
+            :loading="checkingUsername"
+            @input="checkUsernameAvailability"
+          />
+        </div>
+      </div>
+
+      <div class="code-example">
+        <h4>Advanced Validation Code Examples:</h4>
+        <pre><code>// Email Validation
+const isValidEmail = (email: string): boolean => {
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+  return emailRegex.test(email)
+}
+
+// Password Strength
+const isStrongPassword = (password: string): boolean => {
+  const minLength = password.length >= 8
+  const hasUpper = /[A-Z]/.test(password)
+  const hasLower = /[a-z]/.test(password)
+  const hasNumber = /\d/.test(password)
+  const hasSpecial = /[!@#$%^&*(),.?":{}|&lt;&gt;]/.test(password)
+  return minLength && hasUpper && hasLower && hasNumber && hasSpecial
+}
+
+// Phone Number Formatting
+const formatPhoneNumber = () => {
+  let value = phoneValidation.value.replace(/\D/g, '')
+  if (value.length >= 6) {
+    value = `(${value.slice(0, 3)}) ${value.slice(3, 6)}-${value.slice(6, 10)}`
+  } else if (value.length >= 3) {
+    value = `(${value.slice(0, 3)}) ${value.slice(3)}`
+  }
+  phoneValidation.value = value
+}
+
+// Username Availability Check
+const checkUsernameAvailability = debounce(() => {
+  if (usernameValidation.value.length >= 3) {
+    checkingUsername.value = true
+    // Simulate API call
+    setTimeout(() => {
+      checkingUsername.value = false
+    }, 1000)
+  }
+}, 500)</code></pre>
+      </div>
+    </section>
+
+    <!-- Advanced Features -->
+    <section class="demo-section">
+      <h2 class="section-title">Advanced Features</h2>
+
+      <div class="code-example">
         <h4>Code Example:</h4>
         <pre><code>&lt;EaTextInput
   clearable
@@ -624,6 +743,13 @@ const counterExample = ref('');
 const debounceExample = ref('');
 const validationExample = ref('');
 
+// Advanced validation examples
+const emailValidation = ref('');
+const passwordValidation = ref('');
+const phoneValidation = ref('');
+const usernameValidation = ref('');
+const checkingUsername = ref(false);
+
 // Event example
 const eventExample = ref('');
 const eventLog = ref<string[]>([]);
@@ -664,6 +790,86 @@ const onClear = () => {
 const onKeydown = (event: KeyboardEvent) => {
   addEvent('keydown', event.key);
 };
+
+// Advanced Validation Functions
+const isValidEmail = (email: string): boolean => {
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return emailRegex.test(email);
+};
+
+const isStrongPassword = (password: string): boolean => {
+  if (!password) return false;
+  const minLength = password.length >= 8;
+  const hasUpper = /[A-Z]/.test(password);
+  const hasLower = /[a-z]/.test(password);
+  const hasNumber = /\d/.test(password);
+  const hasSpecial = /[!@#$%^&*(),.?":{}|<>]/.test(password);
+  return minLength && hasUpper && hasLower && hasNumber && hasSpecial;
+};
+
+const getPasswordError = (password: string): string => {
+  if (!password) return '';
+
+  const errors = [];
+  if (password.length < 8) errors.push('at least 8 characters');
+  if (!/[A-Z]/.test(password)) errors.push('uppercase letter');
+  if (!/[a-z]/.test(password)) errors.push('lowercase letter');
+  if (!/\d/.test(password)) errors.push('number');
+  if (!/[!@#$%^&*(),.?":{}|<>]/.test(password)) errors.push('special character');
+
+  return errors.length > 0 ? `Password must contain ${errors.join(', ')}` : '';
+};
+
+const isValidPhone = (phone: string): boolean => {
+  const phoneRegex = /^\(\d{3}\) \d{3}-\d{4}$/;
+  return phoneRegex.test(phone);
+};
+
+const formatPhoneNumber = () => {
+  let value = phoneValidation.value.replace(/\D/g, '');
+  if (value.length >= 6) {
+    value = `(${value.slice(0, 3)}) ${value.slice(3, 6)}-${value.slice(6, 10)}`;
+  } else if (value.length >= 3) {
+    value = `(${value.slice(0, 3)}) ${value.slice(3)}`;
+  }
+  phoneValidation.value = value;
+};
+
+const isUsernameAvailable = (username: string): boolean => {
+  if (!username) return true;
+  if (username.length < 3 || username.length > 20) return false;
+  if (!/^[a-zA-Z0-9]+$/.test(username)) return false;
+  // Simulate some usernames being taken
+  const takenUsernames = ['admin', 'user', 'test', 'demo', 'root'];
+  return !takenUsernames.includes(username.toLowerCase());
+};
+
+const getUsernameError = (username: string): string => {
+  if (!username) return '';
+  if (username.length < 3) return 'Username must be at least 3 characters';
+  if (username.length > 20) return 'Username must be less than 20 characters';
+  if (!/^[a-zA-Z0-9]+$/.test(username)) return 'Username can only contain letters and numbers';
+  if (!isUsernameAvailable(username)) return 'Username is already taken';
+  return '';
+};
+
+const debounce = (func: Function, delay: number) => {
+  let timeoutId: number;
+  return (...args: any[]) => {
+    clearTimeout(timeoutId);
+    timeoutId = setTimeout(() => func.apply(null, args), delay);
+  };
+};
+
+const checkUsernameAvailability = debounce(() => {
+  if (usernameValidation.value.length >= 3) {
+    checkingUsername.value = true;
+    // Simulate API call
+    setTimeout(() => {
+      checkingUsername.value = false;
+    }, 1000);
+  }
+}, 500);
 </script>
 
 <style scoped lang="scss">

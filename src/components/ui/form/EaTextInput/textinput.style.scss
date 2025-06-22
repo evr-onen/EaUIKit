@@ -112,11 +112,16 @@
   }
 
   &--readonly &__input-container {
-    @apply bg-gray-50;
+    @apply bg-gray-50 border-transparent shadow-none !important;
   }
 
   &--loading &__input {
     @apply cursor-wait;
+  }
+
+  // Readonly focus state - no border or ring
+  &--readonly.ea-textinput--focus &__input-container {
+    @apply border-transparent ring-0 shadow-none;
   }
 
   // Required field indicator
@@ -139,6 +144,11 @@
   // Hover states
   &:not(.ea-textinput--disabled):not(.ea-textinput--readonly) &__input-container:hover {
     @apply border-gray-400;
+  }
+
+  // Readonly hover state - no border changes
+  &--readonly &__input-container:hover {
+    @apply border-transparent;
   }
 
   &--focus:not(.ea-textinput--invalid):not(.ea-textinput--disabled) &__input-container:hover {
