@@ -7,6 +7,7 @@ export interface ModalState {
   size?: 'sm' | 'md' | 'lg' | 'xl'
   closable?: boolean
   maskClosable?: boolean
+  showFooter?: boolean
   // Lifecycle callbacks
   onOpen?: () => void | Promise<void>
   onClose?: () => void | Promise<void>
@@ -22,7 +23,8 @@ const modalState = ref<ModalState>({
   content: '',
   size: 'md',
   closable: true,
-  maskClosable: true
+  maskClosable: true,
+  showFooter: false
 })
 
 export const useModal = () => {
@@ -82,6 +84,7 @@ export const useModal = () => {
       size: 'md',
       closable: true,
       maskClosable: false,
+      showFooter: true,
       onOpen: () => console.log('Confirm modal opened'),
       onClose: onCancel
     })
@@ -98,6 +101,7 @@ export const useModal = () => {
       size: 'sm',
       closable: true,
       maskClosable: true,
+      showFooter: true,
       onOpen: () => console.log('Alert modal opened'),
       onClose: onOk
     })
@@ -110,6 +114,7 @@ export const useModal = () => {
   const size = computed(() => modalState.value.size)
   const closable = computed(() => modalState.value.closable)
   const maskClosable = computed(() => modalState.value.maskClosable)
+  const showFooter = computed(() => modalState.value.showFooter)
 
   return {
     // State
@@ -130,6 +135,7 @@ export const useModal = () => {
     content,
     size,
     closable,
-    maskClosable
+    maskClosable,
+    showFooter
   }
 }

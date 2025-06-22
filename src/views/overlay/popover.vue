@@ -2,13 +2,13 @@
   <div class="popover-demo">
     <div class="container">
       <!-- Header Section -->
-      <div class="demo-header">
+    <div class="demo-header">
         <h1 class="demo-title">EaPopover Component</h1>
         <p class="demo-subtitle">
           A flexible and customizable popover component for Vue 3 applications.
           Supports multiple triggers, placements, and interactive content.
         </p>
-      </div>
+    </div>
 
       <!-- Quick Demo Section -->
       <div class="demo-section">
@@ -20,47 +20,47 @@
         </div>
 
         <div class="quick-demo-grid">
-          <!-- Click Trigger -->
+        <!-- Click Trigger -->
           <div class="demo-card">
             <div class="demo-header-card">
               <h3 class="demo-card-title">Click Trigger</h3>
               <p class="demo-card-description">Default click-to-open behavior</p>
             </div>
             <div class="demo-content">
-              <EaPopover>
-                <template #trigger>
+          <EaPopover>
+            <template #trigger>
                   <button class="demo-btn demo-btn--primary">Click to open</button>
-                </template>
-                <template #content>
-                  <div class="popover-content">
+            </template>
+            <template #content>
+              <div class="popover-content">
                     <h4>Click Popover</h4>
                     <p>This popover opens when you click the trigger button.</p>
-                  </div>
-                </template>
-              </EaPopover>
+              </div>
+            </template>
+          </EaPopover>
             </div>
-          </div>
+        </div>
 
-          <!-- Hover Trigger -->
+        <!-- Hover Trigger -->
           <div class="demo-card">
             <div class="demo-header-card">
               <h3 class="demo-card-title">Hover Trigger</h3>
               <p class="demo-card-description">Opens on mouse hover</p>
             </div>
             <div class="demo-content">
-              <EaPopover trigger="hover">
-                <template #trigger>
+          <EaPopover trigger="hover">
+            <template #trigger>
                   <button class="demo-btn demo-btn--secondary">Hover to open</button>
-                </template>
-                <template #content>
-                  <div class="popover-content">
-                    <h4>Hover Popover</h4>
+            </template>
+            <template #content>
+              <div class="popover-content">
+                <h4>Hover Popover</h4>
                     <p>This popover appears on hover with smooth transitions.</p>
-                  </div>
-                </template>
-              </EaPopover>
-            </div>
-          </div>
+              </div>
+            </template>
+          </EaPopover>
+        </div>
+      </div>
 
           <!-- Different Placements -->
           <div class="demo-card">
@@ -121,7 +121,7 @@
         </div>
       </div>
 
-      <!-- Placement Examples -->
+    <!-- Placement Examples -->
       <div class="demo-section">
         <div class="section-header">
           <h2 class="section-title">Placement Options</h2>
@@ -130,100 +130,100 @@
           </p>
         </div>
 
-        <div class="placement-demo">
-          <div class="placement-grid">
-            <!-- Top placements -->
-            <div class="placement-row">
-              <EaPopover placement="top-start">
-                <template #trigger>
+      <div class="placement-demo">
+        <div class="placement-grid">
+          <!-- Top placements -->
+          <div class="placement-row">
+            <EaPopover placement="top-start">
+              <template #trigger>
                   <button class="demo-btn demo-btn--secondary">Top Start</button>
-                </template>
-                <template #content>
-                  <div class="popover-content">Top Start Placement</div>
-                </template>
-              </EaPopover>
+              </template>
+              <template #content>
+                <div class="popover-content">Top Start Placement</div>
+              </template>
+            </EaPopover>
 
-              <EaPopover placement="top">
-                <template #trigger>
+            <EaPopover placement="top">
+              <template #trigger>
                   <button class="demo-btn demo-btn--secondary">Top Center</button>
-                </template>
-                <template #content>
-                  <div class="popover-content">Top Center Placement</div>
-                </template>
-              </EaPopover>
+              </template>
+              <template #content>
+                <div class="popover-content">Top Center Placement</div>
+              </template>
+            </EaPopover>
 
-              <EaPopover placement="top-end">
-                <template #trigger>
+            <EaPopover placement="top-end">
+              <template #trigger>
                   <button class="demo-btn demo-btn--secondary">Top End</button>
-                </template>
-                <template #content>
-                  <div class="popover-content">Top End Placement</div>
-                </template>
-              </EaPopover>
-            </div>
+              </template>
+              <template #content>
+                <div class="popover-content">Top End Placement</div>
+              </template>
+            </EaPopover>
+          </div>
 
-            <!-- Middle placements -->
-            <div class="placement-row">
-              <EaPopover placement="left">
-                <template #trigger>
+          <!-- Middle placements -->
+          <div class="placement-row">
+            <EaPopover placement="left">
+              <template #trigger>
                   <button class="demo-btn demo-btn--secondary">Left</button>
-                </template>
-                <template #content>
-                  <div class="popover-content">Left Placement</div>
-                </template>
-              </EaPopover>
+              </template>
+              <template #content>
+                <div class="popover-content">Left Placement</div>
+              </template>
+            </EaPopover>
 
               <div class="placement-center">
                 <span>All Placements</span>
               </div>
 
-              <EaPopover placement="right">
-                <template #trigger>
+            <EaPopover placement="right">
+              <template #trigger>
                   <button class="demo-btn demo-btn--secondary">Right</button>
-                </template>
-                <template #content>
-                  <div class="popover-content">Right Placement</div>
-                </template>
-              </EaPopover>
-            </div>
+              </template>
+              <template #content>
+                <div class="popover-content">Right Placement</div>
+              </template>
+            </EaPopover>
+          </div>
 
-            <!-- Bottom placements -->
-            <div class="placement-row">
-              <EaPopover placement="bottom-start">
-                <template #trigger>
+          <!-- Bottom placements -->
+          <div class="placement-row">
+            <EaPopover placement="bottom-start">
+              <template #trigger>
                   <button class="demo-btn demo-btn--secondary">Bottom Start</button>
-                </template>
-                <template #content>
-                  <div class="popover-content">Bottom Start Placement</div>
-                </template>
-              </EaPopover>
+              </template>
+              <template #content>
+                <div class="popover-content">Bottom Start Placement</div>
+              </template>
+            </EaPopover>
 
-              <EaPopover placement="bottom">
-                <template #trigger>
+            <EaPopover placement="bottom">
+              <template #trigger>
                   <button class="demo-btn demo-btn--secondary">Bottom Center</button>
-                </template>
-                <template #content>
-                  <div class="popover-content">Bottom Center Placement</div>
-                </template>
-              </EaPopover>
+              </template>
+              <template #content>
+                <div class="popover-content">Bottom Center Placement</div>
+              </template>
+            </EaPopover>
 
-              <EaPopover placement="bottom-end">
-                <template #trigger>
+            <EaPopover placement="bottom-end">
+              <template #trigger>
                   <button class="demo-btn demo-btn--secondary">Bottom End</button>
-                </template>
-                <template #content>
-                  <div class="popover-content">Bottom End Placement</div>
-                </template>
-              </EaPopover>
-            </div>
+              </template>
+              <template #content>
+                <div class="popover-content">Bottom End Placement</div>
+              </template>
+            </EaPopover>
           </div>
         </div>
+      </div>
 
         <!-- Placement Code Examples -->
         <div class="section-code-examples">
           <CodeBlock :code="placementCode" title="Placement Examples" language="html" />
+              </div>
         </div>
-      </div>
 
       <!-- Code Examples -->
       <div class="demo-section">
@@ -240,21 +240,21 @@
             <div class="example-header">
               <h3 class="example-title">Basic Usage</h3>
               <p class="example-description">Simple click-triggered popover</p>
-            </div>
+              </div>
             <div class="example-demo">
               <EaPopover>
-                <template #trigger>
+            <template #trigger>
                   <button class="demo-btn demo-btn--primary">Basic Example</button>
-                </template>
-                <template #content>
-                  <div class="popover-content">
+            </template>
+            <template #content>
+              <div class="popover-content">
                     <h4>Basic Popover</h4>
                     <p>This is a simple popover with default settings.</p>
-                  </div>
-                </template>
-              </EaPopover>
+              </div>
+            </template>
+          </EaPopover>
             </div>
-          </div>
+        </div>
 
           <!-- Advanced Example -->
           <div class="example-card">
@@ -264,18 +264,18 @@
             </div>
             <div class="example-demo">
               <EaPopover trigger="hover" placement="top" :show-delay="300" :hide-delay="200" width="300px">
-                <template #trigger>
+            <template #trigger>
                   <button class="demo-btn demo-btn--secondary">Advanced Example</button>
-                </template>
-                <template #content>
-                  <div class="popover-content">
+            </template>
+            <template #content>
+              <div class="popover-content">
                     <h4>Advanced Popover</h4>
                     <p>This popover has custom trigger, placement, delays, and width.</p>
-                  </div>
-                </template>
-              </EaPopover>
-            </div>
-          </div>
+              </div>
+            </template>
+          </EaPopover>
+        </div>
+      </div>
 
           <!-- Interactive Example -->
           <div class="example-card">
@@ -285,59 +285,59 @@
             </div>
             <div class="example-demo">
               <EaPopover width="280px" placement="bottom-start">
-                <template #trigger>
+            <template #trigger>
                   <button class="demo-btn demo-btn--info">Interactive Example</button>
-                </template>
-                <template #content="{ hide }">
-                  <div class="popover-content">
+            </template>
+            <template #content="{ hide }">
+              <div class="popover-content">
                     <h4>User Form</h4>
-                    <form @submit.prevent="handleFormSubmit(hide)" class="popover-form">
-                      <div class="form-group">
+                <form @submit.prevent="handleFormSubmit(hide)" class="popover-form">
+                  <div class="form-group">
                         <label>Name:</label>
-                        <input v-model="formData.username" type="text" class="form-input" />
-                      </div>
-                      <div class="form-group">
-                        <label>Email:</label>
-                        <input v-model="formData.email" type="email" class="form-input" />
-                      </div>
-                      <div class="form-actions">
-                        <button type="submit" class="btn btn-primary">Save</button>
-                        <button type="button" @click="hide" class="btn btn-secondary">Cancel</button>
-                      </div>
-                    </form>
+                    <input v-model="formData.username" type="text" class="form-input" />
                   </div>
-                </template>
-              </EaPopover>
-            </div>
-          </div>
+                  <div class="form-group">
+                    <label>Email:</label>
+                    <input v-model="formData.email" type="email" class="form-input" />
+                  </div>
+                  <div class="form-actions">
+                    <button type="submit" class="btn btn-primary">Save</button>
+                    <button type="button" @click="hide" class="btn btn-secondary">Cancel</button>
+                  </div>
+                </form>
+              </div>
+            </template>
+          </EaPopover>
+        </div>
+                </div>
 
-          <!-- Programmatic Control -->
+    <!-- Programmatic Control -->
           <div class="example-card">
             <div class="example-header">
               <h3 class="example-title">Programmatic Control</h3>
               <p class="example-description">Control popover visibility programmatically</p>
             </div>
             <div class="example-demo">
-              <div class="control-demo">
-                <EaPopover ref="controlledPopover">
-                  <template #trigger>
+        <div class="control-demo">
+          <EaPopover ref="controlledPopover">
+            <template #trigger>
                     <button class="demo-btn demo-btn--warning">Controlled Popover</button>
-                  </template>
-                  <template #content>
-                    <div class="popover-content">
+            </template>
+            <template #content>
+              <div class="popover-content">
                       <h4>Programmatic Control</h4>
-                      <p>This popover can be controlled via external buttons.</p>
-                      <p>Status: {{ controlledPopover?.isVisible ? 'Open' : 'Closed' }}</p>
-                    </div>
-                  </template>
-                </EaPopover>
-                <div class="control-buttons">
-                  <button @click="controlledPopover?.show()" class="btn btn-success">Show</button>
-                  <button @click="controlledPopover?.hide()" class="btn btn-danger">Hide</button>
-                  <button @click="controlledPopover?.toggle()" class="btn btn-info">Toggle</button>
-                </div>
+                <p>This popover can be controlled via external buttons.</p>
+                <p>Status: {{ controlledPopover?.isVisible ? 'Open' : 'Closed' }}</p>
               </div>
-            </div>
+            </template>
+          </EaPopover>
+          <div class="control-buttons">
+            <button @click="controlledPopover?.show()" class="btn btn-success">Show</button>
+            <button @click="controlledPopover?.hide()" class="btn btn-danger">Hide</button>
+            <button @click="controlledPopover?.toggle()" class="btn btn-info">Toggle</button>
+          </div>
+        </div>
+      </div>
           </div>
         </div>
 
@@ -436,7 +436,7 @@
                 <div class="api-cell">CSS z-index value</div>
               </div>
             </div>
-          </div>
+        </div>
 
           <div class="api-card">
             <h3 class="api-title">Slots</h3>
@@ -465,11 +465,11 @@
               <div class="api-row api-header-row">
                 <div class="api-cell">Method</div>
                 <div class="api-cell">Description</div>
-              </div>
+        </div>
               <div class="api-row">
                 <div class="api-cell"><code>show()</code></div>
                 <div class="api-cell">Show the popover</div>
-              </div>
+      </div>
               <div class="api-row">
                 <div class="api-cell"><code>hide()</code></div>
                 <div class="api-cell">Hide the popover</div>
@@ -744,8 +744,8 @@ const handleMenuAction = (action: string, hidePopover: () => void) => {
 }
 
 /* Header */
-.demo-header {
-  text-align: center;
+  .demo-header {
+    text-align: center;
   margin-bottom: 4rem;
 
   .demo-title {
@@ -758,14 +758,14 @@ const handleMenuAction = (action: string, hidePopover: () => void) => {
 
   .demo-subtitle {
     font-size: 1.25rem;
-    color: #6b7280;
+      color: #6b7280;
     max-width: 600px;
     margin: 0 auto;
+    }
   }
-}
 
 /* Sections */
-.demo-section {
+  .demo-section {
   margin-bottom: 4rem;
 
   .section-header {
@@ -787,7 +787,7 @@ const handleMenuAction = (action: string, hidePopover: () => void) => {
 
 /* Quick Demo Grid */
 .quick-demo-grid {
-  display: grid;
+    display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 1.5rem;
   margin-bottom: 2rem;
@@ -831,7 +831,7 @@ const handleMenuAction = (action: string, hidePopover: () => void) => {
   gap: 0.5rem;
   padding: 0.75rem 1.5rem;
   border: none;
-  border-radius: 8px;
+    border-radius: 8px;
   font-size: 0.875rem;
   font-weight: 500;
   cursor: pointer;
@@ -873,26 +873,26 @@ const handleMenuAction = (action: string, hidePopover: () => void) => {
 }
 
 /* Placement Demo */
-.placement-demo {
-  display: flex;
-  justify-content: center;
+  .placement-demo {
+    display: flex;
+    justify-content: center;
   margin: 2rem 0;
 
-  .placement-grid {
-    display: grid;
-    grid-template-rows: repeat(3, 1fr);
+    .placement-grid {
+      display: grid;
+      grid-template-rows: repeat(3, 1fr);
     gap: 1rem;
 
-    .placement-row {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      .placement-row {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
       gap: 1rem;
-      align-items: center;
+        align-items: center;
 
       .placement-center {
-        text-align: center;
+          text-align: center;
         color: #64748b;
-        font-style: italic;
+          font-style: italic;
         font-weight: 500;
       }
     }
@@ -952,23 +952,23 @@ const handleMenuAction = (action: string, hidePopover: () => void) => {
 }
 
 /* Control Demo */
-.control-demo {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  align-items: flex-start;
-
-  .control-buttons {
+  .control-demo {
     display: flex;
-    gap: 0.5rem;
-  }
-}
+    flex-direction: column;
+  gap: 1rem;
+    align-items: flex-start;
 
-.btn {
+    .control-buttons {
+      display: flex;
+    gap: 0.5rem;
+    }
+  }
+
+  .btn {
   padding: 0.375rem 0.75rem;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
   font-size: 0.75rem;
   font-weight: 500;
   transition: all 0.2s ease;
@@ -977,40 +977,40 @@ const handleMenuAction = (action: string, hidePopover: () => void) => {
     transform: translateY(-1px);
   }
 
-  &.btn-primary {
-    background: #3b82f6;
-    color: white;
+    &.btn-primary {
+      background: #3b82f6;
+      color: white;
     &:hover { background: #2563eb; }
-  }
+    }
 
-  &.btn-secondary {
-    background: #6b7280;
-    color: white;
+    &.btn-secondary {
+      background: #6b7280;
+      color: white;
     &:hover { background: #4b5563; }
-  }
+    }
 
-  &.btn-success {
-    background: #10b981;
-    color: white;
+    &.btn-success {
+      background: #10b981;
+      color: white;
     &:hover { background: #059669; }
-  }
+    }
 
-  &.btn-danger {
-    background: #ef4444;
-    color: white;
+    &.btn-danger {
+      background: #ef4444;
+      color: white;
     &:hover { background: #dc2626; }
-  }
+    }
 
-  &.btn-info {
-    background: #06b6d4;
-    color: white;
+    &.btn-info {
+      background: #06b6d4;
+      color: white;
     &:hover { background: #0891b2; }
+    }
   }
-}
 
 /* API Documentation */
 .api-grid {
-  display: grid;
+    display: grid;
   gap: 2rem;
 }
 
@@ -1053,7 +1053,7 @@ const handleMenuAction = (action: string, hidePopover: () => void) => {
     .api-cell {
       font-size: 0.875rem;
 
-      code {
+        code {
         background: #f3f4f6;
         padding: 0.125rem 0.375rem;
         border-radius: 0.25rem;

@@ -21,7 +21,7 @@
               @click="handleClose"
               aria-label="Close modal"
             >
-              <EaIcons name="close" size="20" />
+              <EaIcons name="cross" size="24" />
             </button>
           </div>
 
@@ -39,20 +39,20 @@
           <!-- Footer -->
           <div v-if="showFooter" class="ea-modal__footer">
             <slot name="footer">
-              <button
+              <EaButton
                 v-if="showDefaultButtons"
-                class="btn btn--secondary"
+                variant="secondary"
+                size="md"
+                label="Back"
                 @click="handleClose"
-              >
-                Cancel
-              </button>
-              <button
+              />
+              <EaButton
                 v-if="showDefaultButtons"
-                class="btn btn--primary"
+                variant="primary"
+                size="md"
+                label="Confirm"
                 @click="handleConfirm"
-              >
-                Confirm
-              </button>
+              />
             </slot>
           </div>
         </div>
@@ -64,6 +64,8 @@
 <script setup lang="ts">
 import { computed, onMounted, onUnmounted, watch } from 'vue'
 import { useModal } from './useModal'
+import EaIcons from '@/components/ui/EaIcons.vue'
+import EaButton from '@/components/ui/form/EaButton/index.vue'
 
 interface Props {
   // Modal state
@@ -123,6 +125,7 @@ const {
   size: globalSize,
   closable: globalClosable,
   maskClosable: globalMaskClosable,
+  showFooter: globalShowFooter,
   closeModal
 } = useModal()
 
@@ -138,8 +141,32 @@ const isOpen = computed(() => {
 const title = computed(() => props.title || globalTitle.value)
 const content = computed(() => props.content || globalContent.value)
 const size = computed(() => props.size || globalSize.value || 'md')
-const closable = computed(() => props.closable !== undefined ? props.closable : (globalClosable.value !== undefined ? globalClosable.value : true))
-const maskClosable = computed(() => props.maskClosable !== undefined ? props.maskClosable : (globalMaskClosable.value !== undefined ? globalMaskClosable.value : true))
+const closable = computed(() => {
+  // If using global modal (programmatic), use global closable
+  if (globalIsOpen.value) {
+    return globalClosable.value !== undefined ? globalClosable.value : true
+  }
+  // Otherwise use local prop
+  return props.closable
+})
+const maskClosable = computed(() => {
+  // If using global modal (programmatic), use global maskClosable
+  if (globalIsOpen.value) {
+    return globalMaskClosable.value !== undefined ? globalMaskClosable.value : true
+  }
+  // Otherwise use local prop
+  return props.maskClosable
+})
+const showFooter = computed(() => {
+  // If using global modal (programmatic), use global showFooter
+  if (globalIsOpen.value) {
+    return globalShowFooter.value || false
+  }
+  // Otherwise use local prop
+  return props.showFooter || false
+})
+
+
 
 // Safe content processing
 const contentLines = computed(() => {
