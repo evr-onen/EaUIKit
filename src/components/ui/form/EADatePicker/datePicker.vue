@@ -1,14 +1,18 @@
 <template>
-  <div class="ea-datepicker" :class="{ 'ea-datepicker--required': required }">
+  <div class="ea-datepicker" :class="{
+    'ea-datepicker--required': required,
+    'ea-datepicker--disabled': disabled,
+    'ea-datepicker--error': error || isInvalid
+  }">
     <small v-if="label" class="ea-datepicker__label capitalize text-textPrimary">
       {{ label }}
       <span v-if="required" class="ea-datepicker__required-asterisk">*</span>
     </small>
-    <Dropdown class="w-full" typeCode="ea-datepicker" :panelHeight="390" :panel-width="panelWidth">
+    <Dropdown class="w-full" typeCode="ea-datepicker" :panelHeight="390" :panel-width="panelWidth" :disabled="disabled">
       <template #default="{ openPanel }">
         <div
           class="flex justify-between items-center rounded-lg  relative"
-          @click="() => openPanel()"
+          @click="!disabled && openPanel()"
           :class="size"
         >
           <input
@@ -17,9 +21,11 @@
             tabindex="0"
             :value="displayValue"
             :placeholder="placeholder || (range ? 'Select date range' : 'Select date')"
-            @input="handleInputChange"
-            @keydown="handleKeyDown"
+            @input="!disabled && handleInputChange"
+            @keydown="!disabled && handleKeyDown"
             @blur="validateInput"
+            :disabled="disabled"
+            :readonly="disabled"
           >
           <ChavronDown class="size-6 text-placeholder absolute right-2" />
         </div>
@@ -76,6 +82,11 @@
         </div>
       </template>
     </Dropdown>
+
+    <!-- Error Message -->
+    <small v-if="(error || isInvalid) && errorMessage" class="ea-datepicker__error-message">
+      {{ errorMessage }}
+    </small>
   </div>
 </template>
 
@@ -93,10 +104,13 @@ const props = withDefaults(defineProps<IDatepickerProps>(), {
   range: false,
   dateFormat: 'DD/MM/YYYY',
   panelWidth: 300,
-  required: false
+  required: false,
+  disabled: false,
+  error: false,
+  isInvalid: false
 });
 
-const modelValue = defineModel<Date | [Date, Date] | null>({ default: null });
+const modelValue = defineModel<Date | [Date, Date] | string | [string, string] | null>({ default: null });
 
 const {
   displayValue,

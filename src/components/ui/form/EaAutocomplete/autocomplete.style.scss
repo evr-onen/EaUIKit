@@ -30,7 +30,7 @@
     // dropdown section
     .dropdownPanelWrapper{
         @apply fixed w-full text-placeholder ;
-        
+        z-index: 10 !important;
         ul{
             @apply flex flex-col gap-1 p-1 bg-white  my-1 shadow-lg border border-borderColor overflow-auto rounded-lg;
             li{

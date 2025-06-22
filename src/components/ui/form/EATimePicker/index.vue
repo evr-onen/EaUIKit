@@ -1,19 +1,28 @@
 <template>
-  <div class="ea-timepicker">
-    <small v-if="label" class="ea-timepicker__label capitalize text-textPrimary">{{ label }}</small>
-    <Dropdown class="ea-timepicker__container w-full h-8 border" >
+  <div class="ea-timepicker" :class="{
+    'ea-timepicker--required': required,
+    'ea-timepicker--disabled': disabled,
+    'ea-timepicker--error': error || isInvalid
+  }">
+    <small v-if="label" class="ea-timepicker__label capitalize text-textPrimary">
+      {{ label }}
+      <span v-if="required" class="ea-timepicker__required-asterisk">*</span>
+    </small>
+    <Dropdown class="ea-timepicker__container w-full h-8 border" :disabled="disabled">
       <template #default="{ openPanel }" >
-      <div class="flex" @click="openPanel()">
+              <div class="flex" @click="!disabled && openPanel()">
         <input
         class="ea-timepicker__input rounded-lg"
           :class="size"
           ref="inputRef"
           type="text"
           v-model="displayValue"
-          @focus="openPanel()"
+          @focus="!disabled && openPanel()"
           :placeholder="placeholder"
-          @input="handleInputChange"
+          @input="!disabled && handleInputChange"
           @blur="validateInput"
+          :disabled="disabled"
+          :readonly="disabled"
           maxlength="5"
           >
           <ChavronDown class="ea-timepicker__icon size-6" />
@@ -65,6 +74,11 @@
         </div>
       </template>
     </Dropdown>
+
+    <!-- Error Message -->
+    <small v-if="(error || isInvalid) && errorMessage" class="ea-timepicker__error-message">
+      {{ errorMessage }}
+    </small>
   </div>
 </template>
 
@@ -78,7 +92,11 @@ import type { ITimePickerProps } from './timePicker.types';
 const props = withDefaults(defineProps<ITimePickerProps>(), {
   size: 'normal',
   placeholder: 'Select time',
-  minuteInterval: 5
+  minuteInterval: 5,
+  required: false,
+  disabled: false,
+  error: false,
+  isInvalid: false
 });
 
 const modelValue = defineModel<Date | null>();

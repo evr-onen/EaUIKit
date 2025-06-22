@@ -14,6 +14,29 @@ export interface IDatepickerProps {
    * Default: 'DD/MM/YYYY'
    */
   dateFormat?: string;
+  /**
+   * Format string for output value
+   * If provided, returns formatted string instead of Date object
+   * Example: 'DD/MM/YYYY' returns '25/12/2023'
+   * Default: undefined (returns Date object)
+   */
+  valueFormat?: string;
   panelWidth?: number;
   required?: boolean;
+  /**
+   * Disable the date picker
+   */
+  disabled?: boolean;
+  /**
+   * Show error state with red border
+   */
+  error?: boolean;
+  /**
+   * Show invalid state with red border (alias for error)
+   */
+  isInvalid?: boolean;
+  /**
+   * Error message to display below the input
+   */
+  errorMessage?: string;
 }

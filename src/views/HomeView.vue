@@ -6,34 +6,23 @@
     </div>
     <div class="overflow-y-auto h-[300px]  ea-scroll-bar">
       <h4>Yapilacaklar</h4>
-      <p>Tum form elementleri</p>
-      <p>- checkbox</p>
-      <p>- Radio Buttons</p>
-      <p>- Upload Files & Images</p>
-      <p>- Color Picker</p>
-      <p>- Time Picker</p>
-      <p>- Date Picker</p>
-      <p>- DateTime Picker</p>
-      <p>Dialog</p>
-      <p>Accordion</p>
-      <p>Tabs</p>
-      <p>Drawer</p>
-      <p>popup</p>
-      <p>Toast</p>
-      <p>Alert</p>
-      <p>Badge</p>
-      <p>V-Directive (animate on Scroll)</p>
-      <p>Card</p>
-      <p>Menu</p>
+      <p>* Sayfa sayfa proplari tet etmek ve fixlemek lazim Ayrica demo sayfasi yoksa eklemeli tr ise en ye cevirmeliyiz</p>
+      <p>* Sayfalardaki demolar tek bir type olacak. Birbirinden tutatsiz sayfa olmamasi lazim</p>
+      <p>* code lari temize cekmek gerekiyor</p>
+      <p>* Library yapip icons componenti test edilmeli. svg lerin tutulacagi yeri env de belirtmeliyiz. Yada bi config dosyasi yarrattirip oraya yazdirmaliyiz.</p>
+      <p>* Componentlerdeki classnamesleri yazmaliyiz. buna gore style dosyalarini kullanmaliyiz. tum bu css dosyalarini bir yerde toplamaliyiz. Cunku bunlari library olarak eklendigimiz projeye aktarip bu cssleri overright etmesi lazim. Boylelikle default bir style yapisi olup styles oalrak istedigi cssleri yazma ozgurlugunu vermis oluruz </p>
     </div>
     <EaIcons name="bars" class="text-red-100  border" size="100px" />
+    <EaButton class="w-[200px]" label="Button Example" left-icon="bars" :loading="false">
+
+    </EaButton>
   </div>
 </template>
 
 
 <script setup lang="ts">
 import EaIcons from '@/components/ui/EaIcons.vue';
-
+import EaButton from '@/components/ui/form/EaButton/index.vue';
 // import Icon from '@/components/ui/inputs/index.vue';
 
 </script>

@@ -51,3 +51,8 @@ watch([isOpen, scrollY, panelProcComputed], async() => {
 </script>
 
 
+<style lang="scss">
+.dropdownPanelWrapper{
+    z-index: 1000 !important;
+}
+</style>

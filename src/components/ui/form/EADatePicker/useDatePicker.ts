@@ -1,7 +1,7 @@
 import { computed, ref, type Ref } from "vue";
 import type { IDatepickerProps } from "./datepicker.types";
 
-const useDatePicker = (props: IDatepickerProps, modelValue: Ref<Date | [Date, Date] | null>) => {
+const useDatePicker = (props: IDatepickerProps, modelValue: Ref<Date | [Date, Date] | string | [string, string] | null>) => {
   //vars
   const tempRangeStart = ref<Date | null>(null);
   const isRangeSelectionActive = ref(false);
@@ -76,12 +76,40 @@ const useDatePicker = (props: IDatepickerProps, modelValue: Ref<Date | [Date, Da
     if (props.range && Array.isArray(modelValue.value)) {
       const [start, end] = modelValue.value;
       if (!start) return inputValue.value;
-      if (!end) return formatDate(start);
-      return `${formatDate(start)} - ${formatDate(end)}`;
+
+      // Handle string values in range
+      if (typeof start === 'string' && typeof end === 'string') {
+        return `${start} - ${end}`;
+      }
+
+      // Handle Date values in range
+      if (start instanceof Date && end instanceof Date) {
+        if (!end) return formatDate(start);
+        return `${formatDate(start)} - ${formatDate(end)}`;
+      }
+
+      // Mixed types - convert to display format
+      const startDate = typeof start === 'string' ? new Date(start) : start;
+      const endDate = typeof end === 'string' ? new Date(end) : end;
+      if (startDate && endDate) {
+        return `${formatDate(startDate)} - ${formatDate(endDate)}`;
+      }
     }
 
     if (!Array.isArray(modelValue.value)) {
-      return formatDate(modelValue.value);
+      // Handle string value
+      if (typeof modelValue.value === 'string') {
+        const date = new Date(modelValue.value);
+        if (!isNaN(date.getTime())) {
+          return formatDate(date);
+        }
+        return modelValue.value;
+      }
+
+      // Handle Date value
+      if (modelValue.value instanceof Date) {
+        return formatDate(modelValue.value);
+      }
     }
 
     return inputValue.value;
@@ -107,6 +135,30 @@ const useDatePicker = (props: IDatepickerProps, modelValue: Ref<Date | [Date, Da
     result = result.replace('YYYY', year.toString());
 
     return result;
+  };
+
+  // Format date for output value based on valueFormat prop
+  const formatValue = (date: Date): Date | string => {
+    if (!props.valueFormat) return date;
+
+    const day = date.getDate().toString().padStart(2, '0');
+    const month = (date.getMonth() + 1).toString().padStart(2, '0');
+    const year = date.getFullYear();
+
+    return props.valueFormat
+      .replace('DD', day)
+      .replace('MM', month)
+      .replace('YYYY', year.toString());
+  };
+
+  // Format range for output value
+  const formatRangeValue = (dates: [Date, Date]): [Date, Date] | [string, string] => {
+    if (!props.valueFormat) return dates;
+
+    return [
+      formatValue(dates[0]) as string,
+      formatValue(dates[1]) as string
+    ] as [string, string];
   };
 
   const validateAndCorrectDate = (day: number, month: number, year: number): [number, number, number] => {
@@ -395,7 +447,7 @@ const useDatePicker = (props: IDatepickerProps, modelValue: Ref<Date | [Date, Da
           rangeEnd = start;
         }
 
-        modelValue.value = [rangeStart, rangeEnd] as [Date, Date];
+        modelValue.value = formatRangeValue([rangeStart, rangeEnd]) as [Date, Date] | [string, string];
         inputValue.value = `${formatDate(rangeStart)} - ${formatDate(rangeEnd)}`;
       }
 
@@ -424,7 +476,7 @@ const useDatePicker = (props: IDatepickerProps, modelValue: Ref<Date | [Date, Da
       handleRangeSelection(date, closePanel);
     } else {
       const noonDate = createDateAtNoonUTC(date);
-      modelValue.value = noonDate;
+      modelValue.value = formatValue(noonDate) as Date | string;
       inputValue.value = formatDate(noonDate);
       closePanel()
     }
@@ -436,10 +488,10 @@ const useDatePicker = (props: IDatepickerProps, modelValue: Ref<Date | [Date, Da
     const noonToday = createDateAtNoonUTC(now);
 
     if (props.range) {
-      modelValue.value = [noonToday, noonToday] as [Date, Date];
+      modelValue.value = formatRangeValue([noonToday, noonToday]) as [Date, Date] | [string, string];
       inputValue.value = `${formatDate(noonToday)} - ${formatDate(noonToday)}`;
     } else {
-      modelValue.value = noonToday;
+      modelValue.value = formatValue(noonToday) as Date | string;
       inputValue.value = formatDate(noonToday);
     }
 

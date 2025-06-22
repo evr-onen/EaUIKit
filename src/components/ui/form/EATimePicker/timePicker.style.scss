@@ -8,11 +8,49 @@
     // label section
     .ea-timepicker__label {
         @apply block mb-1;
+    }
+
+    .ea-timepicker__required-asterisk {
+        @apply text-red-500 ml-1 font-bold;
+    }
+
+    .ea-timepicker__error-message {
+        @apply text-red-500 text-xs mt-1 block;
     } 
 
     // Container with positioning context
     .ea-timepicker__container {
         @apply relative rounded-lg;
+    }
+
+    // Error state
+    &.ea-timepicker--error {
+        .ea-timepicker__container {
+            @apply border-red-500;
+        }
+        
+        .ea-timepicker__input {
+            @apply border-red-500 focus:border-red-500;
+        }
+    }
+
+    // Disabled state
+    &.ea-timepicker--disabled {
+        .ea-timepicker__container {
+            @apply bg-gray-100 border-gray-300 cursor-not-allowed;
+        }
+        
+        .ea-timepicker__input {
+            @apply bg-gray-100 text-gray-500 cursor-not-allowed;
+        }
+        
+        .ea-timepicker__icon {
+            @apply text-gray-400;
+        }
+        
+        .ea-timepicker__label {
+            @apply text-gray-500;
+        }
     }
 
     // input field

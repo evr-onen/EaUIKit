@@ -15,4 +15,24 @@ export interface ITimePickerProps {
    * Default: 5 (shows times like 00:00, 00:05, 00:10, etc.)
    */
   minuteInterval?: number;
+  /**
+   * Mark field as required (shows red asterisk)
+   */
+  required?: boolean;
+  /**
+   * Disable the time picker
+   */
+  disabled?: boolean;
+  /**
+   * Show error state with red border
+   */
+  error?: boolean;
+  /**
+   * Show invalid state with red border (alias for error)
+   */
+  isInvalid?: boolean;
+  /**
+   * Error message to display below the input
+   */
+  errorMessage?: string;
 }

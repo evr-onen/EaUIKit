@@ -105,9 +105,9 @@
       </div>
     </section>
 
-    <!-- Date Formats -->
+    <!-- Date Formats (Display) -->
     <section class="demo-section">
-      <h2 class="section-title">Date Formats</h2>
+      <h2 class="section-title">Date Formats (Display)</h2>
       <div class="example-grid">
         <div class="example-item">
           <h3>DD/MM/YYYY (Default)</h3>
@@ -151,6 +151,104 @@
       </div>
     </section>
 
+    <!-- Value Formats (Output) -->
+    <section class="demo-section">
+      <h2 class="section-title">Value Formats (Output)</h2>
+      <div class="example-grid">
+        <div class="example-item">
+          <h3>Default (Date Object)</h3>
+          <EaDatePicker
+            v-model="valueDefault"
+            label="Returns Date Object"
+            placeholder="Select date"
+          />
+          <p class="example-value">Type: {{ typeof valueDefault }}</p>
+          <p class="example-value">Value: {{ valueDefault }}</p>
+        </div>
+
+        <div class="example-item">
+          <h3>DD/MM/YYYY String</h3>
+          <EaDatePicker
+            v-model="valueString"
+            label="Returns String"
+            placeholder="Select date"
+            value-format="DD/MM/YYYY"
+          />
+          <p class="example-value">Type: {{ typeof valueString }}</p>
+          <p class="example-value">Value: {{ valueString }}</p>
+        </div>
+
+        <div class="example-item">
+          <h3>YYYY-MM-DD String</h3>
+          <EaDatePicker
+            v-model="valueISOString"
+            label="Returns ISO String"
+            placeholder="Select date"
+            value-format="YYYY-MM-DD"
+          />
+          <p class="example-value">Type: {{ typeof valueISOString }}</p>
+          <p class="example-value">Value: {{ valueISOString }}</p>
+        </div>
+
+        <div class="example-item">
+          <h3>Range with String Output</h3>
+          <EaDatePicker
+            v-model="valueRangeString"
+            label="Range as Strings"
+            placeholder="Select date range"
+            range
+            value-format="DD/MM/YYYY"
+          />
+          <p class="example-value">Type: {{ Array.isArray(valueRangeString) ? 'Array' : typeof valueRangeString }}</p>
+          <p class="example-value">Value: {{ JSON.stringify(valueRangeString) }}</p>
+        </div>
+
+        <div class="example-item">
+          <h3>Range with Date Output</h3>
+          <EaDatePicker
+            v-model="valueRangeDate"
+            label="Range as Dates"
+            placeholder="Select date range"
+            range
+          />
+          <p class="example-value">Type: {{ Array.isArray(valueRangeDate) ? 'Array' : typeof valueRangeDate }}</p>
+          <p class="example-value">Value: {{ formatDateRange(valueRangeDate) }}</p>
+        </div>
+
+        <div class="example-item">
+          <h3>Combined: Display MM/DD, Output YYYY-MM-DD</h3>
+          <EaDatePicker
+            v-model="valueCombined"
+            label="Different Display vs Output"
+            placeholder="MM/DD/YYYY"
+            date-format="MM/DD/YYYY"
+            value-format="YYYY-MM-DD"
+          />
+          <p class="example-value">Display: MM/DD/YYYY format</p>
+          <p class="example-value">Output: {{ valueCombined }}</p>
+        </div>
+      </div>
+
+      <div class="code-example">
+        <h4>Code Example:</h4>
+        <pre><code>&lt;!-- Returns Date object --&gt;
+&lt;EaDatePicker v-model="dateValue" /&gt;
+
+&lt;!-- Returns formatted string --&gt;
+&lt;EaDatePicker
+  v-model="stringValue"
+  value-format="DD/MM/YYYY"
+/&gt;
+
+&lt;!-- Different display vs output format --&gt;
+&lt;EaDatePicker
+  v-model="combinedValue"
+  date-format="MM/DD/YYYY"
+  value-format="YYYY-MM-DD"
+/&gt;</code></pre>
+      </div>
+    </section>
+
     <!-- Required Fields -->
     <section class="demo-section">
       <h2 class="section-title">Required Fields</h2>
@@ -181,6 +279,104 @@
   v-model="requiredDate"
   label="Birth Date"
   required
+/&gt;</code></pre>
+      </div>
+    </section>
+
+    <!-- Error and Disabled States -->
+    <section class="demo-section">
+      <h2 class="section-title">Error and Disabled States</h2>
+      <div class="example-grid">
+        <div class="example-item">
+          <h3>Error State</h3>
+          <EaDatePicker
+            v-model="errorDate"
+            label="Invalid Date"
+            placeholder="This field has an error"
+            error
+            error-message="Please select a valid date"
+          />
+        </div>
+
+        <div class="example-item">
+          <h3>Is-Invalid State</h3>
+          <EaDatePicker
+            v-model="invalidDate"
+            label="Invalid Date Field"
+            placeholder="Using is-invalid prop"
+            is-invalid
+            error-message="Date must be in the future"
+          />
+        </div>
+
+        <div class="example-item">
+          <h3>Disabled State</h3>
+          <EaDatePicker
+            v-model="disabledDate"
+            label="Disabled Date"
+            placeholder="Cannot select date"
+            disabled
+          />
+        </div>
+
+        <div class="example-item">
+          <h3>Disabled with Value</h3>
+          <EaDatePicker
+            v-model="disabledWithValueDate"
+            label="Read-only Date"
+            placeholder="Fixed date"
+            disabled
+          />
+        </div>
+
+        <div class="example-item">
+          <h3>Required + Error</h3>
+          <EaDatePicker
+            v-model="requiredErrorDate"
+            label="Required Field"
+            placeholder="This field is required"
+            required
+            error
+            error-message="This field is required"
+          />
+        </div>
+
+        <div class="example-item">
+          <h3>Range with Error</h3>
+          <EaDatePicker
+            v-model="rangeErrorDate"
+            label="Invalid Range"
+            placeholder="Select date range"
+            range
+            is-invalid
+            error-message="End date must be after start date"
+          />
+        </div>
+      </div>
+
+      <div class="code-example">
+        <h4>Code Example:</h4>
+        <pre><code>&lt;!-- Error State --&gt;
+&lt;EaDatePicker
+  v-model="errorDate"
+  label="Invalid Date"
+  error
+  error-message="Please select a valid date"
+/&gt;
+
+&lt;!-- Is-Invalid State --&gt;
+&lt;EaDatePicker
+  v-model="invalidDate"
+  label="Invalid Date Field"
+  is-invalid
+  error-message="Date must be in the future"
+/&gt;
+
+&lt;!-- Disabled State --&gt;
+&lt;EaDatePicker
+  v-model="disabledDate"
+  label="Disabled Date"
+  disabled
 /&gt;</code></pre>
       </div>
     </section>
@@ -310,6 +506,12 @@
               <td>Date display format</td>
             </tr>
             <tr>
+              <td>valueFormat</td>
+              <td>string</td>
+              <td>undefined</td>
+              <td>Format string for output value (e.g., 'DD/MM/YYYY'). If provided, returns formatted string instead of Date object</td>
+            </tr>
+            <tr>
               <td>panelWidth</td>
               <td>number</td>
               <td>300</td>
@@ -321,12 +523,36 @@
               <td>false</td>
               <td>Mark field as required (shows red asterisk)</td>
             </tr>
+            <tr>
+              <td>disabled</td>
+              <td>boolean</td>
+              <td>false</td>
+              <td>Disable the date picker</td>
+            </tr>
+            <tr>
+              <td>error</td>
+              <td>boolean</td>
+              <td>false</td>
+              <td>Show error state with red border</td>
+            </tr>
+            <tr>
+              <td>isInvalid</td>
+              <td>boolean</td>
+              <td>false</td>
+              <td>Show invalid state with red border (alias for error)</td>
+            </tr>
+            <tr>
+              <td>errorMessage</td>
+              <td>string</td>
+              <td>undefined</td>
+              <td>Error message to display below the input</td>
+            </tr>
           </tbody>
         </table>
       </div>
     </section>
 
-    <!-- Debug Section -->
+        <!-- Debug Section -->
     <section class="demo-section">
       <h2 class="section-title">Debug Values</h2>
       <div class="debug-grid">
@@ -338,7 +564,28 @@
           <h4>Date Ranges:</h4>
           <pre>{{ JSON.stringify({ dateRange, vacationRange, projectRange }, null, 2) }}</pre>
         </div>
-      </div>
+        <div class="debug-item">
+          <h4>Value Format Examples:</h4>
+          <pre>{{ JSON.stringify({
+            valueDefault: { type: typeof valueDefault, value: valueDefault },
+            valueString: { type: typeof valueString, value: valueString },
+            valueISOString: { type: typeof valueISOString, value: valueISOString },
+            valueRangeString: { type: typeof valueRangeString, value: valueRangeString },
+            valueCombined: { type: typeof valueCombined, value: valueCombined }
+          }, null, 2) }}</pre>
+        </div>
+        <div class="debug-item">
+          <h4>Error & Disabled States:</h4>
+          <pre>{{ JSON.stringify({
+            errorDate: formatDate(errorDate),
+            invalidDate: formatDate(invalidDate),
+            disabledDate: formatDate(disabledDate),
+            disabledWithValueDate: formatDate(disabledWithValueDate),
+            requiredErrorDate: formatDate(requiredErrorDate),
+            rangeErrorDate: formatDateRange(rangeErrorDate)
+          }, null, 2) }}</pre>
+        </div>
+    </div>
     </section>
   </div>
 </template>
@@ -357,14 +604,35 @@ const sizeSmall = ref<Date | null>(null);
 const sizeNormal = ref<Date | null>(null);
 const sizeLarge = ref<Date | null>(null);
 
-// Format examples
+// Format examples (display)
 const formatDefault = ref<Date | null>(null);
 const formatUS = ref<Date | null>(null);
 const formatISO = ref<Date | null>(null);
 
+// Value format examples (output)
+const valueDefault = ref<Date | null>(null);
+const valueString = ref<string | null>(null);
+const valueISOString = ref<string | null>(null);
+const valueRangeString = ref<[string, string] | null>(null);
+const valueRangeDate = ref<[Date, Date] | null>(null);
+const valueCombined = ref<string | null>(null);
+
 // Required examples
 const requiredDate = ref<Date | null>(null);
 const optionalDate = ref<Date | null>(null);
+
+// Error and disabled state examples
+const errorDate = ref<Date | null>(null);
+const invalidDate = ref<Date | null>(null);
+const disabledDate = ref<Date | null>(null);
+const createDisabledDateValue = () => {
+  const date = new Date();
+  date.setDate(date.getDate() + 7); // 7 days from now
+  return date;
+};
+const disabledWithValueDate = ref<Date | null>(createDisabledDateValue());
+const requiredErrorDate = ref<Date | null>(null);
+const rangeErrorDate = ref<[Date, Date] | null>(null);
 
 // Range examples
 const vacationRange = ref<[Date, Date] | null>(null);
