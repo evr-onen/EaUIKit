@@ -1,14 +1,13 @@
 <template>
-  <div class="ea-accordion">
+  <div :class="['ea-accordion', wrapperClass]">
     <div
       v-for="(item, index) in accordionItems"
       :key="index"
-      class="ea-accordion-item"
+      :class="['ea-accordion-item', itemClass]"
     >
       <div
-        class="ea-accordion-header"
+        :class="['ea-accordion-header', headerClass, { 'is-open': openItems.includes(index) }]"
         @click="togglePanelHandler(index)"
-        :class="{ 'is-open': openItems.includes(index) }"
       >
         <slot
           :name="`header-${index+1}`"
@@ -17,14 +16,13 @@
           :isOpen="openItems.includes(index)"
           :toggle="() => togglePanelHandler(index)"
         >
-          <h3>{{ (item as AccordionItem).title || `Item ${index + 1}` }}</h3>
-          <span class="toggle-icon">{{ openItems.includes(index) ? '−' : '+' }}</span>
+          <h3 :class="titleClass">{{ (item as AccordionItem).title || `Item ${index + 1}` }}</h3>
+          <span :class="['toggle-icon', toggleIconClass]">{{ openItems.includes(index) ? '−' : '+' }}</span>
         </slot>
       </div>
 
       <div
-        class="ea-accordion-content"
-        :class="{ 'is-open': openItems.includes(index) }"
+        :class="['ea-accordion-content', contentClass, { 'is-open': openItems.includes(index) }]"
       >
         <slot
           :name="`content-${index+1}`"
@@ -38,13 +36,13 @@
     </div>
 
     <!-- If no items provided, show default structure -->
-    <div v-if="accordionItems.length === 0" class="ea-accordion-item">
-      <div class="ea-accordion-header" @click="togglePanelHandler(0)">
+    <div v-if="accordionItems.length === 0" :class="['ea-accordion-item', itemClass]">
+      <div :class="['ea-accordion-header', headerClass]" @click="togglePanelHandler(0)">
         <slot name="header" :isOpen="openItems.includes(0)">
-          <h3>{{ title || 'Accordion Item' }}</h3>
+          <h3 :class="titleClass">{{ title || 'Accordion Item' }}</h3>
         </slot>
       </div>
-      <div class="ea-accordion-content" :class="{ 'is-open': openItems.includes(0) }">
+      <div :class="['ea-accordion-content', contentClass, { 'is-open': openItems.includes(0) }]">
         <slot :isOpen="openItems.includes(0)"></slot>
       </div>
     </div>
@@ -63,6 +61,31 @@ const props = defineProps({
   allowMultiple: {
     type: Boolean,
     default: false
+  },
+  // CSS Class Names
+  wrapperClass: {
+    type: String,
+    default: ''
+  },
+  itemClass: {
+    type: String,
+    default: ''
+  },
+  headerClass: {
+    type: String,
+    default: ''
+  },
+  contentClass: {
+    type: String,
+    default: ''
+  },
+  titleClass: {
+    type: String,
+    default: ''
+  },
+  toggleIconClass: {
+    type: String,
+    default: ''
   }
 });
 
