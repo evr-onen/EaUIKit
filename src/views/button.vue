@@ -63,20 +63,69 @@
       <!-- Loading & Disabled States -->
       <div class="bg-white rounded-lg p-6 shadow-sm">
         <h2 class="text-2xl font-semibold mb-6 text-gray-800">Loading & Disabled States</h2>
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-          <EaButton label="Normal" variant="primary" />
-          <EaButton label="Loading" variant="primary" :loading="true" />
-          <EaButton label="Disabled" variant="primary" :disabled="true" />
-          <EaButton label="Loading & Disabled" variant="secondary" :loading="true" :disabled="true" />
+        <div class="space-y-6">
+
+          <!-- Basic Loading States -->
+          <div>
+            <h3 class="text-lg font-medium mb-4 text-gray-700">Basic Loading States</h3>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+              <EaButton label="Normal" variant="primary" />
+              <EaButton label="Loading" variant="primary" :loading="true" />
+              <EaButton label="Disabled" variant="primary" :disabled="true" />
+              <EaButton label="Loading & Disabled" variant="secondary" :loading="true" :disabled="true" />
+            </div>
+          </div>
+
+          <!-- Loading with Icons -->
+          <div>
+            <h3 class="text-lg font-medium mb-4 text-gray-700">Loading with Icons (Centered Spinner)</h3>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+              <EaButton label="Save" variant="success" left-icon="check" :loading="true" />
+              <EaButton label="Process" variant="primary" left-icon="settings" right-icon="chavron-down" :loading="true" />
+              <EaButton variant="danger" left-icon="cross" :icon-only="true" :loading="true" />
+              <EaButton label="Upload" variant="info" right-icon="plus" :loading="true" />
+            </div>
+          </div>
+
+          <!-- Loading Different Sizes -->
+          <div>
+            <h3 class="text-lg font-medium mb-4 text-gray-700">Loading Different Sizes</h3>
+            <div class="flex flex-wrap items-center gap-4">
+              <EaButton label="Extra Small" size="xs" variant="primary" :loading="true" />
+              <EaButton label="Small" size="sm" variant="primary" :loading="true" />
+              <EaButton label="Medium" size="md" variant="primary" :loading="true" />
+              <EaButton label="Large" size="lg" variant="primary" :loading="true" />
+              <EaButton label="Extra Large" size="xl" variant="primary" :loading="true" />
+            </div>
+          </div>
+
+          <!-- Loading Gradient Buttons -->
+          <div>
+            <h3 class="text-lg font-medium mb-4 text-gray-700">Loading Gradient Buttons</h3>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+              <EaButton label="Sunset Loading" variant="gradient" gradient="sunset" :loading="true" />
+              <EaButton label="Ocean Loading" variant="gradient" gradient="ocean" :loading="true" />
+              <EaButton label="Rainbow Loading" variant="gradient" gradient="rainbow" :loading="true" />
+            </div>
+          </div>
+
         </div>
 
         <!-- Code Example -->
         <div class="mt-6">
           <h3 class="text-lg font-medium mb-3 text-gray-700">💻 Code Example</h3>
           <div class="bg-gray-900 rounded-lg p-4 text-green-400 font-mono text-sm overflow-x-auto">
-            <pre><code>&lt;EaButton label="Normal" variant="primary" /&gt;
+            <pre><code>&lt;!-- Basic States --&gt;
+&lt;EaButton label="Normal" variant="primary" /&gt;
 &lt;EaButton label="Loading" variant="primary" :loading="true" /&gt;
-&lt;EaButton label="Disabled" variant="primary" :disabled="true" /&gt;</code></pre>
+&lt;EaButton label="Disabled" variant="primary" :disabled="true" /&gt;
+
+&lt;!-- Loading with Icons (Spinner will be centered) --&gt;
+&lt;EaButton label="Save" variant="success" left-icon="check" :loading="true" /&gt;
+&lt;EaButton variant="danger" left-icon="cross" :icon-only="true" :loading="true" /&gt;
+
+&lt;!-- Loading Gradient --&gt;
+&lt;EaButton label="Processing" variant="gradient" gradient="sunset" :loading="true" /&gt;</code></pre>
           </div>
         </div>
       </div>
@@ -123,8 +172,8 @@
 
               <!-- Icon Props -->
               <tr><td colspan="4" class="bg-red-50 font-semibold px-4 py-2 border border-gray-300">Icon Props</td></tr>
-              <tr><td class="border border-gray-300 px-4 py-2 font-mono">leftIcon</td><td class="border border-gray-300 px-4 py-2">string</td><td class="border border-gray-300 px-4 py-2">-</td><td class="border border-gray-300 px-4 py-2">Left icon class</td></tr>
-              <tr><td class="border border-gray-300 px-4 py-2 font-mono">rightIcon</td><td class="border border-gray-300 px-4 py-2">string</td><td class="border border-gray-300 px-4 py-2">-</td><td class="border border-gray-300 px-4 py-2">Right icon class</td></tr>
+              <tr><td class="border border-gray-300 px-4 py-2 font-mono">leftIcon</td><td class="border border-gray-300 px-4 py-2">string</td><td class="border border-gray-300 px-4 py-2">-</td><td class="border border-gray-300 px-4 py-2">SVG filename from assets/svg folder</td></tr>
+              <tr><td class="border border-gray-300 px-4 py-2 font-mono">rightIcon</td><td class="border border-gray-300 px-4 py-2">string</td><td class="border border-gray-300 px-4 py-2">-</td><td class="border border-gray-300 px-4 py-2">SVG filename from assets/svg folder</td></tr>
               <tr><td class="border border-gray-300 px-4 py-2 font-mono">iconOnly</td><td class="border border-gray-300 px-4 py-2">boolean</td><td class="border border-gray-300 px-4 py-2">false</td><td class="border border-gray-300 px-4 py-2">Icon only button</td></tr>
               <tr><td class="border border-gray-300 px-4 py-2 font-mono">iconSize</td><td class="border border-gray-300 px-4 py-2">IconSize</td><td class="border border-gray-300 px-4 py-2">'md'</td><td class="border border-gray-300 px-4 py-2">Icon size</td></tr>
 
@@ -210,19 +259,19 @@
 
           <!-- Icons -->
           <div>
-            <h3 class="text-lg font-medium mb-3 text-gray-700">With Icons</h3>
+            <h3 class="text-lg font-medium mb-3 text-gray-700">With Icons (New EaIcons System)</h3>
             <div class="bg-gray-900 rounded-lg p-4 text-green-400 font-mono text-sm overflow-x-auto">
-              <pre><code>&lt;EaButton label="Left Icon" variant="primary"&gt;
-  &lt;template #prefixIcon&gt;
-    &lt;IconCross class="w-4 h-4" /&gt;
-  &lt;/template&gt;
-&lt;/EaButton&gt;
+              <pre><code>&lt;!-- Left Icon --&gt;
+&lt;EaButton label="Add Item" variant="primary" left-icon="plus" /&gt;
 
-&lt;EaButton variant="danger" :icon-only="true"&gt;
-  &lt;template #prefixIcon&gt;
-    &lt;IconCross class="w-5 h-5" /&gt;
-  &lt;/template&gt;
-&lt;/EaButton&gt;</code></pre>
+&lt;!-- Right Icon --&gt;
+&lt;EaButton label="Next" variant="primary" right-icon="chavron-down" /&gt;
+
+&lt;!-- Icon Only --&gt;
+&lt;EaButton variant="primary" left-icon="plus" :icon-only="true" /&gt;
+
+&lt;!-- Both Icons --&gt;
+&lt;EaButton label="Process" variant="primary" left-icon="settings" right-icon="chavron-down" /&gt;</code></pre>
             </div>
           </div>
 
@@ -309,9 +358,12 @@ const handleButtonClick = () => {
         </div>
       </div>
 
-      <!-- Icons -->
+      <!-- Legacy Icons (Slot-based) -->
       <div class="bg-white rounded-lg p-6 shadow-sm">
-        <h2 class="text-2xl font-semibold mb-6 text-gray-800">With Icons</h2>
+        <h2 class="text-2xl font-semibold mb-6 text-gray-800">Legacy Icons (Slot-based)</h2>
+        <p class="text-sm text-gray-600 mb-4">
+          <strong>Note:</strong> This is the old way of adding icons using slots. The new way is using the <code>leftIcon</code> and <code>rightIcon</code> props with SVG filenames.
+        </p>
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           <EaButton label="Left Icon" variant="primary">
             <template #prefixIcon>
@@ -349,7 +401,7 @@ const handleButtonClick = () => {
 
         <!-- Code Example -->
         <div class="mt-6">
-          <h3 class="text-lg font-medium mb-3 text-gray-700">💻 Code Example</h3>
+          <h3 class="text-lg font-medium mb-3 text-gray-700">💻 Code Example (Legacy)</h3>
           <div class="bg-gray-900 rounded-lg p-4 text-green-400 font-mono text-sm overflow-x-auto">
             <pre><code>&lt;EaButton label="Left Icon" variant="primary"&gt;
   &lt;template #prefixIcon&gt;
@@ -701,6 +753,94 @@ const handleButtonClick = () => {
         </div>
       </div>
 
+      <!-- Icon Buttons -->
+      <div class="bg-white rounded-lg p-6 shadow-sm">
+        <h2 class="text-2xl font-semibold mb-6 text-gray-800">🎨 Icon Buttons</h2>
+        <div class="space-y-6">
+
+          <!-- Left Icons -->
+          <div>
+            <h3 class="text-lg font-medium mb-4 text-gray-700">Left Icons</h3>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+              <EaButton label="Add Item" variant="primary" left-icon="plus" />
+              <EaButton label="Success" variant="success" left-icon="check" />
+              <EaButton label="Settings" variant="secondary" left-icon="settings" />
+              <EaButton label="Dashboard" variant="info" left-icon="dashboard" />
+              <EaButton label="Warning" variant="warning" left-icon="warning" />
+              <EaButton label="Error" variant="danger" left-icon="error" />
+            </div>
+          </div>
+
+          <!-- Right Icons -->
+          <div>
+            <h3 class="text-lg font-medium mb-4 text-gray-700">Right Icons</h3>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+              <EaButton label="Next" variant="primary" right-icon="chavron-down" />
+              <EaButton label="Menu" variant="secondary" right-icon="menu" />
+              <EaButton label="Tasks" variant="info" right-icon="tasks" />
+              <EaButton label="Palette" variant="success" right-icon="palette" />
+              <EaButton label="Notifications" variant="warning" right-icon="notification" />
+              <EaButton label="Close" variant="danger" right-icon="cross" />
+            </div>
+          </div>
+
+          <!-- Icon Only Buttons -->
+          <div>
+            <h3 class="text-lg font-medium mb-4 text-gray-700">Icon Only Buttons</h3>
+            <div class="flex flex-wrap gap-4">
+              <EaButton variant="primary" left-icon="plus" :icon-only="true" />
+              <EaButton variant="success" left-icon="check" :icon-only="true" />
+              <EaButton variant="danger" left-icon="cross" :icon-only="true" />
+              <EaButton variant="info" left-icon="info" :icon-only="true" />
+              <EaButton variant="warning" left-icon="warning" :icon-only="true" />
+              <EaButton variant="secondary" left-icon="settings" :icon-only="true" />
+            </div>
+          </div>
+
+          <!-- Icon Sizes -->
+          <div>
+            <h3 class="text-lg font-medium mb-4 text-gray-700">Icon Sizes</h3>
+            <div class="flex flex-wrap items-center gap-4">
+              <EaButton label="Small" variant="primary" left-icon="sparkles" icon-size="sm" />
+              <EaButton label="Medium" variant="primary" left-icon="sparkles" icon-size="md" />
+              <EaButton label="Large" variant="primary" left-icon="sparkles" icon-size="lg" />
+            </div>
+          </div>
+
+          <!-- Both Icons -->
+          <div>
+            <h3 class="text-lg font-medium mb-4 text-gray-700">Both Left & Right Icons</h3>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+              <EaButton label="Process" variant="primary" left-icon="settings" right-icon="chavron-down" />
+              <EaButton label="Complete" variant="success" left-icon="check" right-icon="success" />
+              <EaButton label="Menu" variant="secondary" left-icon="bars" right-icon="menu" />
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Code Example -->
+        <div class="mt-6">
+          <h3 class="text-lg font-medium mb-3 text-gray-700">💻 Code Example</h3>
+          <div class="bg-gray-900 rounded-lg p-4 text-green-400 font-mono text-sm overflow-x-auto">
+            <pre><code>&lt;!-- Left Icon --&gt;
+&lt;EaButton label="Add Item" variant="primary" left-icon="plus" /&gt;
+
+&lt;!-- Right Icon --&gt;
+&lt;EaButton label="Next" variant="primary" right-icon="chavron-down" /&gt;
+
+&lt;!-- Icon Only --&gt;
+&lt;EaButton variant="primary" left-icon="plus" :icon-only="true" /&gt;
+
+&lt;!-- Icon Size --&gt;
+&lt;EaButton label="Large Icon" variant="primary" left-icon="sparkles" icon-size="lg" /&gt;
+
+&lt;!-- Both Icons --&gt;
+&lt;EaButton label="Process" variant="primary" left-icon="settings" right-icon="chavron-down" /&gt;</code></pre>
+          </div>
+        </div>
+      </div>
+
       <!-- Interactive Demo -->
       <div class="bg-white rounded-lg p-6 shadow-sm">
         <h2 class="text-2xl font-semibold mb-6 text-gray-800">Interactive Demo</h2>
@@ -1001,14 +1141,14 @@ const handleButtonClick = () => {
                 <td class="border border-gray-300 px-4 py-2 text-blue-600 font-mono">leftIcon</td>
                 <td class="border border-gray-300 px-4 py-2 text-gray-600 font-mono">string</td>
                 <td class="border border-gray-300 px-4 py-2 text-gray-500">-</td>
-                <td class="border border-gray-300 px-4 py-2">CSS class for left icon</td>
+                <td class="border border-gray-300 px-4 py-2">SVG filename from assets/svg folder (e.g., 'plus', 'check')</td>
                 <td class="border border-gray-300 px-4 py-2 text-sm text-gray-500">Icon</td>
               </tr>
               <tr>
                 <td class="border border-gray-300 px-4 py-2 text-blue-600 font-mono">rightIcon</td>
                 <td class="border border-gray-300 px-4 py-2 text-gray-600 font-mono">string</td>
                 <td class="border border-gray-300 px-4 py-2 text-gray-500">-</td>
-                <td class="border border-gray-300 px-4 py-2">CSS class for right icon</td>
+                <td class="border border-gray-300 px-4 py-2">SVG filename from assets/svg folder (e.g., 'plus', 'check')</td>
                 <td class="border border-gray-300 px-4 py-2 text-sm text-gray-500">Icon</td>
               </tr>
               <tr class="bg-gray-25">

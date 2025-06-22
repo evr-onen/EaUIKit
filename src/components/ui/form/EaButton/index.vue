@@ -16,11 +16,13 @@
       :class="{ 'ea-spinner-sm': size === 'xs' || size === 'sm' }"
     />
 
-    <!-- Left icon -->
-    <i
+    <!-- Left icon using EaIcons -->
+    <EaIcons
       v-if="leftIcon && !loading"
-      :class="[leftIcon, iconClasses]"
-      aria-hidden="true"
+      :name="leftIcon"
+      :size="iconSizeValue"
+      :color="iconColor"
+      :class="iconClasses"
     />
 
     <!-- Prefix icon slot (for custom icons) -->
@@ -34,11 +36,13 @@
     <!-- Default slot for custom content -->
     <slot v-if="!label && !iconOnly" />
 
-    <!-- Right icon -->
-    <i
+    <!-- Right icon using EaIcons -->
+    <EaIcons
       v-if="rightIcon && !loading"
-      :class="[rightIcon, iconClasses]"
-      aria-hidden="true"
+      :name="rightIcon"
+      :size="iconSizeValue"
+      :color="iconColor"
+      :class="iconClasses"
     />
 
     <!-- Suffix icon slot (for custom icons) -->
@@ -49,6 +53,7 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
 import type { IButtonProps } from './button.types'
+import EaIcons from '../../EaIcons.vue'
 import './button.style.scss'
 
 // Template ref
@@ -159,8 +164,22 @@ const computedStyles = computed(() => {
 // Icon classes
 const iconClasses = computed(() => {
   const classes = ['ea-button-icon']
-  classes.push(`ea-button-icon--${props.iconSize}`)
   return classes
+})
+
+// Icon size value - Convert iconSize prop to pixel value for EaIcons
+const iconSizeValue = computed(() => {
+  const sizeMap = {
+    sm: '14px',
+    md: '16px',
+    lg: '20px'
+  }
+  return sizeMap[props.iconSize] || '16px'
+})
+
+// Icon color - Use textColour if provided, otherwise let CSS handle it
+const iconColor = computed(() => {
+  return props.textColour || undefined
 })
 
 // Ripple effect function - Enhanced for gradients

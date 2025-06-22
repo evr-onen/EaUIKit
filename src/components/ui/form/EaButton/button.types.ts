@@ -19,9 +19,9 @@ export interface IButtonProps {
   loading?: boolean
   disabled?: boolean
 
-  // Icon props
-  leftIcon?: string
-  rightIcon?: string
+  // Icon props - Now accepts SVG filenames from assets/svg folder
+  leftIcon?: string  // SVG filename without extension (e.g., 'check', 'plus')
+  rightIcon?: string // SVG filename without extension (e.g., 'check', 'plus')
   iconOnly?: boolean
   iconSize?: IconSize
 
