@@ -174,10 +174,23 @@ const featureItems = ref([
         <p>Generate accordion items dynamically from data.</p>
 
         <div class="example-demo">
-          <div class="controls">
-            <button @click="addFAQ" class="add-button">Add FAQ</button>
-            <button @click="removeFAQ" class="remove-button" :disabled="dynamicFAQs.length <= 1">Remove FAQ</button>
-          </div>
+                  <div class="controls">
+          <EaButton
+            label="Add FAQ"
+            variant="primary"
+            size="sm"
+            @click="addFAQ"
+            leftIcon="plus"
+          />
+          <EaButton
+            label="Remove FAQ"
+            variant="danger"
+            size="sm"
+            @click="removeFAQ"
+            :disabled="dynamicFAQs.length <= 1"
+            leftIcon="cross"
+          />
+        </div>
 
           <Accordion :items="dynamicFAQsFormatted" :allowMultiple="true">
             <template
@@ -208,8 +221,8 @@ const featureItems = ref([
            <h4>Code</h4>
                                  <pre><code>&lt;template&gt;
    &lt;div class="controls"&gt;
-     &lt;button @click="addFAQ"&gt;Add FAQ&lt;/button&gt;
-     &lt;button @click="removeFAQ"&gt;Remove FAQ&lt;/button&gt;
+     &lt;EaButton label="Add FAQ" variant="primary" size="sm" @click="addFAQ" leftIcon="plus" /&gt;
+     &lt;EaButton label="Remove FAQ" variant="danger" size="sm" @click="removeFAQ" :disabled="dynamicFAQs.length <= 1" leftIcon="cross" /&gt;
    &lt;/div&gt;
 
    &lt;Accordion :allowMultiple="true"&gt;
@@ -239,6 +252,7 @@ const featureItems = ref([
 
 &lt;script setup&gt;
 import { ref } from 'vue';
+import EaButton from '@/components/ui/form/EaButton/index.vue';
 
 const dynamicFAQs = ref([
   {
@@ -490,6 +504,7 @@ const removeFAQ = () => {
 <script setup lang="ts">
 import { ref, computed } from 'vue';
 import Accordion from '@/components/ui/panels/EaAccordion/EaAccordion.vue';
+import EaButton from '@/components/ui/form/EaButton/index.vue';
 
 // Basic example data
 const basicItems = ref([
@@ -849,39 +864,6 @@ td code {
   margin-bottom: 1rem;
   display: flex;
   gap: 0.5rem;
-}
-
-.add-button,
-.remove-button {
-  padding: 0.5rem 1rem;
-  border: none;
-  border-radius: 6px;
-  font-weight: 500;
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
-
-.add-button {
-  background: #2ecc71;
-  color: white;
-}
-
-.add-button:hover {
-  background: #27ae60;
-}
-
-.remove-button {
-  background: #e74c3c;
-  color: white;
-}
-
-.remove-button:hover:not(:disabled) {
-  background: #c0392b;
-}
-
-.remove-button:disabled {
-  background: #bdc3c7;
-  cursor: not-allowed;
 }
 
 /* Responsive */
