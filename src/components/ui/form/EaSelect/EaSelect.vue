@@ -1,6 +1,9 @@
 <template>
-  <div class="ea-select" :class="{ 'ea-select--disabled': disabled, 'ea-select--error': error }">
-    <small v-if="label" class="ea-select__label capitalize text-textPrimary">{{ label }}</small>
+  <div class="ea-select" :class="{ 'ea-select--disabled': disabled, 'ea-select--error': error, 'ea-select--required': required }">
+    <small v-if="label" class="ea-select__label capitalize text-textPrimary">
+      {{ label }}
+      <span v-if="required" class="ea-select__required-asterisk">*</span>
+    </small>
     <Dropdown v-model="selectValue" class="w-full" typeCode="ea-Select" >
       <template #default="{openPanel}">
         <div class="ea-select__placeholder h-[2.0625rem]"
@@ -82,7 +85,8 @@ const props = withDefaults(defineProps<ISelectProps>(), {
   disabled: false,
   error: false,
   clearable: false,
-  isLoading: false
+  isLoading: false,
+  required: false
 })
 const selectValue = defineModel<OptionsType | null>()
 

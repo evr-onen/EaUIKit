@@ -10,6 +10,7 @@ errorMessage   ?: string
 clearable      ?: boolean
 isLoading      ?: boolean
 onLoad         ?: () => Promise<OptionsType[]>
+required       ?: boolean
 }
 
 export type OptionsType = {

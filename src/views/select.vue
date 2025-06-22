@@ -53,6 +53,62 @@ const basicOptions = [
       </div>
     </section>
 
+    <!-- Required Fields -->
+    <section class="space-y-6">
+      <div class="border-b border-gray-200 pb-4">
+        <h2 class="text-2xl font-semibold text-gray-900 mb-2">Required Fields</h2>
+        <p class="text-gray-600">Mark fields as required with a red asterisk (*) indicator.</p>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <div class="space-y-4">
+          <h3 class="text-lg font-medium text-gray-800">Demo</h3>
+          <div class="bg-gray-50 p-6 rounded-lg space-y-4">
+            <div class="w-80">
+              <EaSelect
+                placeholder="This field is required"
+                v-model="requiredValue"
+                :options="basicOptions"
+                label="Required Field"
+                required
+              />
+            </div>
+            <div class="w-80">
+              <EaSelect
+                placeholder="This field is optional"
+                v-model="optionalValue"
+                :options="basicOptions"
+                label="Optional Field"
+              />
+            </div>
+            <div class="mt-4 text-sm text-gray-600">
+              Required field value: <code class="bg-gray-200 px-2 py-1 rounded">{{ requiredValue?.name || 'None' }}</code>
+            </div>
+          </div>
+        </div>
+
+        <div class="space-y-4">
+          <h3 class="text-lg font-medium text-gray-800">Code</h3>
+          <pre class="bg-gray-900 text-gray-100 p-4 rounded-lg overflow-x-auto text-sm"><code>&lt;!-- Required Field --&gt;
+&lt;EaSelect
+  placeholder="This field is required"
+  v-model="requiredValue"
+  :options="basicOptions"
+  label="Required Field"
+  required
+/&gt;
+
+&lt;!-- Optional Field --&gt;
+&lt;EaSelect
+  placeholder="This field is optional"
+  v-model="optionalValue"
+  :options="basicOptions"
+  label="Optional Field"
+/&gt;</code></pre>
+        </div>
+      </div>
+    </section>
+
     <!-- Sizes -->
     <section class="space-y-6">
       <div class="border-b border-gray-200 pb-4">
@@ -436,6 +492,12 @@ const complexOptions = [
               <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">false</td>
               <td class="px-6 py-4 text-sm text-gray-500">Shows loading state with spinner</td>
             </tr>
+            <tr>
+              <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">required</td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">boolean</td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">false</td>
+              <td class="px-6 py-4 text-sm text-gray-500">Shows red asterisk (*) next to label for required fields</td>
+            </tr>
           </tbody>
         </table>
       </div>
@@ -591,6 +653,7 @@ const complexOptions = [
   clearable?: boolean
   isLoading?: boolean
   onLoad?: () => Promise&lt;OptionsType[]&gt;
+  required?: boolean
 }
 
 type OptionsType = {
@@ -627,6 +690,10 @@ const basicOptions = [
   { id: 4, name: 'React' },
   { id: 5, name: 'Angular' }
 ]
+
+// Required fields
+const requiredValue = ref(null)
+const optionalValue = ref(null)
 
 // Different sizes
 const sizeSmallValue = ref(null)
