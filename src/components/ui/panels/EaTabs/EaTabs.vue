@@ -12,7 +12,12 @@
           :disabled="tab.disabled"
         >
           <EaIcons v-if="tab.icon" :name="tab.icon" class="ea-tabs__icon h-full " :class="tab.iconClass" />
-          <span class="ea-tabs__label">{{ tab.label }}</span>
+          <span class="ea-tabs__label">
+            <!-- Invisible bold text to maintain width -->
+            <span class="ea-tabs__label-bold">{{ tab.label }}</span>
+            <!-- Visible text with dynamic weight -->
+            <span class="ea-tabs__label-visible">{{ tab.label }}</span>
+          </span>
           <span v-if="tab.badge" class="ea-tabs__badge">{{ tab.badge }}</span>
         </button>
       </div>
@@ -145,9 +150,10 @@ onMounted(() => {
     font-size: 0.875rem;
     font-weight: 500;
     color: #6b7280;
-    transition: all 0.2s ease;
+    transition: color 0.2s ease, background-color 0.2s ease;
     border-radius: 0.375rem 0.375rem 0 0;
     white-space: nowrap;
+    min-width: fit-content;
 
     &:hover:not(:disabled) {
       color: #374151;
@@ -161,7 +167,10 @@ onMounted(() => {
 
     &--active {
       color: #3b82f6;
-      font-weight: 600;
+
+      .ea-tabs__label-visible {
+        font-weight: 600;
+      }
     }
   }
 
@@ -171,6 +180,22 @@ onMounted(() => {
 
   &__label {
     flex: 1;
+    position: relative;
+  }
+
+  &__label-bold {
+    font-weight: 600;
+    visibility: hidden;
+    display: block;
+  }
+
+  &__label-visible {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    font-weight: 500;
+    transition: font-weight 0.2s ease;
   }
 
   &__badge {
@@ -223,6 +248,10 @@ onMounted(() => {
       background-color: #3b82f6;
       color: white;
 
+      .ea-tabs__label-visible {
+        font-weight: 600;
+      }
+
       &:hover {
         background-color: #3b82f6;
         color: white;
@@ -243,6 +272,7 @@ onMounted(() => {
   .ea-tabs__tab {
     border-radius: 0;
     padding-bottom: 0.75rem;
+    border-bottom: 2px solid transparent; // Add transparent border to prevent layout shift
 
     &:hover:not(:disabled) {
       background-color: transparent;
@@ -250,6 +280,10 @@ onMounted(() => {
 
     &--active {
       border-bottom: 2px solid #3b82f6;
+
+      .ea-tabs__label-visible {
+        font-weight: 600;
+      }
     }
   }
 
