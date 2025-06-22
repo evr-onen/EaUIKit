@@ -54,6 +54,52 @@
         </div>
       </section>
 
+      <!-- Required Fields -->
+      <section class="bg-white rounded-lg shadow-sm border p-6 mb-8">
+        <h2 class="text-2xl font-semibold mb-4 text-gray-800">Required Fields</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+          <div>
+            <h3 class="text-sm font-medium mb-2 text-gray-700">Required Field</h3>
+            <EaMultiselect
+              placeholder="This field is required"
+              v-model="requiredValue"
+              :options="sampleOptions"
+              label="Required Field"
+              required
+            />
+          </div>
+          <div>
+            <h3 class="text-sm font-medium mb-2 text-gray-700">Optional Field</h3>
+            <EaMultiselect
+              placeholder="This field is optional"
+              v-model="optionalValue"
+              :options="sampleOptions"
+              label="Optional Field"
+            />
+          </div>
+        </div>
+
+        <!-- Code Example -->
+        <div class="bg-gray-900 rounded-lg p-4 overflow-x-auto">
+          <pre class="text-green-400 text-sm"><code>&lt;!-- Required Field --&gt;
+&lt;EaMultiselect
+  placeholder="This field is required"
+  v-model="requiredValue"
+  :options="sampleOptions"
+  label="Required Field"
+  required
+/&gt;
+
+&lt;!-- Optional Field --&gt;
+&lt;EaMultiselect
+  placeholder="This field is optional"
+  v-model="optionalValue"
+  :options="sampleOptions"
+  label="Optional Field"
+/&gt;</code></pre>
+        </div>
+      </section>
+
       <!-- Component States -->
       <section class="bg-white rounded-lg shadow-sm border p-6 mb-8">
         <h2 class="text-2xl font-semibold mb-4 text-gray-800">Component States</h2>
@@ -429,6 +475,7 @@ const customLabelValue2 = ref([])
 // Additional values
 const hintValue = ref([])
 const requiredValue = ref([])
+const optionalValue = ref([])
 
 // Async values
 const asyncValue = ref([])

@@ -9,6 +9,10 @@
       
     } 
 
+    .ea-multiselect__required-asterisk{
+        @apply text-red-500 ml-1 font-bold;
+    }
+
     // placeholder section
     .ea-multiselect__placeholder{
         @apply px-[.625rem] border border-borderColor hover:border-placeholder rounded-lg  flex justify-between items-center capitalize

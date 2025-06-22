@@ -14,6 +14,7 @@ export interface IMultiselectProps{
   searchable     ?: boolean
   required       ?: boolean
   hint           ?: string
+  limit          ?: number
 }
 
 export type OptionsType = {

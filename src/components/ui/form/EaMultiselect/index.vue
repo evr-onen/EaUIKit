@@ -1,6 +1,9 @@
 <template>
-  <div class="ea-multiselect" :class="{ 'ea-multiselect--disabled': disabled, 'ea-multiselect--error': error }">
-    <small v-if="label" class="ea-multiselect__label capitalize text-textPrimary">{{ label }}</small>
+  <div class="ea-multiselect" :class="{ 'ea-multiselect--disabled': disabled, 'ea-multiselect--error': error, 'ea-multiselect--required': required }">
+    <small v-if="label" class="ea-multiselect__label capitalize text-textPrimary">
+      {{ label }}
+      <span v-if="required" class="ea-multiselect__required-asterisk">*</span>
+    </small>
     <Dropdown v-model="selectValues" class="w-full" typeCode="ea-Multiselect" >
       <template #default="{openPanel}">
         <div class="ea-multiselect__placeholder"
