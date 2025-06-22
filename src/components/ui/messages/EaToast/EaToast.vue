@@ -10,7 +10,7 @@
         >
           <div class="toast__content">
             <div class="toast__icon">
-              <EaIcons :name="toast.type" size="20" />
+              <EaIcons :name="getIconName(toast.type)" size="20" />
             </div>
             <div class="toast__message">
               {{ toast.message }}
@@ -45,7 +45,16 @@ const getToastClasses = (type: ToastMessage['type']) => {
   }
 }
 
-// Icons are now inline in the template for better performance and simplicity
+// Get icon name based on toast type
+const getIconName = (type: ToastMessage['type']) => {
+  const iconMap = {
+    success: 'success-message',
+    error: 'error-message',
+    warning: 'warning-message',
+    info: 'info-message'
+  }
+  return iconMap[type]
+}
 </script>
 
 <style scoped>
