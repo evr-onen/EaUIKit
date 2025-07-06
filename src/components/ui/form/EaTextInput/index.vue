@@ -103,7 +103,7 @@
 import './textinput.style.scss';
 import { ref, computed, watch, nextTick } from 'vue';
 import type { ITextinputProps } from './textinput.types';
-import Icon from '@/components/ui/EaIcons.vue';
+import Icon from '@/components/ui/EaIcon.vue';
 
 // Model
 const modelValue = defineModel<string | number>({ default: '' });

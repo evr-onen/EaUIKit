@@ -95,7 +95,7 @@ import { ref, computed, onMounted, watch } from 'vue';
 import { useFileManagement } from './useFileManagement';
 import type { FileData } from './useFileManagement';
 import FileItem from './FileItem.vue';
-import EaIcons from '../EaIcons.vue';
+import EaIcons from '../EaIcon.vue';
 
 
 // Initialize

@@ -57,7 +57,7 @@
 <script setup lang="ts">
 import { computed, onMounted, onUnmounted, ref, watch, useSlots } from 'vue'
 import { useDrawer, type DrawerPosition } from '@/composables/useDrawer'
-import EaIcons from '@/components/ui/EaIcons.vue'
+import EaIcons from '@/components/ui/EaIcon.vue'
 
 // Props
 interface Props {

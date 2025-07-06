@@ -34,7 +34,7 @@
 <script setup lang="ts">
 // Vue imports not needed for this component
 import { useToast, type ToastMessage } from './useToast'
-import EaIcons from '@/components/ui/EaIcons.vue'
+import EaIcons from '@/components/ui/EaIcon.vue'
 
 const { toasts, removeToast } = useToast()
 

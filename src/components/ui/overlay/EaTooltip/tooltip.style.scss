@@ -1,0 +1,102 @@
+.tooltip-wrapper {
+  display: inline-block;
+}
+
+.ea-tooltip {
+  position: fixed;
+  background: var(--p-surface-900, #1f2937);
+  color: var(--p-surface-0, #ffffff);
+  padding: 0.5rem 0.75rem;
+  border-radius: 0.375rem;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  max-width: 200px;
+  word-wrap: break-word;
+  z-index: 9999;
+  // No transition for position changes
+  transition: none;
+
+  &.tooltip-top {
+    .ea-tooltip-arrow {
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 0;
+      height: 0;
+      border-left: 6px solid transparent;
+      border-right: 6px solid transparent;
+      border-top: 6px solid var(--p-surface-900, #1f2937);
+    }
+  }
+
+  &.tooltip-bottom {
+    .ea-tooltip-arrow {
+      position: absolute;
+      bottom: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 0;
+      height: 0;
+      border-left: 6px solid transparent;
+      border-right: 6px solid transparent;
+      border-bottom: 6px solid var(--p-surface-900, #1f2937);
+    }
+  }
+
+  &.tooltip-left {
+    .ea-tooltip-arrow {
+      position: absolute;
+      top: 50%;
+      left: 100%;
+      transform: translateY(-50%);
+      width: 0;
+      height: 0;
+      border-top: 6px solid transparent;
+      border-bottom: 6px solid transparent;
+      border-left: 6px solid var(--p-surface-900, #1f2937);
+    }
+  }
+
+  &.tooltip-right {
+    .ea-tooltip-arrow {
+      position: absolute;
+      top: 50%;
+      right: 100%;
+      transform: translateY(-50%);
+      width: 0;
+      height: 0;
+      border-top: 6px solid transparent;
+      border-bottom: 6px solid transparent;
+      border-right: 6px solid var(--p-surface-900, #1f2937);
+    }
+  }
+}
+
+.ea-tooltip-text {
+  position: relative;
+  z-index: 1;
+}
+
+.ea-tooltip-arrow {
+  position: absolute;
+}
+
+// Transition animations - only for show/hide, not position
+.tooltip-enter-active,
+.tooltip-leave-active {
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.tooltip-enter-from,
+.tooltip-leave-to {
+  opacity: 0;
+  transform: scale(0.95);
+}
+
+.tooltip-enter-to,
+.tooltip-leave-from {
+  opacity: 1;
+  transform: scale(1);
+} 

@@ -64,7 +64,7 @@
 <script setup lang="ts">
 import { computed, onMounted, onUnmounted, watch } from 'vue'
 import { useModal } from './useModal'
-import EaIcons from '@/components/ui/EaIcons.vue'
+import EaIcons from '@/components/ui/EaIcon.vue'
 import EaButton from '@/components/ui/form/EaButton/index.vue'
 
 interface Props {

@@ -427,7 +427,7 @@ drawer.isOpen.value    // Check if drawer is open`"
 
 <script setup lang="ts">
 import EaDrawer from '@/components/ui/overlay/EaDrawer/index.vue'
-import EaIcons from '@/components/ui/EaIcons.vue'
+import EaIcons from '@/components/ui/EaIcon.vue'
 import CodeBlock from '@/components/general/CodeBlock.vue'
 import { useDrawer } from '@/composables/useDrawer'
 

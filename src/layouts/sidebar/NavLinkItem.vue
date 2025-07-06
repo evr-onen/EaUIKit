@@ -12,7 +12,7 @@
 <script setup lang="ts">
 import { ref, watch } from 'vue';
 import { useRoute } from 'vue-router';
-import EaIcons from '@/components/ui/EaIcons.vue';
+import EaIcons from '@/components/ui/EaIcon.vue';
 
 const props = defineProps<{
   item: Record<string, any>

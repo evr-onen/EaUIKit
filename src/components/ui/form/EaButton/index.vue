@@ -53,7 +53,7 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
 import type { IButtonProps } from './button.types'
-import EaIcons from '../../EaIcons.vue'
+import EaIcons from '../../EaIcon.vue'
 import './button.style.scss'
 
 // Template ref

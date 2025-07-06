@@ -1,0 +1,67 @@
+// TimePicker Dropdown Styles for teleported panels
+.ea-timepicker__dropdowns {
+    @apply flex gap-2 p-2 bg-white rounded-lg shadow-md border border-gray-200;
+    min-width: 200px !important;
+    z-index: 1000 !important;
+    
+    // Columns for hours and minutes
+    .ea-timepicker__column {
+        @apply flex-1 flex flex-col;
+        
+        // Column headers
+        .ea-timepicker__column-header {
+            @apply text-xs font-medium text-textSecondary mb-1 text-center py-1;
+        }
+        
+        // Lists of time options
+        .ea-timepicker__time-list {
+            @apply flex flex-col gap-1 max-h-60 overflow-y-auto scrollbar-thin;
+            
+            // Individual time items
+            .ea-timepicker__time-item {
+                @apply text-center py-1 px-2 rounded-md text-sm cursor-pointer hover:bg-gray-100;
+                transition: all 0.2s ease !important;
+                
+                &.selected {
+                    @apply bg-primary text-white hover:bg-primary;
+                    background-color: #3b82f6 !important;
+                    color: white !important;
+                }
+                
+                &:hover:not(.selected) {
+                    background-color: #f3f4f6 !important;
+                }
+                
+                &.extra-item {
+                    @apply cursor-default;
+                    pointer-events: none;
+                    
+                    .invisible {
+                        @apply opacity-0;
+                    }
+                }
+            }
+        }
+    }
+}
+
+// Scrollbar styles for timepicker dropdowns
+.scrollbar-thin {
+    scrollbar-width: thin;
+    
+    &::-webkit-scrollbar {
+        @apply w-1;
+    }
+    
+    &::-webkit-scrollbar-track {
+        @apply bg-transparent;
+    }
+    
+    &::-webkit-scrollbar-thumb {
+        @apply bg-gray-300 rounded-full;
+    }
+    
+    &::-webkit-scrollbar-thumb:hover {
+        @apply bg-gray-400;
+    }
+} 

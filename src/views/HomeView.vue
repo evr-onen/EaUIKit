@@ -24,7 +24,7 @@
 
 
 <script setup lang="ts">
-import EaIcons from '@/components/ui/EaIcons.vue';
+import EaIcons from '@/components/ui/EaIcon.vue';
 import EaButton from '@/components/ui/form/EaButton/index.vue';
 import TextInput from './textInput.vue';
 // import Icon from '@/components/ui/inputs/index.vue';

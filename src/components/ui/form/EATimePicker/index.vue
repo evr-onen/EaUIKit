@@ -397,5 +397,5 @@ watch([hoursListRef, minutesListRef], () => {
 </script>
 
 <style lang="scss">
-// TimePicker component styles are now in main.scss for teleport compatibility
+@import './timepicker-dropdown.style.scss';
 </style>

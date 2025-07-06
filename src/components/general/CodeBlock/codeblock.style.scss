@@ -1,72 +1,3 @@
-<template>
-  <div class="code-block-wrapper">
-                <div class="code-block-header">
-      <span class="code-block-title">{{ title || 'Code Example' }}</span>
-      <div class="code-block-actions">
-        <button
-          class="code-action-btn"
-          @click="toggleCode"
-          :title="isVisible ? 'Hide Code' : 'Show Code'"
-        >
-          <EaIcons name="chavron-down" size="16" :class="{ 'rotate-180': isVisible }" />
-          {{ isVisible ? 'Hide' : 'Show' }}
-        </button>
-        <button
-          class="code-action-btn copy-btn"
-          @click="copyCode"
-          :title="copyText"
-        >
-          <EaIcons :name="copied ? 'check' : 'copy'" size="16" />
-          {{ copied ? 'Copied' : 'Copy' }}
-        </button>
-      </div>
-    </div>
-
-    <div v-show="isVisible" class="code-block-content">
-      <pre><code>{{ code }}</code></pre>
-    </div>
-  </div>
-</template>
-
-<script setup lang="ts">
-import { ref, computed } from 'vue'
-import EaIcons from '@/components/ui/EaIcon.vue'
-
-interface Props {
-  code: string
-  title?: string
-  language?: string
-  defaultVisible?: boolean
-}
-
-const props = withDefaults(defineProps<Props>(), {
-  language: 'vue',
-  defaultVisible: true
-})
-
-const isVisible = ref(props.defaultVisible)
-const copied = ref(false)
-
-const copyText = computed(() => copied.value ? 'Copied!' : 'Copy')
-
-const toggleCode = () => {
-  isVisible.value = !isVisible.value
-}
-
-const copyCode = async () => {
-  try {
-    await navigator.clipboard.writeText(props.code)
-    copied.value = true
-    setTimeout(() => {
-      copied.value = false
-    }, 2000)
-  } catch (err) {
-    console.error('Failed to copy code:', err)
-  }
-}
-</script>
-
-<style scoped lang="scss">
 .code-block-wrapper {
   background: #475569;
   border-radius: 12px;
@@ -174,5 +105,4 @@ const copyCode = async () => {
     font-size: 0.75rem;
     padding: 0.25rem 0.5rem;
   }
-}
-</style>
+} 

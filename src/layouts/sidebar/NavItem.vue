@@ -22,7 +22,7 @@
 </template>
 
 <script setup lang="ts">
-import EaIcons from '@/components/ui/EaIcons.vue';
+import EaIcons from '@/components/ui/EaIcon.vue';
 import ChevronDownIcon from '@/components/icons/chavron-down.vue';
 import { ref, watch } from 'vue';
 import { useRoute } from 'vue-router';
