@@ -16,7 +16,7 @@ export interface ScrollRevealOptions {
 
 const vScrollOnReveal = {
   beforeMount(el: RevealHtmlElement, binding: DirectiveBinding) {
-    console.log('ScrollOnReveal directive mounted', el, binding.value)
+    // console.log('ScrollOnReveal directive mounted', el, binding.value)
 
     // Parse options - can be string or object
     let options: ScrollRevealOptions = {}
