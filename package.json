@@ -1,11 +1,37 @@
 {
-  "name": "mykitty",
-  "version": "0.0.0",
-  "private": true,
+  "name": "ea-kit",
+  "version": "1.0.1",
+  "description": "A comprehensive Vue 3 UI component library with TypeScript support",
   "type": "module",
+  "main": "./dist/ea-kit.umd.js",
+  "module": "./dist/ea-kit.es.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/ea-kit.es.js",
+      "require": "./dist/ea-kit.umd.js"
+    },
+    "./dist/style.css": "./dist/ea-kit.css"
+  },
+  "keywords": ["vue", "vue3", "ui", "components", "typescript", "library"],
+  "author": "Your Name <your.email@example.com>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yourusername/ea-kit.git"
+  },
+  "bugs": {
+    "url": "https://github.com/yourusername/ea-kit/issues"
+  },
+  "homepage": "https://github.com/yourusername/ea-kit#readme",
   "scripts": {
     "dev": "vite",
     "build": "run-p type-check \"build-only {@}\" --",
+    "build:lib": "vite build && node_modules\\.bin\\vue-tsc --project tsconfig.lib.json",
     "preview": "vite preview",
     "build-only": "vite build",
     "type-check": "vue-tsc --build",

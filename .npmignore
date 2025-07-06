@@ -1,0 +1,43 @@
+# Source files
+src/
+public/
+
+# Development files
+.vscode/
+.git/
+.gitignore
+*.log
+node_modules/
+
+# Configuration files
+vite.config.ts
+tsconfig*.json
+eslint.config.mjs
+postcss.config.js
+tailwind.config.js
+env.d.ts
+
+# Documentation (keep only essential)
+example-usage.md
+
+# Build artifacts (except dist)
+*.tsbuildinfo
+.tmp/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE files
+*.swp
+*.swo
+*~
+
+# Test files
+**/*.test.*
+**/*.spec.*
+coverage/
+
+# Development scripts
+scripts/
+.env* 

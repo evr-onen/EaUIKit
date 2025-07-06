@@ -47,7 +47,6 @@ const useSelect = (props: ISelectProps, selectValue: Ref<OptionsType | null>) =>
 
     try {
       internalLoading.value = true
-      isLoadingState.value = true
 
       // Open panel to show loading state
       openPanel()

@@ -41,13 +41,13 @@ export interface ITextinputProps{
 
 export interface ITextinputEmits {
   (event: 'update:modelValue', value: string | number): void
-  (event: 'focus', event: FocusEvent): void
-  (event: 'blur', event: FocusEvent): void
-  (event: 'input', event: Event): void
-  (event: 'change', event: Event): void
+  (event: 'focus', focusEvent: FocusEvent): void
+  (event: 'blur', focusEvent: FocusEvent): void
+  (event: 'input', inputEvent: Event): void
+  (event: 'change', changeEvent: Event): void
   (event: 'clear'): void
-  (event: 'keydown', event: KeyboardEvent): void
-  (event: 'keyup', event: KeyboardEvent): void
+  (event: 'keydown', keyEvent: KeyboardEvent): void
+  (event: 'keyup', keyEvent: KeyboardEvent): void
 }
 
 type SizeType = 'sm' | 'md' | 'lg'

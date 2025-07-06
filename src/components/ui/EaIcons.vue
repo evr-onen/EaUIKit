@@ -7,7 +7,7 @@
 <script setup lang="ts">
 import { ref, nextTick, computed, watch } from "vue";
 
-const svgs = import.meta.glob("/src/assets/svg/*.svg", { as: "raw" });
+const svgs = (import.meta as any).glob("/src/assets/svg/*.svg", { query: "?raw", import: "default" }) as Record<string, () => Promise<string>>;
 
 interface IIconPropsType {
   name: string;

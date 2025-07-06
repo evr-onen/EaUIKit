@@ -98,7 +98,7 @@ const emit = defineEmits<{
 const drawerRef = ref<HTMLElement>()
 
 // Slots
-const slots = useSlots()
+const slots = useSlots() as any
 
 // Composable
 const drawer = useDrawer(props.id)

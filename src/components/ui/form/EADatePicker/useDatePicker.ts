@@ -360,27 +360,33 @@ const useDatePicker = (props: IDatepickerProps, modelValue: Ref<Date | [Date, Da
 
     // Single date selection
     if (!props.range && modelValue.value && !Array.isArray(modelValue.value)) {
-      classes['selected'] = isSameDate(date, modelValue.value);
+      const dateValue = typeof modelValue.value === 'string' ? parseDate(modelValue.value) : modelValue.value;
+      if (dateValue) {
+        classes['selected'] = isSameDate(date, dateValue);
+      }
     }
 
     // Range selection - completed range
     if (props.range && Array.isArray(modelValue.value)) {
       const [start, end] = modelValue.value;
 
-      if (start && isSameDate(date, start)) {
+      const startDate = typeof start === 'string' ? parseDate(start) : start;
+      const endDate = typeof end === 'string' ? parseDate(end) : end;
+
+      if (startDate && isSameDate(date, startDate)) {
         classes['range-start'] = true;
         classes['selected'] = true;
       }
 
-      if (end && isSameDate(date, end)) {
+      if (endDate && isSameDate(date, endDate)) {
         classes['range-end'] = true;
         classes['selected'] = true;
       }
 
-      if (start && end) {
+      if (startDate && endDate) {
         const dateTime = normalizeDate(date).getTime();
-        const startTime = normalizeDate(start).getTime();
-        const endTime = normalizeDate(end).getTime();
+        const startTime = normalizeDate(startDate).getTime();
+        const endTime = normalizeDate(endDate).getTime();
 
         if (dateTime > startTime && dateTime < endTime) {
           classes['in-range'] = true;

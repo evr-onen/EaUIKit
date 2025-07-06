@@ -1,0 +1,16 @@
+{
+  "extends": "@vue/tsconfig/tsconfig.dom.json",
+  "include": ["src/index.ts", "src/**/*", "src/**/*.vue"],
+  "exclude": ["src/**/__tests__/*", "src/main.ts", "src/App.vue", "src/views/**/*", "src/router/**/*"],
+  "compilerOptions": {
+    "declaration": true,
+    "declarationMap": true,
+    "emitDeclarationOnly": true,
+    "outDir": "./dist",
+    "rootDir": "./src",
+    "skipLibCheck": true,
+    "paths": {
+      "@/*": ["./src/*"]
+    }
+  }
+} 
