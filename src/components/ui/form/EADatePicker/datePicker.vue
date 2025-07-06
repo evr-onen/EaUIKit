@@ -56,7 +56,7 @@
               :key="index"
               class="ea-datepicker__day"
               :class="getDayClasses(day.date, day.currentMonth)"
-              @click="day.currentMonth && handleDateSelection(day.date, day.currentMonth, closePanel)"
+              @click.stop="day.currentMonth && handleDateSelection(day.date, day.currentMonth, closePanel)"
               @mouseenter="day.currentMonth && props.range && handleHover(day.date)"
               @mouseleave="resetHoverState"
             >

@@ -3,13 +3,15 @@
     <div ref="slotRef" class="" >
       <slot name="default" :openPanel="openPanel" />
     </div>
-    <div v-if="isOpen && (resultCount !==0)" ref="dropdownPanelRef" class="dropdownPanelWrapper fixed scrollbar-custom flex flex-col"  :class="{'justify-end':isPanelOverflowing }"
-      :style="{ top: `${panelPosition.y}px`, left: `${panelPosition.x}px`, width: `${panelWidth ?? panelPosition.width}px`, height: `${panelHeight}px` }"
-      @click.self="handleOutsideClick">
-      <div >
-        <slot name='panelContent' :closePanel="() => isOpen = false" />
+    <Teleport to="body">
+      <div v-if="isOpen && (resultCount !==0)" ref="dropdownPanelRef" class="dropdownPanelWrapper fixed scrollbar-custom flex flex-col"  :class="{'justify-end':isPanelOverflowing }"
+        :style="{ top: `${panelPosition.y}px`, left: `${panelPosition.x}px`, width: `${panelWidth ?? panelPosition.width}px`, height: `${panelHeight}px` }"
+        @click.self="props.closeOnSelect ? handleOutsideClick : undefined">
+        <div >
+          <slot name='panelContent' :closePanel="() => isOpen = false" />
+        </div>
       </div>
-    </div>
+    </Teleport>
 
   </div>
 </template>
@@ -33,14 +35,12 @@ const {
   isOpen,
   panelPosition,
   isPanelOverflowing,
-  scrollY,
-  panelProcComputed,
   handleOutsideClick,
   updatePosition,
   openPanel
   } = useDropdown(props)
 
-watch([isOpen, scrollY, panelProcComputed], async() => {
+watch([isOpen], async() => {
   await nextTick()
   updatePosition()
 })
@@ -50,9 +50,3 @@ watch([isOpen, scrollY, panelProcComputed], async() => {
 
 </script>
 
-
-<style lang="scss">
-.dropdownPanelWrapper{
-    z-index: 1000 !important;
-}
-</style>

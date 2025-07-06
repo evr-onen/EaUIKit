@@ -13,9 +13,12 @@
       <p>* Componentlerdeki classnamesleri yazmaliyiz. buna gore style dosyalarini kullanmaliyiz. tum bu css dosyalarini bir yerde toplamaliyiz. Cunku bunlari library olarak eklendigimiz projeye aktarip bu cssleri overright etmesi lazim. Boylelikle default bir style yapisi olup styles oalrak istedigi cssleri yazma ozgurlugunu vermis oluruz </p>
     </div>
     <EaIcons name="bars" class="text-red-100  border" size="100px" />
-    <EaButton class="w-[200px]" label="Button Example" left-icon="bars" :loading="false">
 
-    </EaButton>
+    <div class="transform -translate-y-1/2">
+      <div class="fixed top-0 left-0">
+          <TextInput class="w-[200px]" label="Button Example" left-icon="bars"/>
+        </div>
+      </div>
   </div>
 </template>
 
@@ -23,6 +26,7 @@
 <script setup lang="ts">
 import EaIcons from '@/components/ui/EaIcons.vue';
 import EaButton from '@/components/ui/form/EaButton/index.vue';
+import TextInput from './textInput.vue';
 // import Icon from '@/components/ui/inputs/index.vue';
 
 </script>

@@ -1,280 +1,1061 @@
 <template>
-  <div class="min-h-screen bg-gray-50 py-8">
-    <div class="max-w-6xl mx-auto px-4">
-      <!-- Header -->
-      <div class="text-center mb-12">
-        <h1 class="text-4xl font-bold text-gray-900 mb-4">EACheckbox Bileşeni</h1>
-        <p class="text-lg text-gray-600">Checkbox bileşeninin tüm özelliklerini keşfedin</p>
+  <div class="checkbox-demo">
+    <div class="demo-container">
+      <!-- Header Section -->
+      <div class="demo-header">
+        <h1>EaCheckbox Component</h1>
+        <p class="demo-description">
+          A customizable checkbox component with multiple sizes, states, and validation support.
+          Perfect for forms, settings panels, and user preferences with full accessibility features.
+        </p>
       </div>
 
-      <!-- Özellikler Genel Bakış -->
-      <div class="bg-white rounded-lg shadow-sm p-6 mb-8">
-        <h2 class="text-2xl font-semibold mb-4 text-gray-800">Özellikler</h2>
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-          <div class="bg-blue-50 p-4 rounded-lg">
-            <h3 class="font-medium text-blue-900">Boyutlar</h3>
-            <p class="text-sm text-blue-700">sm, md, lg</p>
-          </div>
-          <div class="bg-green-50 p-4 rounded-lg">
-            <h3 class="font-medium text-green-900">Durumlar</h3>
-            <p class="text-sm text-green-700">Normal, Disabled, Error</p>
-          </div>
-          <div class="bg-purple-50 p-4 rounded-lg">
-            <h3 class="font-medium text-purple-900">v-model</h3>
-            <p class="text-sm text-purple-700">İki yönlü veri bağlama</p>
-          </div>
-          <div class="bg-orange-50 p-4 rounded-lg">
-            <h3 class="font-medium text-orange-900">Özelleştirme</h3>
-            <p class="text-sm text-orange-700">Label, renk seçenekleri</p>
-          </div>
-        </div>
-      </div>
+      <!-- Quick Demo Section -->
+      <section class="demo-section">
+        <h2>Quick Demo</h2>
+        <p class="section-description">
+          Try out different checkbox variations with these interactive examples.
+        </p>
 
-      <!-- Temel Kullanım -->
-      <div class="bg-white rounded-lg shadow-sm p-6 mb-8">
-        <h2 class="text-2xl font-semibold mb-6 text-gray-800">Temel Kullanım</h2>
-        <div class="space-y-4">
-          <div class="flex items-center gap-4">
-            <EACheckbox label="Basit Checkbox" v-model="basicCheck" />
-            <span class="text-sm text-gray-500">Değer: {{ basicCheck }}</span>
+        <div class="demo-grid">
+          <div class="demo-card">
+            <h4>Basic Checkbox</h4>
+            <p>Simple checkbox with label</p>
+            <EACheckbox label="Accept terms" v-model="basicCheck" />
+            <span class="value-display">Value: {{ basicCheck }}</span>
           </div>
-          <div class="bg-gray-100 p-4 rounded-lg">
-            <code class="text-sm">
-              &lt;EACheckbox label="Basit Checkbox" v-model="basicCheck" /&gt;
-            </code>
-          </div>
-        </div>
-      </div>
 
-      <!-- Boyut Örnekleri -->
-      <div class="bg-white rounded-lg shadow-sm p-6 mb-8">
-        <h2 class="text-2xl font-semibold mb-6 text-gray-800">Boyut Seçenekleri</h2>
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div class="space-y-4">
-            <h3 class="font-medium text-gray-700">Küçük (sm)</h3>
-            <EACheckbox label="Küçük Checkbox" v-model="sizeSmall" size="sm"/>
-            <div class="bg-gray-100 p-3 rounded">
-              <code class="text-xs">size="sm"</code>
+          <div class="demo-card">
+            <h4>Size Variants</h4>
+            <p>Small, medium, and large options</p>
+            <div class="checkbox-group">
+              <EACheckbox label="Small" v-model="sizeDemo" size="sm" />
+              <EACheckbox label="Medium" v-model="sizeDemo" size="md" />
+              <EACheckbox label="Large" v-model="sizeDemo" size="lg" />
             </div>
           </div>
-          <div class="space-y-4">
-            <h3 class="font-medium text-gray-700">Orta (md) - Varsayılan</h3>
-            <EACheckbox label="Orta Checkbox" v-model="sizeMedium" />
-            <div class="bg-gray-100 p-3 rounded">
-              <code class="text-xs">size="md" (default)</code>
+
+          <div class="demo-card">
+            <h4>Disabled State</h4>
+            <p>Non-interactive checkbox</p>
+            <div class="checkbox-group">
+              <EACheckbox label="Disabled unchecked" v-model="disabledUnchecked" :disabled="true" />
+              <EACheckbox label="Disabled checked" v-model="disabledChecked" :disabled="true" />
             </div>
           </div>
-          <div class="space-y-4">
-            <h3 class="font-medium text-gray-700">Büyük (lg)</h3>
-            <EACheckbox label="Büyük Checkbox" v-model="sizeLarge" size="lg"/>
-            <div class="bg-gray-100 p-3 rounded">
-              <code class="text-xs">size="lg"</code>
-            </div>
-          </div>
-        </div>
-      </div>
 
-      <!-- Durumlar -->
-      <div class="bg-white rounded-lg shadow-sm p-6 mb-8">
-        <h2 class="text-2xl font-semibold mb-6 text-gray-800">Durum Örnekleri</h2>
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div class="space-y-4">
-            <h3 class="font-medium text-gray-700">Normal Durum</h3>
-            <EACheckbox label="Normal Checkbox" v-model="normalState" />
-            <span class="text-sm text-gray-500">Değer: {{ normalState }}</span>
-          </div>
-          <div class="space-y-4">
-            <h3 class="font-medium text-gray-700">Devre Dışı</h3>
-            <EACheckbox label="Devre Dışı Checkbox" v-model="disabledState" :disabled="true" />
-            <span class="text-sm text-gray-500">Değer: {{ disabledState }}</span>
-          </div>
-          <div class="space-y-4">
-            <h3 class="font-medium text-gray-700">Hata Durumu</h3>
-            <EACheckbox label="Hatalı Checkbox" v-model="errorState" :error="true" />
-            <span class="text-sm text-red-500">Değer: {{ errorState }}</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- Gerçek Hayat Örnekleri -->
-      <div class="bg-white rounded-lg shadow-sm p-6 mb-8">
-        <h2 class="text-2xl font-semibold mb-6 text-gray-800">Gerçek Hayat Örnekleri</h2>
-
-        <!-- Form Örneği -->
-        <div class="mb-8">
-          <h3 class="text-lg font-medium mb-4 text-gray-700">Kullanıcı Kayıt Formu</h3>
-          <div class="bg-gray-50 p-6 rounded-lg space-y-4">
-            <EACheckbox label="Hizmet Şartlarını kabul ediyorum" v-model="termsAccepted" />
-            <EACheckbox label="E-posta bildirimlerini almak istiyorum" v-model="emailNotifications" />
-            <EACheckbox label="SMS bildirimlerini almak istiyorum" v-model="smsNotifications" />
-            <EACheckbox label="Pazarlama e-postalarını almak istiyorum" v-model="marketingEmails" />
-
-            <div class="mt-4 p-4 bg-white rounded border">
-              <h4 class="font-medium mb-2">Seçilen Değerler:</h4>
-              <ul class="text-sm space-y-1">
-                <li>Şartlar: {{ termsAccepted ? '✓ Kabul edildi' : '✗ Kabul edilmedi' }}</li>
-                <li>E-posta: {{ emailNotifications ? '✓ Aktif' : '✗ Pasif' }}</li>
-                <li>SMS: {{ smsNotifications ? '✓ Aktif' : '✗ Pasif' }}</li>
-                <li>Pazarlama: {{ marketingEmails ? '✓ Aktif' : '✗ Pasif' }}</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-
-        <!-- Ayarlar Örneği -->
-        <div class="mb-8">
-          <h3 class="text-lg font-medium mb-4 text-gray-700">Uygulama Ayarları</h3>
-          <div class="bg-gray-50 p-6 rounded-lg">
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div class="space-y-3">
-                <h4 class="font-medium text-gray-600">Bildirimler</h4>
-                <EACheckbox label="Push bildirimleri" v-model="pushNotifications" size="sm"/>
-                <EACheckbox label="Sesli bildirimler" v-model="soundNotifications" size="sm"/>
-                <EACheckbox label="Titreşim" v-model="vibrationNotifications" size="sm"/>
-              </div>
-              <div class="space-y-3">
-                <h4 class="font-medium text-gray-600">Gizlilik</h4>
-                <EACheckbox label="Konum paylaşımı" v-model="locationSharing" size="sm"/>
-                <EACheckbox label="Çevrimiçi durum" v-model="onlineStatus" size="sm"/>
-                <EACheckbox label="Son görülme" v-model="lastSeen" size="sm"/>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Hata Durumu Örneği -->
-        <div>
-          <h3 class="text-lg font-medium mb-4 text-gray-700">Validasyon Örneği</h3>
-          <div class="bg-gray-50 p-6 rounded-lg">
-            <EACheckbox
-              label="Hizmet şartlarını kabul etmelisiniz"
-              v-model="validationExample"
-              :error="!validationExample && showValidationError"
-            />
-            <button
-              @click="handleValidation"
-              class="mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors"
-            >
-              Formu Gönder
+          <div class="demo-card">
+            <h4>Error State</h4>
+            <p>Validation error styling</p>
+            <EACheckbox label="Required field" v-model="errorCheck" :error="!errorCheck && showError" />
+            <button @click="showError = !showError" class="btn btn--secondary btn--sm">
+              Toggle Error
             </button>
-            <p v-if="showValidationError && !validationExample" class="text-red-500 text-sm mt-2">
-              * Bu alan zorunludur
-            </p>
-            <p v-if="validationExample && validationSuccess" class="text-green-500 text-sm mt-2">
-              ✓ Form başarıyla gönderildi!
-            </p>
           </div>
         </div>
-      </div>
 
-      <!-- Tüm Kombinasyonlar -->
-      <div class="bg-white rounded-lg shadow-sm p-6">
-        <h2 class="text-2xl font-semibold mb-6 text-gray-800">Tüm Kombinasyonlar</h2>
-        <div class="overflow-x-auto">
-          <table class="w-full text-sm">
+        <CodeBlock
+          :code="quickDemoCode"
+          title="Quick Demo Usage"
+        />
+      </section>
+
+      <!-- Size Variants -->
+      <section class="demo-section">
+        <h2>Size Variants</h2>
+        <p class="section-description">
+          EaCheckbox supports three size options: sm, md (default), and lg. Each size maintains proper proportions and accessibility standards.
+        </p>
+
+        <div class="demo-group">
+          <button @click="activateSize('sm')" class="btn btn--secondary">Small (sm)</button>
+          <button @click="activateSize('md')" class="btn btn--secondary">Medium (md)</button>
+          <button @click="activateSize('lg')" class="btn btn--secondary">Large (lg)</button>
+        </div>
+
+        <div class="showcase-grid">
+          <div class="showcase-item">
+            <div class="showcase-demo">
+              <EACheckbox label="Small checkbox" v-model="sizeSm" size="sm" />
+            </div>
+            <div class="showcase-info">
+              <h4>Small (sm)</h4>
+              <p>Compact size for dense layouts and space-constrained interfaces</p>
+            </div>
+          </div>
+
+          <div class="showcase-item">
+            <div class="showcase-demo">
+              <EACheckbox label="Medium checkbox" v-model="sizeMd" size="md" />
+            </div>
+            <div class="showcase-info">
+              <h4>Medium (md)</h4>
+              <p>Default size that works well for most use cases and applications</p>
+            </div>
+          </div>
+
+          <div class="showcase-item">
+            <div class="showcase-demo">
+              <EACheckbox label="Large checkbox" v-model="sizeLg" size="lg" />
+            </div>
+            <div class="showcase-info">
+              <h4>Large (lg)</h4>
+              <p>Larger size for better accessibility and mobile interfaces</p>
+            </div>
+          </div>
+        </div>
+
+        <CodeBlock
+          :code="sizeVariantsCode"
+          title="Size Variants Example"
+        />
+      </section>
+
+      <!-- States and Validation -->
+      <section class="demo-section">
+        <h2>States and Validation</h2>
+        <p class="section-description">
+          Handle different checkbox states including normal, disabled, and error states for comprehensive form validation.
+        </p>
+
+        <div class="demo-group">
+          <button @click="toggleState('normal')" class="btn btn--secondary">Normal State</button>
+          <button @click="toggleState('disabled')" class="btn btn--secondary">Disabled State</button>
+          <button @click="toggleState('error')" class="btn btn--secondary">Error State</button>
+        </div>
+
+        <div class="showcase-grid">
+          <div class="showcase-item">
+            <div class="showcase-demo">
+              <EACheckbox label="Normal checkbox" v-model="normalState" />
+            </div>
+            <div class="showcase-info">
+              <h4>Normal</h4>
+              <p>Default interactive state with standard styling and behavior</p>
+            </div>
+          </div>
+
+          <div class="showcase-item">
+            <div class="showcase-demo">
+              <EACheckbox label="Disabled checkbox" v-model="disabledState" :disabled="true" />
+            </div>
+            <div class="showcase-info">
+              <h4>Disabled</h4>
+              <p>Non-interactive state with reduced opacity and no pointer events</p>
+            </div>
+          </div>
+
+          <div class="showcase-item">
+            <div class="showcase-demo">
+              <EACheckbox label="Error checkbox" v-model="errorState" :error="true" />
+            </div>
+            <div class="showcase-info">
+              <h4>Error</h4>
+              <p>Validation error state with red border and error styling</p>
+            </div>
+          </div>
+        </div>
+
+        <CodeBlock
+          :code="statesCode"
+          title="States Example"
+        />
+      </section>
+
+      <!-- Form Integration -->
+      <section class="demo-section">
+        <h2>Form Integration</h2>
+        <p class="section-description">
+          Real-world examples demonstrating checkbox integration in forms with validation, user preferences, and state management.
+        </p>
+
+        <div class="form-demo-container">
+          <div class="form-demo">
+            <h4>User Registration Form</h4>
+            <div class="form-group">
+              <EACheckbox
+                label="I agree to the Terms of Service"
+                v-model="formData.termsAccepted"
+                :error="!formData.termsAccepted && formValidation.showErrors"
+              />
+              <EACheckbox
+                label="Subscribe to newsletter updates"
+                v-model="formData.newsletter"
+              />
+              <EACheckbox
+                label="Enable email notifications"
+                v-model="formData.emailNotifications"
+              />
+              <EACheckbox
+                label="Enable SMS notifications"
+                v-model="formData.smsNotifications"
+              />
+            </div>
+
+            <div class="form-actions">
+              <button @click="validateForm" class="btn btn--primary">
+                Submit Registration
+              </button>
+              <button @click="resetForm" class="btn btn--secondary">
+                Reset Form
+              </button>
+            </div>
+
+            <div v-if="formValidation.showErrors && !formData.termsAccepted" class="error-message">
+              ⚠️ Please accept the Terms of Service to continue.
+            </div>
+
+            <div v-if="formValidation.success" class="success-message">
+              ✅ Registration submitted successfully!
+            </div>
+          </div>
+
+          <div class="form-state">
+            <h5>Form State Monitor</h5>
+            <div class="state-grid">
+              <div class="state-item">
+                <span class="state-label">Terms:</span>
+                <span :class="formData.termsAccepted ? 'state-true' : 'state-false'">
+                  {{ formData.termsAccepted ? '✓ Accepted' : '✗ Not accepted' }}
+                </span>
+              </div>
+              <div class="state-item">
+                <span class="state-label">Newsletter:</span>
+                <span :class="formData.newsletter ? 'state-true' : 'state-false'">
+                  {{ formData.newsletter ? '✓ Subscribed' : '✗ Not subscribed' }}
+                </span>
+              </div>
+              <div class="state-item">
+                <span class="state-label">Email:</span>
+                <span :class="formData.emailNotifications ? 'state-true' : 'state-false'">
+                  {{ formData.emailNotifications ? '✓ Enabled' : '✗ Disabled' }}
+                </span>
+              </div>
+              <div class="state-item">
+                <span class="state-label">SMS:</span>
+                <span :class="formData.smsNotifications ? 'state-true' : 'state-false'">
+                  {{ formData.smsNotifications ? '✓ Enabled' : '✗ Disabled' }}
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <CodeBlock
+          :code="formIntegrationCode"
+          title="Form Integration Example"
+        />
+      </section>
+
+      <!-- Settings Panel -->
+      <section class="demo-section">
+        <h2>Settings Panel</h2>
+        <p class="section-description">
+          Example of using checkboxes in a settings or preferences panel with grouped options and categories.
+        </p>
+
+        <div class="settings-demo">
+          <div class="settings-group">
+            <h4>🔔 Notifications</h4>
+            <div class="settings-options">
+              <EACheckbox label="Push notifications" v-model="settings.pushNotifications" size="sm" />
+              <EACheckbox label="Sound alerts" v-model="settings.soundAlerts" size="sm" />
+              <EACheckbox label="Vibration feedback" v-model="settings.vibration" size="sm" />
+              <EACheckbox label="Email digest" v-model="settings.emailDigest" size="sm" />
+            </div>
+          </div>
+
+          <div class="settings-group">
+            <h4>🔒 Privacy</h4>
+            <div class="settings-options">
+              <EACheckbox label="Share location data" v-model="settings.shareLocation" size="sm" />
+              <EACheckbox label="Show online status" v-model="settings.showOnlineStatus" size="sm" />
+              <EACheckbox label="Allow data collection" v-model="settings.allowDataCollection" size="sm" />
+              <EACheckbox label="Anonymous analytics" v-model="settings.anonymousAnalytics" size="sm" />
+            </div>
+          </div>
+
+          <div class="settings-group">
+            <h4>♿ Accessibility</h4>
+            <div class="settings-options">
+              <EACheckbox label="High contrast mode" v-model="settings.highContrast" size="sm" />
+              <EACheckbox label="Large text display" v-model="settings.largeText" size="sm" />
+              <EACheckbox label="Reduce motion effects" v-model="settings.reduceMotion" size="sm" />
+              <EACheckbox label="Screen reader support" v-model="settings.screenReader" size="sm" />
+            </div>
+          </div>
+        </div>
+
+        <CodeBlock
+          :code="settingsPanelCode"
+          title="Settings Panel Example"
+        />
+      </section>
+
+      <!-- Props Documentation -->
+      <section class="demo-section">
+        <h2>Props</h2>
+        <div class="props-table">
+          <table>
             <thead>
-              <tr class="border-b">
-                <th class="text-left p-3">Boyut</th>
-                <th class="text-left p-3">Normal</th>
-                <th class="text-left p-3">Seçili</th>
-                <th class="text-left p-3">Devre Dışı</th>
-                <th class="text-left p-3">Hata</th>
+              <tr>
+                <th>Prop</th>
+                <th>Type</th>
+                <th>Default</th>
+                <th>Description</th>
               </tr>
             </thead>
             <tbody>
-              <tr class="border-b">
-                <td class="p-3 font-medium">Küçük</td>
-                <td class="p-3"><EACheckbox label="Küçük" v-model="demo1" size="sm"/></td>
-                <td class="p-3"><EACheckbox label="Küçük" v-model="demo2" size="sm"/></td>
-                <td class="p-3"><EACheckbox label="Küçük" v-model="demo3" size="sm" :disabled="true"/></td>
-                <td class="p-3"><EACheckbox label="Küçük" v-model="demo4" size="sm" :error="true"/></td>
-              </tr>
-              <tr class="border-b">
-                <td class="p-3 font-medium">Orta</td>
-                <td class="p-3"><EACheckbox label="Orta" v-model="demo5"/></td>
-                <td class="p-3"><EACheckbox label="Orta" v-model="demo6"/></td>
-                <td class="p-3"><EACheckbox label="Orta" v-model="demo7" :disabled="true"/></td>
-                <td class="p-3"><EACheckbox label="Orta" v-model="demo8" :error="true"/></td>
+              <tr>
+                <td><code>label</code></td>
+                <td><code>string</code></td>
+                <td><code>''</code></td>
+                <td>Text label displayed next to the checkbox</td>
               </tr>
               <tr>
-                <td class="p-3 font-medium">Büyük</td>
-                <td class="p-3"><EACheckbox label="Büyük" v-model="demo9" size="lg"/></td>
-                <td class="p-3"><EACheckbox label="Büyük" v-model="demo10" size="lg"/></td>
-                <td class="p-3"><EACheckbox label="Büyük" v-model="demo11" size="lg" :disabled="true"/></td>
-                <td class="p-3"><EACheckbox label="Büyük" v-model="demo12" size="lg" :error="true"/></td>
+                <td><code>v-model</code></td>
+                <td><code>boolean</code></td>
+                <td><code>false</code></td>
+                <td>Checked state of the checkbox (required)</td>
+              </tr>
+              <tr>
+                <td><code>size</code></td>
+                <td><code>'sm' | 'md' | 'lg'</code></td>
+                <td><code>'md'</code></td>
+                <td>Size variant of the checkbox component</td>
+              </tr>
+              <tr>
+                <td><code>disabled</code></td>
+                <td><code>boolean</code></td>
+                <td><code>false</code></td>
+                <td>Disables the checkbox interaction</td>
+              </tr>
+              <tr>
+                <td><code>error</code></td>
+                <td><code>boolean</code></td>
+                <td><code>false</code></td>
+                <td>Shows error state with validation styling</td>
               </tr>
             </tbody>
           </table>
         </div>
-      </div>
+      </section>
+
+      <!-- Events Documentation -->
+      <section class="demo-section">
+        <h2>Events</h2>
+        <div class="props-table">
+          <table>
+            <thead>
+              <tr>
+                <th>Event</th>
+                <th>Payload</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>update:modelValue</code></td>
+                <td><code>boolean</code></td>
+                <td>Emitted when checkbox state changes</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import EACheckbox from '@/components/ui/form/EaCheckbox/EaCheckbox.vue';
-import { ref } from 'vue';
+import { ref, reactive } from 'vue'
+import EACheckbox from '@/components/ui/form/EaCheckbox/EaCheckbox.vue'
+import CodeBlock from '@/components/general/CodeBlock.vue'
 
-// Basic examples
-const basicCheck = ref(false);
+// Quick Demo
+const basicCheck = ref(false)
+const sizeDemo = ref(true)
+const disabledUnchecked = ref(false)
+const disabledChecked = ref(true)
+const errorCheck = ref(false)
+const showError = ref(true)
 
-// Size examples
-const sizeSmall = ref(false);
-const sizeMedium = ref(true);
-const sizeLarge = ref(false);
+// Size Variants
+const sizeSm = ref(true)
+const sizeMd = ref(true)
+const sizeLg = ref(true)
 
-// State examples
-const normalState = ref(false);
-const disabledState = ref(true);
-const errorState = ref(false);
+// States
+const normalState = ref(false)
+const disabledState = ref(true)
+const errorState = ref(false)
 
-// Real-life examples - Registration form
-const termsAccepted = ref(false);
-const emailNotifications = ref(true);
-const smsNotifications = ref(false);
-const marketingEmails = ref(false);
+// Form Integration
+const formData = reactive({
+  termsAccepted: false,
+  newsletter: false,
+  emailNotifications: true,
+  smsNotifications: false
+})
 
-// Settings example
-const pushNotifications = ref(true);
-const soundNotifications = ref(true);
-const vibrationNotifications = ref(false);
-const locationSharing = ref(false);
-const onlineStatus = ref(true);
-const lastSeen = ref(true);
+const formValidation = reactive({
+  showErrors: false,
+  success: false
+})
 
-// Validation example
-const validationExample = ref(false);
-const showValidationError = ref(false);
-const validationSuccess = ref(false);
+// Settings
+const settings = reactive({
+  pushNotifications: true,
+  soundAlerts: false,
+  vibration: true,
+  emailDigest: false,
+  shareLocation: false,
+  showOnlineStatus: true,
+  allowDataCollection: false,
+  anonymousAnalytics: true,
+  highContrast: false,
+  largeText: false,
+  reduceMotion: false,
+  screenReader: false
+})
 
-// All combinations demo
-const demo1 = ref(false);
-const demo2 = ref(true);
-const demo3 = ref(false);
-const demo4 = ref(false);
-const demo5 = ref(false);
-const demo6 = ref(true);
-const demo7 = ref(false);
-const demo8 = ref(false);
-const demo9 = ref(false);
-const demo10 = ref(true);
-const demo11 = ref(false);
-const demo12 = ref(false);
+// Methods
+const activateSize = (size: string) => {
+  console.log(`Activated ${size} size demo`)
+}
 
-const handleValidation = () => {
-  if (!validationExample.value) {
-    showValidationError.value = true;
-    validationSuccess.value = false;
-  } else {
-    showValidationError.value = false;
-    validationSuccess.value = true;
+const toggleState = (state: string) => {
+  console.log(`Toggled ${state} state demo`)
+}
+
+const validateForm = () => {
+  formValidation.showErrors = true
+  if (formData.termsAccepted) {
+    formValidation.success = true
     setTimeout(() => {
-      validationSuccess.value = false;
-    }, 3000);
+      formValidation.success = false
+    }, 3000)
   }
-};
+}
+
+const resetForm = () => {
+  Object.assign(formData, {
+    termsAccepted: false,
+    newsletter: false,
+    emailNotifications: true,
+    smsNotifications: false
+  })
+  formValidation.showErrors = false
+  formValidation.success = false
+}
+
+// Code Examples
+const quickDemoCode = `<template>
+  <div class="checkbox-examples">
+    <!-- Basic checkbox -->
+    <EACheckbox label="Accept terms" v-model="basicCheck" />
+
+    <!-- Size variants -->
+    <EACheckbox label="Small" v-model="sizeDemo" size="sm" />
+    <EACheckbox label="Medium" v-model="sizeDemo" size="md" />
+    <EACheckbox label="Large" v-model="sizeDemo" size="lg" />
+
+    <!-- Disabled state -->
+    <EACheckbox label="Disabled" v-model="disabled" :disabled="true" />
+
+    <!-- Error state -->
+    <EACheckbox label="Required field" v-model="errorCheck" :error="!errorCheck" />
+  </div>
+</template>
+
+//script
+import { ref } from 'vue'
+import EACheckbox from '@/components/ui/form/EaCheckbox/EaCheckbox.vue'
+
+const basicCheck = ref(false)
+const sizeDemo = ref(true)
+const disabled = ref(true)
+const errorCheck = ref(false)`
+
+const sizeVariantsCode = `<template>
+  <div class="size-examples">
+    <!-- Small checkbox -->
+    <EACheckbox
+      label="Small checkbox"
+      v-model="sizeSm"
+      size="sm"
+    />
+
+    <!-- Medium checkbox (default) -->
+    <EACheckbox
+      label="Medium checkbox"
+      v-model="sizeMd"
+      size="md"
+    />
+
+    <!-- Large checkbox -->
+    <EACheckbox
+      label="Large checkbox"
+      v-model="sizeLg"
+      size="lg"
+    />
+  </div>
+</template>
+
+//script
+import { ref } from 'vue'
+
+const sizeSm = ref(true)
+const sizeMd = ref(true)
+const sizeLg = ref(true)`
+
+const statesCode = `<template>
+  <div class="states-examples">
+    <!-- Normal state -->
+    <EACheckbox
+      label="Normal checkbox"
+      v-model="normalState"
+    />
+
+    <!-- Disabled state -->
+    <EACheckbox
+      label="Disabled checkbox"
+      v-model="disabledState"
+      :disabled="true"
+    />
+
+    <!-- Error state -->
+    <EACheckbox
+      label="Error checkbox"
+      v-model="errorState"
+      :error="true"
+    />
+  </div>
+</template>
+
+//script
+import { ref } from 'vue'
+
+const normalState = ref(false)
+const disabledState = ref(true)
+const errorState = ref(false)`
+
+const formIntegrationCode = `<template>
+  <form @submit.prevent="validateForm">
+    <EACheckbox
+      label="I agree to the Terms of Service"
+      v-model="formData.termsAccepted"
+      :error="!formData.termsAccepted && showErrors"
+    />
+
+    <EACheckbox
+      label="Subscribe to newsletter"
+      v-model="formData.newsletter"
+    />
+
+    <EACheckbox
+      label="Enable email notifications"
+      v-model="formData.emailNotifications"
+    />
+
+    <button type="submit">Submit Registration</button>
+
+    <div v-if="showErrors && !formData.termsAccepted" class="error">
+      Please accept the Terms of Service to continue.
+    </div>
+  </form>
+</template>
+
+//script
+import { reactive, ref } from 'vue'
+
+const formData = reactive({
+  termsAccepted: false,
+  newsletter: false,
+  emailNotifications: true
+})
+
+const showErrors = ref(false)
+
+const validateForm = () => {
+  showErrors.value = true
+  if (formData.termsAccepted) {
+    console.log('Form submitted:', formData)
+  }
+}`
+
+const settingsPanelCode = `<template>
+  <div class="settings-panel">
+    <div class="settings-group">
+      <h4>Notifications</h4>
+      <EACheckbox label="Push notifications" v-model="settings.pushNotifications" size="sm" />
+      <EACheckbox label="Sound alerts" v-model="settings.soundAlerts" size="sm" />
+      <EACheckbox label="Email digest" v-model="settings.emailDigest" size="sm" />
+    </div>
+
+    <div class="settings-group">
+      <h4>Privacy</h4>
+      <EACheckbox label="Share location" v-model="settings.shareLocation" size="sm" />
+      <EACheckbox label="Show online status" v-model="settings.showOnlineStatus" size="sm" />
+    </div>
+  </div>
+</template>
+
+//script
+import { reactive } from 'vue'
+
+const settings = reactive({
+  pushNotifications: true,
+  soundAlerts: false,
+  emailDigest: false,
+  shareLocation: false,
+  showOnlineStatus: true
+})`
 </script>
 
-<style scoped>
+<style scoped lang="scss">
+.checkbox-demo {
+  background: #f8fafc;
+  min-height: 100vh;
+  padding: 2rem 1rem;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
 
+.demo-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.demo-header {
+  text-align: center;
+  margin-bottom: 3rem;
+
+  h1 {
+    font-size: 3rem;
+    font-weight: 700;
+    color: #1e293b;
+    margin-bottom: 1rem;
+    background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .demo-description {
+    font-size: 1.25rem;
+    color: #64748b;
+    max-width: 800px;
+    margin: 0 auto;
+    line-height: 1.6;
+  }
+}
+
+.demo-section {
+  background: white;
+  border-radius: 16px;
+  padding: 2.5rem;
+  margin-bottom: 2rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  border: 1px solid #e5e7eb;
+
+  h2 {
+    font-size: 2rem;
+    font-weight: 600;
+    color: #1e293b;
+    margin-bottom: 0.75rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+
+    &::before {
+      content: '';
+      width: 4px;
+      height: 2rem;
+      background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+      border-radius: 2px;
+    }
+  }
+
+  .section-description {
+    font-size: 1rem;
+    color: #64748b;
+    margin-bottom: 2rem;
+    line-height: 1.6;
+  }
+}
+
+.demo-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.demo-card {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 1.5rem;
+  text-align: center;
+  transition: all 0.2s ease;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    border-color: #3b82f6;
+  }
+
+  h4 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #1e293b;
+    margin-bottom: 0.5rem;
+  }
+
+  p {
+    font-size: 0.9rem;
+    color: #64748b;
+    margin-bottom: 1rem;
+    line-height: 1.5;
+  }
+}
+
+.checkbox-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.value-display {
+  display: block;
+  margin-top: 0.75rem;
+  font-size: 0.875rem;
+  color: #64748b;
+  font-weight: 500;
+}
+
+.demo-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.showcase-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.showcase-item {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 1.5rem;
+  text-align: center;
+  transition: all 0.2s ease;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    border-color: #3b82f6;
+  }
+}
+
+.showcase-demo {
+  margin-bottom: 1rem;
+  display: flex;
+  justify-content: center;
+}
+
+.showcase-info {
+  h4 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #1e293b;
+    margin-bottom: 0.5rem;
+  }
+
+  p {
+    font-size: 0.9rem;
+    color: #64748b;
+    line-height: 1.5;
+  }
+}
+
+.form-demo-container {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 2rem;
+  margin-bottom: 2rem;
+
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.form-demo {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 1.5rem;
+
+  h4 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #1e293b;
+    margin-bottom: 1rem;
+  }
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+}
+
+.form-actions {
+  display: flex;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+}
+
+.form-state {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 1.5rem;
+  height: fit-content;
+
+  h5 {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #1e293b;
+    margin-bottom: 1rem;
+  }
+}
+
+.state-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.state-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.875rem;
+}
+
+.state-label {
+  font-weight: 500;
+  color: #64748b;
+}
+
+.state-true {
+  color: #059669;
+  font-weight: 500;
+}
+
+.state-false {
+  color: #dc2626;
+  font-weight: 500;
+}
+
+.settings-demo {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.settings-group {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 1.5rem;
+
+  h4 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #1e293b;
+    margin-bottom: 1rem;
+  }
+}
+
+.settings-options {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.btn {
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  border: 1px solid transparent;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 120px;
+
+  &--primary {
+    background: linear-gradient(135deg, #3b82f6, #2563eb);
+    color: white;
+    box-shadow: 0 2px 4px rgba(59, 130, 246, 0.2);
+
+    &:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 4px 8px rgba(59, 130, 246, 0.3);
+    }
+
+    &:active {
+      transform: translateY(0);
+    }
+  }
+
+  &--secondary {
+    background: white;
+    color: #374151;
+    border-color: #d1d5db;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+
+    &:hover {
+      background: #f9fafb;
+      border-color: #9ca3af;
+      transform: translateY(-1px);
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    &:active {
+      transform: translateY(0);
+    }
+  }
+
+  &--sm {
+    padding: 0.5rem 1rem;
+    font-size: 0.8rem;
+    min-width: 100px;
+  }
+}
+
+.error-message {
+  color: #dc2626;
+  font-size: 0.875rem;
+  font-weight: 500;
+  margin-top: 0.5rem;
+  padding: 0.5rem;
+  background: #fef2f2;
+  border-radius: 6px;
+  border: 1px solid #fecaca;
+}
+
+.success-message {
+  color: #059669;
+  font-size: 0.875rem;
+  font-weight: 500;
+  margin-top: 0.5rem;
+  padding: 0.5rem;
+  background: #f0fdf4;
+  border-radius: 6px;
+  border: 1px solid #bbf7d0;
+}
+
+.props-table {
+  overflow-x: auto;
+  margin-top: 1.5rem;
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+
+    th, td {
+      padding: 1rem 1.25rem;
+      text-align: left;
+      border-bottom: 1px solid #e5e7eb;
+    }
+
+    th {
+      background: #f8fafc;
+      font-weight: 600;
+      color: #374151;
+      font-size: 0.875rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    td {
+      color: #6b7280;
+      font-size: 0.875rem;
+      line-height: 1.5;
+
+      code {
+        background: #f1f5f9;
+        padding: 0.25rem 0.5rem;
+        border-radius: 4px;
+        font-family: 'Monaco', 'Consolas', monospace;
+        font-size: 0.8rem;
+        color: #1e293b;
+        font-weight: 500;
+      }
+    }
+
+    tr:last-child {
+      th, td {
+        border-bottom: none;
+      }
+    }
+
+    tr:hover {
+      background: #f8fafc;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .checkbox-demo {
+    padding: 1rem 0.5rem;
+  }
+
+  .demo-header h1 {
+    font-size: 2rem;
+  }
+
+  .demo-section {
+    padding: 1.5rem;
+  }
+
+  .demo-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .demo-group {
+    flex-direction: column;
+  }
+
+  .form-actions {
+    flex-direction: column;
+  }
+
+  .btn {
+    width: 100%;
+  }
+
+  .props-table {
+    font-size: 0.8rem;
+  }
+}
 </style>

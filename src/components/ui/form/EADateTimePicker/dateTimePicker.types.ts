@@ -81,4 +81,9 @@ export interface IDateTimePickerProps {
    * Default: 'DD/MM/YYYY'
    */
   dateFormat?: string;
+  /**
+   * Panel width for the time picker dropdown (in pixels)
+   * Default: 200
+   */
+  timePanelWidth?: number;
 }

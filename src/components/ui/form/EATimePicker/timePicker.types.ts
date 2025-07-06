@@ -16,6 +16,11 @@ export interface ITimePickerProps {
    */
   minuteInterval?: number;
   /**
+   * Panel width for the dropdown (in pixels)
+   * Default: 200
+   */
+  panelWidth?: number;
+  /**
    * Mark field as required (shows red asterisk)
    */
   required?: boolean;

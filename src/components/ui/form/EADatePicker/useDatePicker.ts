@@ -433,6 +433,8 @@ const useDatePicker = (props: IDatepickerProps, modelValue: Ref<Date | [Date, Da
       isRangeSelectionActive.value = true;
       // Don't update modelValue yet, just show the start date
       inputValue.value = formatDate(noonDate);
+      // Don't close panel after first date selection - keep it open for second date
+      return false; // Return false to indicate panel should not close
     } else {
       // Second date selection - complete the range
       const start = tempRangeStart.value;
@@ -456,7 +458,9 @@ const useDatePicker = (props: IDatepickerProps, modelValue: Ref<Date | [Date, Da
       isRangeSelectionActive.value = false;
       hoverDate.value = null;
 
+      // Close panel only after second date selection (range is complete)
       closePanel();
+      return true; // Return true to indicate panel should close
     }
   };
 
@@ -469,16 +473,20 @@ const useDatePicker = (props: IDatepickerProps, modelValue: Ref<Date | [Date, Da
     return utcDate;
   };
 
-  const handleDateSelection = (date: Date, isCurrentMonth: boolean, closePanel: () => void) => {
+    const handleDateSelection = (date: Date, isCurrentMonth: boolean, closePanel: () => void) => {
     if (!isCurrentMonth) return;
 
     if (props.range) {
-      handleRangeSelection(date, closePanel);
+      const shouldClose = handleRangeSelection(date, closePanel);
+      // Don't call closePanel here - handleRangeSelection handles it
     } else {
       const noonDate = createDateAtNoonUTC(date);
-      modelValue.value = formatValue(noonDate) as Date | string;
+      const formattedValue = formatValue(noonDate);
+
+      modelValue.value = formattedValue as Date | string;
       inputValue.value = formatDate(noonDate);
-      closePanel()
+
+      closePanel();
     }
   };
 
@@ -522,7 +530,6 @@ const useDatePicker = (props: IDatepickerProps, modelValue: Ref<Date | [Date, Da
   return {
     displayValue,
     hasValue,
-    currentDate,
     currentYear,
     currentMonthName,
     handleInputChange,
@@ -532,7 +539,6 @@ const useDatePicker = (props: IDatepickerProps, modelValue: Ref<Date | [Date, Da
     daysOfWeek,
     calendarDays,
     getDayClasses,
-    handleRangeSelection,
     handleDateSelection,
     selectToday,
     clearDate,

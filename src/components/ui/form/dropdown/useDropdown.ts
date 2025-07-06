@@ -1,4 +1,4 @@
-import { computed, onMounted, onUnmounted, ref } from "vue";
+import { onMounted, onUnmounted, ref } from "vue";
 import type { IDropdownProps } from "./dropdown.types";
 
 const useDropdown = (props: IDropdownProps) => {
@@ -8,17 +8,11 @@ const dropdownPanelRef = ref<HTMLElement | null>(null)
 const isOpen = ref(false)
 const panelPosition = ref({ x: 0, y: 0, width: 0, height: 0 })
 const isPanelOverflowing = ref(false)
-const scrollY = ref(0)
 
-//Computed
-const panelProcComputed = computed(()=>props.panelProc)
 
 //Methods - Event Handlers
 const handleOutsideClick = () => isOpen.value = false
 
-const updateScroll = () => {
-  scrollY.value = window.scrollY
-}
 
 // Update position on any scroll or resize
 const updatePosition = () => {
@@ -26,6 +20,7 @@ const updatePosition = () => {
     const rect = slotRef.value.getBoundingClientRect()
     const screenBottom = window.innerHeight
 
+    // With teleport to body, we can use simple viewport positioning
     // Calculate if panel would overflow at the bottom
     isPanelOverflowing.value = (rect.bottom + (props.panelHeight || 300)) > screenBottom
 
@@ -45,15 +40,8 @@ const updatePosition = () => {
 }
 
 // Handle scroll events (including nested scroll containers)
-const handleScroll = (e: Event) => {
-  updateScroll()
+const handleScroll = () => {
   updatePosition()
-
-  // Close panel if scrolling outside of the dropdown panel
-  if (isOpen.value && dropdownPanelRef.value && !dropdownPanelRef.value.contains(e.target as Node)) {
-    // Optional: close on scroll (can be made configurable via props)
-    // isOpen.value = false
-  }
 }
 
 //Methods - Open/Close
@@ -61,8 +49,8 @@ const openPanel = (isToggle: boolean = false) => isOpen.value = isToggle ? !isOp
 
 //LifeCycle Hooks
 onMounted(() => {
-  // Listen to scroll events on window and document
-  window.addEventListener('scroll', handleScroll, true) // useCapture = true to catch all scroll events
+  // Listen to scroll and resize events for position updates
+  window.addEventListener('scroll', handleScroll, true)
   window.addEventListener('resize', updatePosition)
 })
 
@@ -77,10 +65,7 @@ return {
   isOpen,
   panelPosition,
   isPanelOverflowing,
-  scrollY,
-  panelProcComputed,
   handleOutsideClick,
-  updateScroll,
   updatePosition,
   openPanel
 }

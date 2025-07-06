@@ -24,6 +24,7 @@
         class="ea-date-time-picker__time"
         :size="size"
         :minute-interval="minuteInterval"
+        :panel-width="timePanelWidth"
         :disabled="disabled"
         :error="error || isInvalid"
         placeholder="Select time"
@@ -40,12 +41,13 @@
 <script setup lang="ts">
 import EaDatePicker from '@/components/ui/form/EaDatePicker/datePicker.vue';
 import EaTimePicker from '@/components/ui/form/EaTimePicker/index.vue';
-import { ref, watch, defineProps, withDefaults } from 'vue';
+import { ref, watch, defineProps, withDefaults, nextTick } from 'vue';
 import type { IDateTimePickerProps } from './dateTimePicker.types';
 
 const props = withDefaults(defineProps<IDateTimePickerProps>(), {
   minuteInterval: 5,
   size: 'normal',
+  timePanelWidth: 200,
   required: false,
   disabled: false,
   error: false,
@@ -80,7 +82,7 @@ const initializeValues = () => {
 
 const initialValue = initializeValues();
 const date = ref<Date>(new Date(initialValue));
-const time = ref<Date | null>(new Date(initialValue));
+const time = ref<Date>(new Date(initialValue));
 
 // Format date to string based on valueFormat prop
 const formatDateTime = (dateTime: Date): string => {
@@ -102,19 +104,18 @@ const formatDateTime = (dateTime: Date): string => {
     .replace('mm', minutes);
 };
 
-// Default format function for display (always returns formatted string)
-const getDefaultFormat = (dateTime: Date): string => {
-  const day = dateTime.getDate().toString().padStart(2, '0');
-  const month = (dateTime.getMonth() + 1).toString().padStart(2, '0');
-  const year = dateTime.getFullYear();
-  const hours = dateTime.getHours().toString().padStart(2, '0');
-  const minutes = dateTime.getMinutes().toString().padStart(2, '0');
-
-  return `${day}/${month}/${year} ${hours}:${minutes}`;
-};
+// Flag to prevent infinite loop
+let isUpdatingFromModel = false;
 
 watch([date, time], ([newDate, newTime]) => {
-  if (!newTime || !newDate) return;
+  // Prevent infinite loop when updating from model
+  if (isUpdatingFromModel) {
+    return;
+  }
+
+  if (!newDate || !newTime) {
+    return;
+  }
 
   const combinedDate = new Date(
     newDate.getFullYear(),
@@ -134,7 +135,9 @@ watch([date, time], ([newDate, newTime]) => {
 
 // Model değiştiğinde bileşen değerlerini güncelle
 watch(model, (newValue) => {
-  if (!newValue) return;
+  if (!newValue) {
+    return;
+  }
 
   let parsedDate: Date;
 
@@ -147,9 +150,17 @@ watch(model, (newValue) => {
     parsedDate = newValue;
   }
 
+  // Set flag to prevent infinite loop
+  isUpdatingFromModel = true;
+
   date.value = new Date(parsedDate);
   time.value = new Date(parsedDate);
-});
+
+  // Reset flag after next tick
+  nextTick(() => {
+    isUpdatingFromModel = false;
+  });
+}, { immediate: true });
 </script>
 
 <style scoped lang="scss">

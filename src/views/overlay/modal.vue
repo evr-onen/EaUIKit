@@ -756,7 +756,7 @@ Use Cases:
 • Loading states and progress indicators
 
 This configuration prevents accidental closure while maintaining accessibility and user control through alternative methods.`,
-      size: 'auto',
+      size: 'auto' as const,
       closable: false,
       maskClosable: true
     },
@@ -778,7 +778,7 @@ Use Cases:
 • Complex data entry that shouldn't be lost
 
 This prevents accidental closure from background clicks while keeping the close button available.`,
-      size: 'auto',
+      size: 'auto' as const,
       closable: true,
       maskClosable: false
     },
@@ -800,7 +800,7 @@ Use Cases:
 • Security confirmations and warnings
 
 This provides maximum control over modal dismissal while maintaining keyboard accessibility for screen readers and assistive technologies.`,
-      size: 'auto',
+      size: 'auto' as const,
       closable: false,
       maskClosable: false
     }

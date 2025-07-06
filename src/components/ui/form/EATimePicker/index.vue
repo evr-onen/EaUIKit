@@ -8,7 +8,7 @@
       {{ label }}
       <span v-if="required" class="ea-timepicker__required-asterisk">*</span>
     </small>
-    <Dropdown class="ea-timepicker__container w-full h-8 border" :disabled="disabled">
+    <Dropdown class="ea-timepicker__container w-full h-8 border" :disabled="disabled" :close-on-select="false" :panel-width="panelWidth">
       <template #default="{ openPanel }" >
               <div class="flex" @click="!disabled && openPanel()">
         <input
@@ -28,8 +28,8 @@
           <ChavronDown class="ea-timepicker__icon size-6" />
         </div>
       </template>
-      <template #panelContent>
-        <div class="ea-timepicker__dropdowns">
+      <template #panelContent="{ closePanel }">
+        <div class="ea-timepicker__dropdowns" @click.stop>
           <!-- Saat Kolonu -->
           <div class="ea-timepicker__column">
             <div class="ea-timepicker__column-header">Hours</div>
@@ -42,7 +42,7 @@
                   'selected': selectedHour === hour.value && !hour.isExtra,
                   'extra-item': hour.isExtra
                 }"
-                @click="!hour.isExtra && selectHour(hour.value)"
+                @click.stop="!hour.isExtra && selectHour(hour.value)"
                 :ref="(el) => { if (selectedHour === hour.value && !hour.isExtra && el) selectedHourRef = el as HTMLElement }"
               >
                 <span v-if="!hour.isExtra">{{ hour.display }}</span>
@@ -63,7 +63,7 @@
                   'selected': selectedMinute === minute.value && !minute.isExtra,
                   'extra-item': minute.isExtra
                 }"
-                @click="!minute.isExtra && selectMinute(minute.value)"
+                @click.stop="!minute.isExtra && selectMinute(minute.value, closePanel)"
                 :ref="(el) => { if (selectedMinute === minute.value && !minute.isExtra && el) selectedMinuteRef = el as HTMLElement }"
               >
                 <span v-if="!minute.isExtra">{{ minute.display }}</span>
@@ -93,6 +93,7 @@ const props = withDefaults(defineProps<ITimePickerProps>(), {
   size: 'normal',
   placeholder: 'Select time',
   minuteInterval: 5,
+  panelWidth: 200,
   required: false,
   disabled: false,
   error: false,
@@ -292,8 +293,7 @@ const selectHour = (hour: number) => {
 };
 
 // Dakika seçme fonksiyonu
-const selectMinute = (minute: number) => {
-  console.log('selectMinute', minute);
+const selectMinute = (minute: number, closePanel?: () => void) => {
   selectedMinute.value = minute;
   updateModelValue();
 
@@ -301,6 +301,11 @@ const selectMinute = (minute: number) => {
   nextTick(() => {
     scrollToSelectedItem(minutesListRef.value, selectedMinuteRef.value);
   });
+
+  // Dakika seçildikten sonra paneli kapat
+  if (closePanel) {
+    closePanel();
+  }
 };
 
 // Seçilen öğeye scroll yapma fonksiyonu - Ekstra değerleri de hesaba katarak
@@ -344,7 +349,6 @@ const updateModelValue = () => {
 
 // Modelden değerleri başlatma
 const initializeFromModel = () => {
-console.log('initializeFromModel')
   if (!modelValue.value) {
     selectedHour.value = null;
     selectedMinute.value = null;
@@ -393,17 +397,5 @@ watch([hoursListRef, minutesListRef], () => {
 </script>
 
 <style lang="scss">
-.ea-timepicker {
-  // ... existing styles ...
-
-  // Boş ekstra öğeler için stil
-  .extra-item {
-    @apply cursor-default;
-    pointer-events: none;
-  }
-
-  .invisible {
-    @apply opacity-0;
-  }
-}
+// TimePicker component styles are now in main.scss for teleport compatibility
 </style>
