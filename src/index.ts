@@ -66,8 +66,8 @@ export { default as useDatePicker } from './components/ui/form/EaDatePicker/useD
 export { default as useUploadImage } from './components/ui/form/EaUploadImage/useUploadImage'
 
 // Directives
-export { default as clickOutside } from './directives/clickOutside'
-export { default as scrollOnReveal } from './directives/scrollOnReveal'
+export { default as vClickOutside } from './directives/clickOutside'
+export { default as vScrollOnReveal } from './directives/scrollOnReveal'
 
 // Types
 export type * from './types/Global.types'

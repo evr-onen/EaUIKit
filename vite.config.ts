@@ -32,7 +32,11 @@ export default defineConfig({
           pinia: 'Pinia'
         }
       }
-    }
+    },
+    cssCodeSplit: false,
+    minify: false,
+    sourcemap: true,
+    target: 'esnext'
   }
 })
 

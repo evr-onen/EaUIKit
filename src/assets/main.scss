@@ -4,8 +4,24 @@
 @import url('./base.scss');
 @import url('./scroll-animations.css');
 
-// TimePicker styles
+// Component styles
+@import '../components/ui/form/EaButton/button.style.scss';
+@import '../components/ui/form/EaTextInput/textinput.style.scss';
+@import '../components/ui/form/EaSelect/select.style.scss';
+@import '../components/ui/form/EaCheckbox/checkBox.style.scss';
+@import '../components/ui/form/EaRadioButtons/radioButtons.style.scss';
 @import '../components/ui/form/EaTimePicker/timePicker.style.scss';
+@import '../components/ui/form/EaDatePicker/datepicker.style.scss';
+@import '../components/ui/form/EaDateTimePicker/dateTimePicker.style.scss';
+@import '../components/ui/form/EaAutocomplete/autocomplete.style.scss';
+@import '../components/ui/form/EaMultiselect/multiselect.style.scss';
+@import '../components/ui/form/EaUploadImage/uploadImage.scss';
+@import '../components/ui/form/dropdown/dropdown.style.scss';
+@import '../components/ui/overlay/EaModal/style.scss';
+@import '../components/ui/overlay/EaDialog/EaDialog.scss';
+@import '../components/ui/overlay/EaDrawer/EaDrawer.scss';
+@import '../components/ui/messages/EaToast/EaToast.scss';
+@import '../components/ui/file-management/file-management.scss';
 
 // Global TimePicker dropdown styles for teleported panels
 .ea-timepicker__dropdowns {
@@ -71,42 +87,4 @@
     }
 }
 
-// Global dropdown styles for teleported panels
-.dropdownPanelWrapper {
-    z-index: 1000 !important;
-    background: transparent !important;
-    border: none !important;
-    box-shadow: none !important;
-    padding: 0 !important;
-    margin: 0 !important;
-    
-    ul {
-        @apply flex flex-col gap-1 p-1 bg-white shadow-lg border border-borderColor overflow-auto rounded-lg;
-        margin: 0 !important;
-        
-        li {
-            @apply h-[1.9375rem] px-[.625rem] bg-white flex items-center rounded-[.25rem];
-            cursor: pointer;
-            transition: all 0.2s ease;
-            border: none;
-            margin: 0;
-        }
-        
-        li.selectedOption, 
-        li.selectedOption.hoverOption {
-            @apply bg-optionSelectedBg/80 text-white hover:text-white hover:bg-optionSelectedBg/70;
-        }
-        
-        li.hoverOption {
-            @apply text-textPrimary bg-bgSecondary;
-        }
-        
-        li:hover:not(.selectedOption) {
-            @apply bg-bgSecondary;
-        }
-        
-        li.selectedOption:hover {
-            @apply bg-optionSelectedBg/70;
-        }
-    }
-}
+// Global dropdown styles moved to dropdown.style.scss

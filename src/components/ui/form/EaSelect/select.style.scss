@@ -1,4 +1,4 @@
-.ea-Select{
+.ea-select{
 
     *:focus{
         @apply outline-none;
@@ -6,7 +6,7 @@
 
     // label section
     .ea-select__label{
-      
+        @apply text-sm font-medium text-gray-700 mb-1 block;
     } 
 
     .ea-select__required-asterisk{
@@ -15,7 +15,7 @@
 
     // placeholder section
     .ea-select__placeholder{
-            @apply px-[.625rem] border border-borderColor hover:border-placeholder rounded-lg  flex justify-between items-center capitalize bg-white;
+        @apply px-[.625rem] border border-borderColor hover:border-placeholder rounded-lg flex justify-between items-center capitalize bg-white cursor-pointer transition-colors;
     }
     
     .ea-select__placeholder--disabled{
@@ -35,29 +35,33 @@
     }
     
     &.contentPanelOpen .ea-select__placeholder{
-        @apply border-placeholder;
+        @apply border-placeholder ring-1 ring-placeholder;
     }
-    // dropdown section
-    .dropdownPanelWrapper{
-        @apply fixed w-full text-placeholder ;
+    
+    // option panel styles
+    .ea-select__option-panel{
+        @apply flex flex-col gap-1 p-1 bg-white my-1 shadow-lg border border-borderColor overflow-auto rounded-lg max-h-60;
         
-        ul{
-            @apply flex flex-col gap-1 p-1 bg-white  my-1 shadow-lg border border-borderColor overflow-auto rounded-lg;
-            li{
-                @apply h-[1.9375rem] px-[.625rem] bg-white  flex items-center rounded-[.25rem];
-            } 
-            li.selectedOption, li.selectedOption.hoverOption{
-                @apply bg-optionSelectedBg/80 text-white hover:text-white hover:bg-optionSelectedBg/70;
-            }
-            li.hoverOption{
-                @apply text-textPrimary bg-bgSecondary;
-            }
+        li{
+            @apply h-[1.9375rem] px-[.625rem] bg-white flex items-center rounded-[.25rem] cursor-pointer hover:bg-bgSecondary transition-colors;
+        } 
+        
+        li.selectedOption, li.selectedOption.hoverOption{
+            @apply bg-optionSelectedBg/80 text-white hover:text-white hover:bg-optionSelectedBg/70;
+        }
+        
+        li.hoverOption{
+            @apply text-textPrimary bg-bgSecondary;
         }
     }
 }
 
-.ea-Select:focus{
-    @apply outline-none border-placeholder rounded-[8px];
+.ea-select:focus-within{
+    @apply outline-none;
+    
+    .ea-select__placeholder{
+        @apply border-placeholder ring-1 ring-placeholder;
+    }
 }
 
 .ea-select--disabled{

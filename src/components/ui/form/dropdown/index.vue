@@ -50,3 +50,7 @@ watch([isOpen], async() => {
 
 </script>
 
+<style lang="scss">
+@import './dropdown.style.scss';
+</style>
+
