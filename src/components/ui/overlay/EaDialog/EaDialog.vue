@@ -89,5 +89,5 @@ const handleCancel = () => {
 </script>
 
 <style scoped lang="scss">
-@import './EaDialog.scss';
+@use './EaDialog.scss';
 </style>

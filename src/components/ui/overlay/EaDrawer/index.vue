@@ -194,5 +194,5 @@ defineExpose({
 </script>
 
 <style scoped lang="scss">
-@import './EaDrawer.scss';
+@use './EaDrawer.scss';
 </style>

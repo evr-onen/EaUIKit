@@ -8,9 +8,9 @@
       {{ label }}
       <span v-if="required" class="ea-timepicker__required-asterisk">*</span>
     </small>
-    <Dropdown class="ea-timepicker__container w-full h-8 border" :disabled="disabled" :close-on-select="false" :panel-width="panelWidth">
+        <Dropdown class="ea-timepicker__container w-full border" :disabled="disabled" :close-on-select="false" :panel-width="panelWidth">
       <template #default="{ openPanel }" >
-              <div class="flex" @click="!disabled && openPanel()">
+              <div class="ea-timepicker__input-wrapper" :class="size" @click="!disabled && openPanel()">
         <input
         class="ea-timepicker__input rounded-lg"
           :class="size"
@@ -397,5 +397,5 @@ watch([hoursListRef, minutesListRef], () => {
 </script>
 
 <style lang="scss">
-@import './timepicker-dropdown.style.scss';
+@use './timepicker-dropdown.style.scss';
 </style>

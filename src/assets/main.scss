@@ -1,35 +1,36 @@
+// Sass @use rules must come first
+@use './base.scss';
+@use './scroll-animations.css';
+
+// Component styles
+@use '../components/ui/form/EaButton/button.style.scss';
+@use '../components/ui/form/EaTextInput/textinput.style.scss';
+@use '../components/ui/form/EaSelect/select.style.scss';
+@use '../components/ui/form/EaCheckbox/checkBox.style.scss';
+@use '../components/ui/form/EaRadioButtons/radioButtons.style.scss';
+@use '../components/ui/form/EaTimePicker/timePicker.style.scss';
+@use '../components/ui/form/EaDatePicker/datepicker.style.scss';
+@use '../components/ui/form/EaDateTimePicker/dateTimePicker.style.scss';
+@use '../components/ui/form/EaAutocomplete/autocomplete.style.scss';
+@use '../components/ui/form/EaMultiselect/multiselect.style.scss';
+@use '../components/ui/form/EaUploadImage/uploadImage.scss';
+@use '../components/ui/form/dropdown/dropdown.style.scss';
+@use '../components/ui/overlay/EaModal/style.scss';
+@use '../components/ui/overlay/EaDialog/EaDialog.scss';
+@use '../components/ui/overlay/EaDrawer/EaDrawer.scss';
+@use '../components/ui/overlay/EaTooltip/tooltip.style.scss';
+@use '../components/ui/overlay/EaPopover/popover.style.scss';
+@use '../components/ui/messages/EaToast/EaToast.scss';
+@use '../components/ui/messages/EaMessage/message.style.scss';
+@use '../components/ui/file-management/file-management.scss';
+@use '../components/ui/panels/EaAccordion/accordion.style.scss';
+@use '../components/ui/panels/EaCard/card.style.scss';
+@use '../components/ui/panels/EaTabs/tabs.style.scss';
+
+// Tailwind directives come after @use rules
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-@import url('./base.scss');
-@import url('./scroll-animations.css');
-
-// Component styles
-@import '../components/ui/form/EaButton/button.style.scss';
-@import '../components/ui/form/EaTextInput/textinput.style.scss';
-@import '../components/ui/form/EaSelect/select.style.scss';
-@import '../components/ui/form/EaCheckbox/checkBox.style.scss';
-@import '../components/ui/form/EaRadioButtons/radioButtons.style.scss';
-@import '../components/ui/form/EaTimePicker/timePicker.style.scss';
-@import '../components/ui/form/EaTimePicker/timepicker-dropdown.style.scss';
-@import '../components/ui/form/EaDatePicker/datepicker.style.scss';
-@import '../components/ui/form/EaDateTimePicker/dateTimePicker.style.scss';
-@import '../components/ui/form/EaAutocomplete/autocomplete.style.scss';
-@import '../components/ui/form/EaMultiselect/multiselect.style.scss';
-@import '../components/ui/form/EaUploadImage/uploadImage.scss';
-@import '../components/ui/form/dropdown/dropdown.style.scss';
-@import '../components/ui/overlay/EaModal/style.scss';
-@import '../components/ui/overlay/EaDialog/EaDialog.scss';
-@import '../components/ui/overlay/EaDrawer/EaDrawer.scss';
-@import '../components/ui/overlay/EaTooltip/tooltip.style.scss';
-@import '../components/ui/overlay/EaPopover/popover.style.scss';
-@import '../components/ui/messages/EaToast/EaToast.scss';
-@import '../components/ui/messages/EaMessage/message.style.scss';
-@import '../components/ui/file-management/file-management.scss';
-@import '../components/ui/panels/EaAccordion/accordion.style.scss';
-@import '../components/ui/panels/EaCard/card.style.scss';
-@import '../components/ui/panels/EaTabs/tabs.style.scss';
-@import '../components/general/CodeBlock/codeblock.style.scss';
 
 
 

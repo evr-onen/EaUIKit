@@ -22,6 +22,19 @@
     .ea-timepicker__container {
         @apply relative rounded-lg;
     }
+    
+    // Input wrapper with flex and sizing
+    .ea-timepicker__input-wrapper {
+        @apply flex items-center min-h-[2.0625rem] bg-white rounded-lg px-3; // normal height - same as DatePicker
+        
+        &.small {
+            @apply min-h-[1.7188rem] px-2; // 27.5px - same as DatePicker
+        }
+        
+        &.large {
+            @apply min-h-[2.4375rem] px-4; // 39px - same as DatePicker
+        }
+    }
 
     // Error state
     &.ea-timepicker--error {
@@ -37,11 +50,15 @@
     // Disabled state
     &.ea-timepicker--disabled {
         .ea-timepicker__container {
-            @apply bg-gray-100 border-gray-300 cursor-not-allowed;
+            @apply border-gray-300 cursor-not-allowed;
+        }
+        
+        .ea-timepicker__input-wrapper {
+            @apply bg-gray-100 cursor-not-allowed;
         }
         
         .ea-timepicker__input {
-            @apply bg-gray-100 text-gray-500 cursor-not-allowed;
+            @apply text-gray-500 cursor-not-allowed;
         }
         
         .ea-timepicker__icon {
@@ -55,7 +72,7 @@
 
     // input field
     .ea-timepicker__input {
-        @apply px-3 py-1 capitalize bg-white w-full cursor-pointer text-[.875rem] ;
+        @apply py-1 capitalize bg-transparent w-full cursor-pointer text-[.875rem] border-0 outline-none;
     }
     
     .ea-timepicker__input.small {
@@ -67,7 +84,7 @@
     }
     
     .ea-timepicker__icon {
-        @apply absolute right-2 top-1/2 transform -translate-y-1/2 text-placeholder;
+        @apply text-placeholder flex-shrink-0 ml-2;
     }
     
     // Dropdowns wrapper

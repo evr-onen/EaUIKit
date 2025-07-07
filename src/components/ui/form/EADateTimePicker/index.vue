@@ -28,6 +28,7 @@
         :disabled="disabled"
         :error="error || isInvalid"
         placeholder="Select time"
+        
       />
     </div>
 

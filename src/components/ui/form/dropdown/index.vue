@@ -51,6 +51,6 @@ watch([isOpen], async() => {
 </script>
 
 <style lang="scss">
-@import './dropdown.style.scss';
+@use './dropdown.style.scss';
 </style>
 

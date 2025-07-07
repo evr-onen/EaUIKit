@@ -77,6 +77,35 @@
           </div>
         </div>
       </div>
+
+      <div class="code-example">
+        <h3 class="code-title">Size Configuration</h3>
+        <div class="code-blocks">
+          <div class="code-block">
+            <h4 class="code-subtitle">Size Variants</h4>
+            <pre><code>&lt;!-- Small Size --&gt;
+&lt;EaTimePicker
+  v-model="timeValue"
+  size="small"
+  placeholder="Small time picker"
+/&gt;
+
+&lt;!-- Normal Size (Default) --&gt;
+&lt;EaTimePicker
+  v-model="timeValue"
+  size="normal"
+  placeholder="Normal time picker"
+/&gt;
+
+&lt;!-- Large Size --&gt;
+&lt;EaTimePicker
+  v-model="timeValue"
+  size="large"
+  placeholder="Large time picker"
+/&gt;</code></pre>
+          </div>
+        </div>
+      </div>
     </section>
 
     <!-- Size Variants Section -->
@@ -115,31 +144,29 @@
         </div>
       </div>
 
-      <div class="code-section">
-        <h3 class="code-title">Size Configuration</h3>
-        <CodeBlock
-          title="Size Variants"
-          :code="`<!-- Small Size -->
-<EaTimePicker
-  v-model=\"timeValue\"
-  size=\"small\"
-  placeholder=\"Small time picker\"
-/>
+      <div class="code-example">
+        <h3 class="code-title">Code Examples</h3>
+        <div class="code-blocks">
+          <div class="code-block">
+            <h4 class="code-subtitle">Basic Usage</h4>
+            <pre><code>&lt;EaTimePicker
+  v-model="timeValue"
+  label="Select Time"
+  placeholder="Choose a time"
+/&gt;</code></pre>
+          </div>
 
-<!-- Normal Size (Default) -->
-<EaTimePicker
-  v-model=\"timeValue\"
-  size=\"normal\"
-  placeholder=\"Normal time picker\"
-/>
-
-<!-- Large Size -->
-<EaTimePicker
-  v-model=\"timeValue\"
-  size=\"large\"
-  placeholder=\"Large time picker\"
-/>`"
-        />
+          <div class="code-block">
+            <h4 class="code-subtitle">With Constraints</h4>
+            <pre><code>&lt;EaTimePicker
+  v-model="businessTime"
+  label="Meeting Time"
+  min-time="09:00"
+  max-time="18:00"
+  :minute-interval="15"
+/&gt;</code></pre>
+          </div>
+        </div>
       </div>
     </section>
 
@@ -190,37 +217,39 @@
         </div>
       </div>
 
-      <div class="code-section">
-        <h3 class="code-title">Time Constraint Examples</h3>
-        <CodeBlock
-          title="Setting Time Limits"
-          :code="`<!-- Business Hours Constraint -->
-<EaTimePicker
-  v-model=\"businessTime\"
-  label=\"Business Hours\"
-  min-time=\"09:00\"
-  max-time=\"18:00\"
-  placeholder=\"Select business time\"
-/>
+      <div class="code-example">
+        <h3 class="code-title">Time Constraints Examples</h3>
+        <div class="code-blocks">
+          <div class="code-block">
+            <h4 class="code-subtitle">Business Hours & Time Limits</h4>
+            <pre><code>&lt;!-- Business Hours (9 AM - 6 PM) --&gt;
+&lt;EaTimePicker
+  v-model="businessTime"
+  label="Business Hours"
+  min-time="09:00"
+  max-time="18:00"
+  placeholder="Select business time"
+/&gt;
 
-<!-- Morning Only -->
-<EaTimePicker
-  v-model=\"morningTime\"
-  label=\"Morning Schedule\"
-  min-time=\"06:00\"
-  max-time=\"12:00\"
-  placeholder=\"Morning hours only\"
-/>
+&lt;!-- Morning Schedule --&gt;
+&lt;EaTimePicker
+  v-model="morningTime"
+  label="Morning Schedule"
+  min-time="06:00"
+  max-time="12:00"
+  placeholder="Morning hours only"
+/&gt;
 
-<!-- Evening Only -->
-<EaTimePicker
-  v-model=\"eveningTime\"
-  label=\"Evening Schedule\"
-  min-time=\"18:00\"
-  max-time=\"23:00\"
-  placeholder=\"Evening hours only\"
-/>`"
-        />
+&lt;!-- Evening Hours --&gt;
+&lt;EaTimePicker
+  v-model="eveningTime"
+  label="Evening Schedule"
+  min-time="18:00"
+  max-time="23:00"
+  placeholder="Evening hours only"
+/&gt;</code></pre>
+          </div>
+        </div>
       </div>
     </section>
 
@@ -229,7 +258,7 @@
       <div class="section-header">
         <h2 class="section-title">Minute Intervals</h2>
         <p class="section-description">
-          Configure time step intervals to match your scheduling requirements.
+          Control the granularity of time selection with different minute intervals.
         </p>
       </div>
 
@@ -238,8 +267,8 @@
           <h3 class="demo-title">5-Minute Steps (Default)</h3>
           <EaTimePicker
             v-model="intervals.five"
-            label="5-Minute Intervals"
-            placeholder="Every 5 minutes"
+            label="Default Interval"
+            placeholder="5-minute steps"
             :minute-interval="5"
           />
           <p class="demo-hint">00, 05, 10, 15, 20, 25, 30...</p>
@@ -249,8 +278,8 @@
           <h3 class="demo-title">15-Minute Steps</h3>
           <EaTimePicker
             v-model="intervals.fifteen"
-            label="15-Minute Intervals"
-            placeholder="Every 15 minutes"
+            label="Appointment Slots"
+            placeholder="15-minute steps"
             :minute-interval="15"
           />
           <p class="demo-hint">00, 15, 30, 45</p>
@@ -260,8 +289,8 @@
           <h3 class="demo-title">30-Minute Steps</h3>
           <EaTimePicker
             v-model="intervals.thirty"
-            label="30-Minute Intervals"
-            placeholder="Every 30 minutes"
+            label="Meeting Slots"
+            placeholder="30-minute steps"
             :minute-interval="30"
           />
           <p class="demo-hint">00, 30</p>
@@ -271,46 +300,48 @@
           <h3 class="demo-title">1-Minute Precision</h3>
           <EaTimePicker
             v-model="intervals.one"
-            label="1-Minute Intervals"
-            placeholder="Every minute"
+            label="Precise Time"
+            placeholder="1-minute precision"
             :minute-interval="1"
           />
           <p class="demo-hint">Precise minute selection</p>
         </div>
       </div>
 
-      <div class="code-section">
-        <h3 class="code-title">Interval Configuration</h3>
-        <CodeBlock
-          title="Minute Intervals"
-          :code="`<!-- 5-Minute Intervals (Default) -->
-<EaTimePicker
-  v-model=\"timeValue\"
-  :minute-interval=\"5\"
-  placeholder=\"Every 5 minutes\"
-/>
+      <div class="code-example">
+        <h3 class="code-title">Minute Intervals Configuration</h3>
+        <div class="code-blocks">
+          <div class="code-block">
+            <h4 class="code-subtitle">Different Time Intervals</h4>
+            <pre><code>&lt;!-- 5-Minute Intervals (Default) --&gt;
+&lt;EaTimePicker
+  v-model="timeValue"
+  :minute-interval="5"
+  placeholder="Every 5 minutes"
+/&gt;
 
-<!-- 15-Minute Intervals -->
-<EaTimePicker
-  v-model=\"timeValue\"
-  :minute-interval=\"15\"
-  placeholder=\"Every 15 minutes\"
-/>
+&lt;!-- 15-Minute Intervals --&gt;
+&lt;EaTimePicker
+  v-model="timeValue"
+  :minute-interval="15"
+  placeholder="Every 15 minutes"
+/&gt;
 
-<!-- 30-Minute Intervals -->
-<EaTimePicker
-  v-model=\"timeValue\"
-  :minute-interval=\"30\"
-  placeholder=\"Every 30 minutes\"
-/>
+&lt;!-- 30-Minute Intervals --&gt;
+&lt;EaTimePicker
+  v-model="timeValue"
+  :minute-interval="30"
+  placeholder="Every 30 minutes"
+/&gt;
 
-<!-- 1-Minute Precision -->
-<EaTimePicker
-  v-model=\"timeValue\"
-  :minute-interval=\"1\"
-  placeholder=\"Every minute\"
-/>`"
-        />
+&lt;!-- 1-Minute Precision --&gt;
+&lt;EaTimePicker
+  v-model="timeValue"
+  :minute-interval="1"
+  placeholder="Every minute"
+/&gt;</code></pre>
+          </div>
+        </div>
       </div>
     </section>
 
@@ -319,7 +350,7 @@
       <div class="section-header">
         <h2 class="section-title">States & Validation</h2>
         <p class="section-description">
-          Different states including required fields, error states, and disabled conditions.
+          Different states and validation options for comprehensive form integration.
         </p>
       </div>
 
@@ -343,7 +374,7 @@
           <EaTimePicker
             v-model="states.error"
             label="Invalid Time"
-            placeholder="This field has an error"
+            placeholder="Error state"
             error
             error-message="Please select a valid time"
           />
@@ -354,7 +385,7 @@
           <EaTimePicker
             v-model="states.invalid"
             label="Invalid Time Field"
-            placeholder="Using is-invalid prop"
+            placeholder="Invalid state"
             is-invalid
             error-message="Time format is invalid"
           />
@@ -371,42 +402,36 @@
         </div>
       </div>
 
-      <div class="code-section">
-        <h3 class="code-title">State Management</h3>
-        <CodeBlock
-          title="States and Validation"
-          :code="`<!-- Required Field -->
-<EaTimePicker
-  v-model=\"timeValue\"
-  label=\"Start Time\"
+      <div class="code-example">
+        <h3 class="code-title">States & Validation Examples</h3>
+        <div class="code-blocks">
+          <div class="code-block">
+            <h4 class="code-subtitle">Form States</h4>
+            <pre><code>&lt;!-- Required Field --&gt;
+&lt;EaTimePicker
+  v-model="timeValue"
+  label="Start Time"
   required
-  placeholder=\"Required field\"
-/>
+  placeholder="Required field"
+/&gt;
 
-<!-- Error State -->
-<EaTimePicker
-  v-model=\"timeValue\"
-  label=\"Invalid Time\"
+&lt;!-- Error State --&gt;
+&lt;EaTimePicker
+  v-model="timeValue"
+  label="Invalid Time"
   error
-  error-message=\"Please select a valid time\"
-/>
+  error-message="Please select a valid time"
+/&gt;
 
-<!-- Is-Invalid State -->
-<EaTimePicker
-  v-model=\"timeValue\"
-  label=\"Invalid Time Field\"
-  is-invalid
-  error-message=\"Time format is invalid\"
-/>
-
-<!-- Disabled State -->
-<EaTimePicker
-  v-model=\"timeValue\"
-  label=\"Disabled Time\"
+&lt;!-- Disabled State --&gt;
+&lt;EaTimePicker
+  v-model="timeValue"
+  label="Disabled Time"
   disabled
-  placeholder=\"Cannot select time\"
-/>`"
-        />
+  placeholder="Cannot select time"
+/&gt;</code></pre>
+          </div>
+        </div>
       </div>
     </section>
 
@@ -489,50 +514,185 @@
         </div>
       </div>
 
-      <div class="code-section">
-        <h3 class="code-title">Use Case Examples</h3>
-        <CodeBlock
-          title="Real-world Implementations"
-          :code="`<!-- Doctor Appointment -->
-<EaTimePicker
-  v-model=\"appointmentTime\"
-  label=\"Appointment Time\"
-  min-time=\"08:00\"
-  max-time=\"17:00\"
-  :minute-interval=\"15\"
+      <div class="code-example">
+        <h3 class="code-title">Real-world Implementation Examples</h3>
+        <div class="code-blocks">
+          <div class="code-block">
+            <h4 class="code-subtitle">Common Use Cases</h4>
+            <pre><code>&lt;!-- Doctor Appointment --&gt;
+&lt;EaTimePicker
+  v-model="appointmentTime"
+  label="Appointment Time"
+  min-time="08:00"
+  max-time="17:00"
+  :minute-interval="15"
   required
-  placeholder=\"Select appointment time\"
-/>
+  placeholder="Select appointment time"
+/&gt;
 
-<!-- Meeting Scheduler -->
-<EaTimePicker
-  v-model=\"meetingTime\"
-  label=\"Meeting Time\"
-  min-time=\"09:00\"
-  max-time=\"18:00\"
-  :minute-interval=\"30\"
-  placeholder=\"Schedule meeting\"
-/>
+&lt;!-- Meeting Scheduler --&gt;
+&lt;EaTimePicker
+  v-model="meetingTime"
+  label="Meeting Time"
+  min-time="09:00"
+  max-time="18:00"
+  :minute-interval="30"
+  placeholder="Schedule meeting"
+/&gt;
 
-<!-- Alarm Clock -->
-<EaTimePicker
-  v-model=\"alarmTime\"
-  label=\"Alarm Time\"
-  :minute-interval=\"1\"
-  placeholder=\"Set alarm\"
-/>
-
-<!-- Restaurant Reservation -->
-<EaTimePicker
-  v-model=\"reservationTime\"
-  label=\"Reservation Time\"
-  min-time=\"17:00\"
-  max-time=\"22:00\"
-  :minute-interval=\"15\"
+&lt;!-- Restaurant Reservation --&gt;
+&lt;EaTimePicker
+  v-model="reservationTime"
+  label="Reservation Time"
+  min-time="17:00"
+  max-time="22:00"
+  :minute-interval="15"
   required
-  placeholder=\"Select dining time\"
-/>`"
-        />
+  placeholder="Select dining time"
+/&gt;</code></pre>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Advanced Example Section -->
+    <section class="demo-section">
+      <div class="section-header">
+        <h2 class="section-title">Advanced Example</h2>
+        <p class="section-description">
+          Complex time validation with start/end time relationships and duration calculation.
+        </p>
+      </div>
+
+      <div class="advanced-demo">
+        <div class="demo-card large">
+          <h3 class="demo-title">Appointment Scheduling Form</h3>
+
+          <div class="form-row">
+            <EaTimePicker
+              v-model="advanced.startTime"
+              label="Start Time"
+              placeholder="Select start time"
+              min-time="08:00"
+              max-time="18:00"
+              :minute-interval="15"
+              required
+              :error="advanced.errors.startTime"
+              :error-message="advanced.errors.startTimeMessage"
+              @update:model-value="validateStartTime"
+            />
+
+            <EaTimePicker
+              v-model="advanced.endTime"
+              label="End Time"
+              placeholder="Select end time"
+              :min-time="getMinEndTime()"
+              max-time="18:00"
+              :minute-interval="15"
+              required
+              :error="advanced.errors.endTime"
+              :error-message="advanced.errors.endTimeMessage"
+              @update:model-value="validateEndTime"
+            />
+          </div>
+
+          <div class="form-row">
+            <EaTimePicker
+              v-model="advanced.breakTime"
+              label="Break Time (Optional)"
+              placeholder="Select break time"
+              :min-time="getMinBreakTime()"
+              :max-time="getMaxBreakTime()"
+              :minute-interval="15"
+              :disabled="!canSelectBreak()"
+            />
+          </div>
+
+          <div class="advanced-feedback">
+            <div class="feedback-item">
+              <span class="label">Duration:</span>
+              <span class="value">{{ calculateDuration() }}</span>
+            </div>
+            <div class="feedback-item">
+              <span class="label">Break Time:</span>
+              <span class="value">{{ formatTime(advanced.breakTime) || 'No break' }}</span>
+            </div>
+            <div class="feedback-item">
+              <span class="label">Total with Break:</span>
+              <span class="value">{{ calculateTotalDuration() }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="code-example">
+        <h3 class="code-title">Advanced Form Implementation</h3>
+        <div class="code-blocks">
+          <div class="code-block">
+            <h4 class="code-subtitle">Complex Validation Example</h4>
+            <pre><code>&lt;template&gt;
+  &lt;div class="appointment-form"&gt;
+    &lt;EaTimePicker
+      v-model="startTime"
+      label="Start Time"
+      placeholder="Select start time"
+      min-time="08:00"
+      max-time="18:00"
+      :minute-interval="15"
+      required
+      :error="errors.startTime"
+      :error-message="errors.startTimeMessage"
+      @update:model-value="validateStartTime"
+    /&gt;
+
+    &lt;EaTimePicker
+      v-model="endTime"
+      label="End Time"
+      placeholder="Select end time"
+      :min-time="getMinEndTime()"
+      max-time="18:00"
+      :minute-interval="15"
+      required
+      :error="errors.endTime"
+      :error-message="errors.endTimeMessage"
+      @update:model-value="validateEndTime"
+    /&gt;
+  &lt;/div&gt;
+&lt;/template&gt;</code></pre>
+          </div>
+
+          <div class="code-block">
+            <h4 class="code-subtitle">Script Implementation</h4>
+            <pre><code>&lt;script setup&gt;
+const startTime = ref(null)
+const endTime = ref(null)
+
+const errors = reactive({
+  startTime: false,
+  startTimeMessage: '',
+  endTime: false,
+  endTimeMessage: ''
+})
+
+const validateStartTime = () => {
+  if (!startTime.value) {
+    errors.startTime = true
+    errors.startTimeMessage = 'Start time is required'
+    return
+  }
+  errors.startTime = false
+  errors.startTimeMessage = ''
+}
+
+const getMinEndTime = () => {
+  if (!startTime.value) return '08:00'
+  const nextSlot = new Date(startTime.value)
+  nextSlot.setMinutes(nextSlot.getMinutes() + 15)
+  return nextSlot.toTimeString().slice(0, 5)
+}
+&lt;/script&gt;</code></pre>
+          </div>
+        </div>
       </div>
     </section>
 
@@ -633,7 +793,7 @@
             <span class="prop-type">boolean</span>
             <span class="prop-default">false</span>
           </div>
-          <p class="prop-description">Show error state with red border styling</p>
+          <p class="prop-description">Show error state with red border</p>
         </div>
 
         <div class="prop-card">
@@ -642,7 +802,7 @@
             <span class="prop-type">boolean</span>
             <span class="prop-default">false</span>
           </div>
-          <p class="prop-description">Alternative prop for error state (alias for error)</p>
+          <p class="prop-description">Show invalid state (alias for error)</p>
         </div>
 
         <div class="prop-card">
@@ -651,233 +811,17 @@
             <span class="prop-type">string</span>
             <span class="prop-default">undefined</span>
           </div>
-          <p class="prop-description">Error message displayed below the input field</p>
-        </div>
-      </div>
-    </section>
-
-    <!-- Events Documentation Section -->
-    <section class="demo-section">
-      <div class="section-header">
-        <h2 class="section-title">Events Documentation</h2>
-        <p class="section-description">
-          Available events emitted by the TimePicker component.
-        </p>
-      </div>
-
-      <div class="events-grid">
-        <div class="event-card">
-          <h4 class="event-name">update:modelValue</h4>
-          <div class="event-payload">
-            <span class="payload-type">Date | null</span>
-          </div>
-          <p class="event-description">Emitted when the selected time value changes</p>
+          <p class="prop-description">Error message to display below the input</p>
         </div>
 
-        <div class="event-card">
-          <h4 class="event-name">change</h4>
-          <div class="event-payload">
-            <span class="payload-type">Date | null</span>
+        <div class="prop-card">
+          <h4 class="prop-name">panelWidth</h4>
+          <div class="prop-details">
+            <span class="prop-type">number</span>
+            <span class="prop-default">200</span>
           </div>
-          <p class="event-description">Emitted when the time selection is confirmed</p>
+          <p class="prop-description">Width of the dropdown panel in pixels</p>
         </div>
-
-        <div class="event-card">
-          <h4 class="event-name">focus</h4>
-          <div class="event-payload">
-            <span class="payload-type">FocusEvent</span>
-          </div>
-          <p class="event-description">Emitted when the input field receives focus</p>
-        </div>
-
-        <div class="event-card">
-          <h4 class="event-name">blur</h4>
-          <div class="event-payload">
-            <span class="payload-type">FocusEvent</span>
-          </div>
-          <p class="event-description">Emitted when the input field loses focus</p>
-        </div>
-      </div>
-    </section>
-
-    <!-- Complete Usage Example Section -->
-    <section class="demo-section">
-      <div class="section-header">
-        <h2 class="section-title">Complete Usage Example</h2>
-        <p class="section-description">
-          A comprehensive example showing advanced TimePicker usage with form validation.
-        </p>
-      </div>
-
-      <div class="usage-demo">
-        <div class="form-example">
-          <h3 class="form-title">Appointment Booking Form</h3>
-
-          <div class="form-row">
-            <EaTimePicker
-              v-model="completeExample.startTime"
-              label="Start Time"
-              placeholder="Select start time"
-              min-time="08:00"
-              max-time="18:00"
-              :minute-interval="15"
-              required
-              :error="completeExample.errors.startTime"
-              :error-message="completeExample.errors.startTimeMessage"
-              @change="validateStartTime"
-            />
-          </div>
-
-          <div class="form-row">
-            <EaTimePicker
-              v-model="completeExample.endTime"
-              label="End Time"
-              placeholder="Select end time"
-              :min-time="getMinEndTime()"
-              max-time="18:00"
-              :minute-interval="15"
-              required
-              :error="completeExample.errors.endTime"
-              :error-message="completeExample.errors.endTimeMessage"
-              @change="validateEndTime"
-            />
-          </div>
-
-          <div class="form-row">
-            <EaTimePicker
-              v-model="completeExample.breakTime"
-              label="Break Time (Optional)"
-              placeholder="Select break time"
-              :min-time="getMinBreakTime()"
-              :max-time="getMaxBreakTime()"
-              :minute-interval="15"
-              :disabled="!canSelectBreak()"
-            />
-          </div>
-
-          <div class="form-feedback">
-            <div class="feedback-row">
-              <span class="feedback-label">Duration:</span>
-              <span class="feedback-value">{{ calculateDuration() }}</span>
-            </div>
-            <div class="feedback-row">
-              <span class="feedback-label">Total Time:</span>
-              <span class="feedback-value">{{ calculateTotalTime() }}</span>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="code-section">
-        <h3 class="code-title">Complete Implementation</h3>
-        <CodeBlock
-          title="Advanced Form Example"
-          :code="`<template>
-  <div class=\"appointment-form\">
-    <EaTimePicker
-      v-model=\"startTime\"
-      label=\"Start Time\"
-      placeholder=\"Select start time\"
-      min-time=\"08:00\"
-      max-time=\"18:00\"
-      :minute-interval=\"15\"
-      required
-      :error=\"errors.startTime\"
-      :error-message=\"errors.startTimeMessage\"
-      @change=\"validateStartTime\"
-    />
-
-    <EaTimePicker
-      v-model=\"endTime\"
-      label=\"End Time\"
-      placeholder=\"Select end time\"
-      :min-time=\"getMinEndTime()\"
-      max-time=\"18:00\"
-      :minute-interval=\"15\"
-      required
-      :error=\"errors.endTime\"
-      :error-message=\"errors.endTimeMessage\"
-      @change=\"validateEndTime\"
-    />
-
-    <EaTimePicker
-      v-model=\"breakTime\"
-      label=\"Break Time (Optional)\"
-      placeholder=\"Select break time\"
-      :min-time=\"getMinBreakTime()\"
-      :max-time=\"getMaxBreakTime()\"
-      :minute-interval=\"15\"
-      :disabled=\"!canSelectBreak()\"
-    />
-  </div>
-</template>
-
-const startTime = ref<Date | null>(null)
-const endTime = ref<Date | null>(null)
-const breakTime = ref<Date | null>(null)
-
-const errors = reactive({
-  startTime: false,
-  startTimeMessage: '',
-  endTime: false,
-  endTimeMessage: ''
-})
-
-const validateStartTime = () => {
-  if (!startTime.value) {
-    errors.startTime = true
-    errors.startTimeMessage = 'Start time is required'
-    return
-  }
-
-  const hour = startTime.value.getHours()
-  if (hour < 8 || hour >= 18) {
-    errors.startTime = true
-    errors.startTimeMessage = 'Start time must be between 8:00 and 18:00'
-    return
-  }
-
-  errors.startTime = false
-  errors.startTimeMessage = ''
-
-  // Validate end time if it exists
-  if (endTime.value) {
-    validateEndTime()
-  }
-}
-
-const validateEndTime = () => {
-  if (!endTime.value || !startTime.value) return
-
-  if (endTime.value <= startTime.value) {
-    errors.endTime = true
-    errors.endTimeMessage = 'End time must be after start time'
-    return
-  }
-
-  errors.endTime = false
-  errors.endTimeMessage = ''
-}
-
-const getMinEndTime = (): string => {
-  if (!startTime.value) return '08:00'
-
-  const nextSlot = new Date(startTime.value)
-  nextSlot.setMinutes(nextSlot.getMinutes() + 15)
-
-  return nextSlot.toTimeString().slice(0, 5)
-}
-
-const calculateDuration = (): string => {
-  if (!startTime.value || !endTime.value) return 'Not calculated'
-
-  const diff = endTime.value.getTime() - startTime.value.getTime()
-  const hours = Math.floor(diff / (1000 * 60 * 60))
-  const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60))
-
-  return hours > 0 ? \`\${hours}h \${minutes}m\` : \`\${minutes}m\`
-}`"
-        />
       </div>
     </section>
 
@@ -946,7 +890,6 @@ const calculateDuration = (): string => {
 <script setup lang="ts">
 import { ref, reactive } from 'vue'
 import EaTimePicker from '@/components/ui/form/EaTimePicker/index.vue'
-import CodeBlock from '@/components/general/CodeBlock.vue'
 
 // Quick Demo
 const quickDemo = reactive({
@@ -994,8 +937,8 @@ const useCases = reactive({
   restaurant: null as Date | null
 })
 
-// Complete Example
-const completeExample = reactive({
+// Advanced Example
+const advanced = reactive({
   startTime: null as Date | null,
   endTime: null as Date | null,
   breakTime: null as Date | null,
@@ -1018,78 +961,78 @@ const formatTime = (date: Date | null): string => {
 }
 
 const validateStartTime = () => {
-  if (!completeExample.startTime) {
-    completeExample.errors.startTime = true
-    completeExample.errors.startTimeMessage = 'Start time is required'
+  if (!advanced.startTime) {
+    advanced.errors.startTime = true
+    advanced.errors.startTimeMessage = 'Start time is required'
     return
   }
 
-  const hour = completeExample.startTime.getHours()
+  const hour = advanced.startTime.getHours()
   if (hour < 8 || hour >= 18) {
-    completeExample.errors.startTime = true
-    completeExample.errors.startTimeMessage = 'Start time must be between 8:00 and 18:00'
+    advanced.errors.startTime = true
+    advanced.errors.startTimeMessage = 'Start time must be between 8:00 and 18:00'
     return
   }
 
-  completeExample.errors.startTime = false
-  completeExample.errors.startTimeMessage = ''
+  advanced.errors.startTime = false
+  advanced.errors.startTimeMessage = ''
 
-  if (completeExample.endTime) {
+  if (advanced.endTime) {
     validateEndTime()
   }
 }
 
 const validateEndTime = () => {
-  if (!completeExample.endTime || !completeExample.startTime) return
+  if (!advanced.endTime || !advanced.startTime) return
 
-  if (completeExample.endTime <= completeExample.startTime) {
-    completeExample.errors.endTime = true
-    completeExample.errors.endTimeMessage = 'End time must be after start time'
+  if (advanced.endTime <= advanced.startTime) {
+    advanced.errors.endTime = true
+    advanced.errors.endTimeMessage = 'End time must be after start time'
     return
   }
 
-  completeExample.errors.endTime = false
-  completeExample.errors.endTimeMessage = ''
+  advanced.errors.endTime = false
+  advanced.errors.endTimeMessage = ''
 }
 
 const getMinEndTime = (): string => {
-  if (!completeExample.startTime) return '08:00'
+  if (!advanced.startTime) return '08:00'
 
-  const nextSlot = new Date(completeExample.startTime)
+  const nextSlot = new Date(advanced.startTime)
   nextSlot.setMinutes(nextSlot.getMinutes() + 15)
 
   return nextSlot.toTimeString().slice(0, 5)
 }
 
 const getMinBreakTime = (): string => {
-  if (!completeExample.startTime) return '08:00'
-  return completeExample.startTime.toTimeString().slice(0, 5)
+  if (!advanced.startTime) return '08:00'
+  return advanced.startTime.toTimeString().slice(0, 5)
 }
 
 const getMaxBreakTime = (): string => {
-  if (!completeExample.endTime) return '18:00'
-  return completeExample.endTime.toTimeString().slice(0, 5)
+  if (!advanced.endTime) return '18:00'
+  return advanced.endTime.toTimeString().slice(0, 5)
 }
 
 const canSelectBreak = (): boolean => {
-  return !!(completeExample.startTime && completeExample.endTime)
+  return !!(advanced.startTime && advanced.endTime)
 }
 
 const calculateDuration = (): string => {
-  if (!completeExample.startTime || !completeExample.endTime) return 'Not calculated'
+  if (!advanced.startTime || !advanced.endTime) return 'Not calculated'
 
-  const diff = completeExample.endTime.getTime() - completeExample.startTime.getTime()
+  const diff = advanced.endTime.getTime() - advanced.startTime.getTime()
   const hours = Math.floor(diff / (1000 * 60 * 60))
   const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60))
 
   return hours > 0 ? `${hours}h ${minutes}m` : `${minutes}m`
 }
 
-const calculateTotalTime = (): string => {
+const calculateTotalDuration = (): string => {
   const duration = calculateDuration()
   if (duration === 'Not calculated') return duration
 
-  if (completeExample.breakTime && completeExample.startTime && completeExample.endTime) {
+  if (advanced.breakTime && advanced.startTime && advanced.endTime) {
     return `${duration} (including break time)`
   }
 
@@ -1098,185 +1041,186 @@ const calculateTotalTime = (): string => {
 </script>
 
 <style scoped lang="scss">
+@use '@/assets/main.scss';
+
 .page-container {
-  @apply min-h-screen bg-gradient-to-br from-slate-50 to-blue-50;
+  @apply min-h-screen bg-gray-50 py-8;
 }
 
 .page-header {
-  @apply bg-gradient-to-r from-blue-600 to-purple-600 text-white py-16;
+  @apply mb-12;
 
   .header-content {
-    @apply max-w-4xl mx-auto px-6 text-center;
+    @apply max-w-6xl mx-auto px-6;
   }
 
   .page-title {
-    @apply text-4xl md:text-5xl font-bold mb-4;
+    @apply text-4xl font-bold text-gray-900 mb-4;
   }
 
   .page-description {
-    @apply text-xl text-blue-100 max-w-2xl mx-auto leading-relaxed;
+    @apply text-lg text-gray-600 leading-relaxed;
   }
 }
 
 .demo-section {
-  @apply max-w-6xl mx-auto px-6 py-12;
-}
+  @apply mb-16;
 
-.section-header {
-  @apply text-center mb-10;
+  .section-header {
+    @apply max-w-6xl mx-auto px-6 mb-8;
+  }
 
   .section-title {
-    @apply text-3xl font-bold text-gray-900 mb-4;
+    @apply text-2xl font-semibold text-gray-900 mb-4;
   }
 
   .section-description {
-    @apply text-lg text-gray-600 max-w-2xl mx-auto;
+    @apply text-gray-600 leading-relaxed;
   }
 }
 
 .demo-grid {
-  @apply grid grid-cols-1 md:grid-cols-2 gap-6 mb-8;
+  @apply max-w-6xl mx-auto px-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6;
 }
 
 .demo-card {
-  @apply bg-white rounded-xl shadow-lg border border-gray-100 p-6 space-y-4 hover:shadow-xl transition-shadow;
+  @apply bg-white rounded-lg shadow-sm border border-gray-200 p-6;
+
+  &.large {
+    @apply md:col-span-2;
+  }
 
   .demo-title {
-    @apply text-lg font-semibold text-gray-800 mb-4;
+    @apply text-lg font-medium text-gray-900 mb-4;
   }
 
   .demo-hint {
-    @apply text-sm text-blue-600 italic;
+    @apply text-sm text-gray-500 mt-2;
   }
 
   .demo-feedback {
-    @apply bg-gray-50 rounded-lg p-3 space-y-1;
+    @apply mt-4 p-3 bg-gray-50 rounded-md;
 
     .feedback-label {
       @apply text-sm font-medium text-gray-600;
     }
 
     .feedback-value {
-      @apply text-sm font-mono text-gray-900 ml-2;
+      @apply text-sm text-gray-900 ml-2;
     }
   }
 }
 
 .size-demo {
-  @apply space-y-6 mb-8;
+  @apply max-w-6xl mx-auto px-6 space-y-6;
 
   .size-item {
-    @apply flex items-center space-x-4;
+    @apply bg-white rounded-lg shadow-sm border border-gray-200 p-6;
 
     .size-label {
-      @apply w-32 text-sm font-medium text-gray-700;
+      @apply block text-sm font-medium text-gray-700 mb-3;
     }
   }
 }
 
-.code-section {
-  @apply mt-8;
+.advanced-demo {
+  @apply max-w-6xl mx-auto px-6;
 
-  .code-title {
-    @apply text-xl font-semibold text-gray-800 mb-4;
+  .form-row {
+    @apply grid grid-cols-1 md:grid-cols-2 gap-6 mb-6;
+  }
+
+  .advanced-feedback {
+    @apply mt-6 p-4 bg-blue-50 rounded-lg border border-blue-200;
+
+    .feedback-item {
+      @apply flex justify-between items-center py-2;
+
+      .label {
+        @apply font-medium text-blue-900;
+      }
+
+      .value {
+        @apply text-blue-700;
+      }
+    }
   }
 }
 
 .props-grid {
-  @apply grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4;
+  @apply max-w-6xl mx-auto px-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4;
 }
 
 .prop-card {
-  @apply bg-white rounded-lg border border-gray-200 p-4 space-y-3;
+  @apply bg-white rounded-lg shadow-sm border border-gray-200 p-4;
 
   .prop-name {
-    @apply text-lg font-semibold text-blue-600;
+    @apply text-sm font-semibold text-gray-900 mb-2;
   }
 
   .prop-details {
-    @apply flex flex-col space-y-1;
+    @apply flex flex-wrap gap-2 mb-2;
 
     .prop-type {
-      @apply text-sm font-mono text-purple-600 bg-purple-50 px-2 py-1 rounded;
+      @apply text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded;
     }
 
     .prop-default {
-      @apply text-sm font-mono text-gray-500 bg-gray-50 px-2 py-1 rounded;
+      @apply text-xs bg-gray-100 text-gray-700 px-2 py-1 rounded;
     }
   }
 
   .prop-description {
-    @apply text-sm text-gray-600 leading-relaxed;
-  }
-}
-
-.events-grid {
-  @apply grid grid-cols-1 md:grid-cols-2 gap-4;
-}
-
-.event-card {
-  @apply bg-white rounded-lg border border-gray-200 p-4 space-y-3;
-
-  .event-name {
-    @apply text-lg font-semibold text-green-600;
-  }
-
-  .event-payload {
-    .payload-type {
-      @apply text-sm font-mono text-blue-600 bg-blue-50 px-2 py-1 rounded;
-    }
-  }
-
-  .event-description {
-    @apply text-sm text-gray-600 leading-relaxed;
-  }
-}
-
-.usage-demo {
-  @apply mb-8;
-}
-
-.form-example {
-  @apply bg-white rounded-xl shadow-lg border border-gray-100 p-8;
-
-  .form-title {
-    @apply text-2xl font-bold text-gray-800 mb-6 pb-4 border-b border-gray-200;
-  }
-
-  .form-row {
-    @apply mb-6;
-  }
-
-  .form-feedback {
-    @apply bg-blue-50 rounded-lg p-4 space-y-2 mt-6;
-
-    .feedback-row {
-      @apply flex justify-between items-center;
-
-      .feedback-label {
-        @apply font-medium text-gray-700;
-      }
-
-      .feedback-value {
-        @apply font-mono text-blue-600;
-      }
-    }
+    @apply text-sm text-gray-600;
   }
 }
 
 .practices-grid {
-  @apply grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6;
+  @apply max-w-6xl mx-auto px-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6;
 }
 
 .practice-card {
-  @apply bg-white rounded-lg border border-gray-200 p-6 space-y-3 hover:shadow-lg transition-shadow;
+  @apply bg-white rounded-lg shadow-sm border border-gray-200 p-6;
 
   .practice-title {
-    @apply text-lg font-semibold text-gray-800;
+    @apply text-lg font-medium text-gray-900 mb-3;
   }
 
   .practice-description {
-    @apply text-sm text-gray-600 leading-relaxed;
+    @apply text-gray-600 leading-relaxed;
+  }
+}
+
+.code-example {
+  @apply max-w-6xl mx-auto px-6 mt-8;
+
+  .code-title {
+    @apply text-xl font-semibold text-gray-900 mb-6;
+  }
+
+  .code-blocks {
+    @apply space-y-6;
+  }
+
+  .code-block {
+    @apply bg-gray-900 rounded-lg overflow-hidden;
+
+    .code-subtitle {
+      @apply text-sm font-medium text-gray-300 bg-gray-800 px-4 py-2 border-b border-gray-700;
+    }
+
+    pre {
+      @apply p-4 overflow-x-auto;
+
+      code {
+        @apply text-sm text-gray-300 font-mono leading-relaxed;
+
+        &::selection {
+          @apply bg-blue-600 bg-opacity-50;
+        }
+      }
+    }
   }
 }
 </style>
+
