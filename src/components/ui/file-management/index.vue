@@ -277,5 +277,5 @@ const handleRemoveFile = (id: string) => {
 </script>
 
 <style scoped lang="scss">
-@import './file-management.scss';
+@use './file-management.scss';
 </style>
