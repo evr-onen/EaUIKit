@@ -154,17 +154,57 @@
           Beautiful gradient effects with predefined options and custom gradient support.
         </p>
 
-        <div class="demo-group">
-          <EaButton label="Sunset" variant="gradient" gradient="sunset" :on-click="handleClick" />
-          <EaButton label="Ocean" variant="gradient" gradient="ocean" :on-click="handleClick" />
-          <EaButton label="Purple" variant="gradient" gradient="purple" :on-click="handleClick" />
-          <EaButton label="Rainbow" variant="gradient" gradient="rainbow" :on-click="handleClick" />
-          <EaButton
-            label="Custom"
-            variant="gradient"
-            custom-gradient="linear-gradient(45deg, #667eea 0%, #764ba2 100%)"
-            :on-click="handleClick"
-          />
+        <div class="demo-subsection">
+          <h3>Basic Gradients</h3>
+          <div class="demo-group">
+            <EaButton label="Sunset" variant="gradient" gradient="sunset" :on-click="handleClick" />
+            <EaButton label="Ocean" variant="gradient" gradient="ocean" :on-click="handleClick" />
+            <EaButton label="Purple" variant="gradient" gradient="purple" :on-click="handleClick" />
+            <EaButton label="Pink" variant="gradient" gradient="pink" :on-click="handleClick" />
+            <EaButton label="Emerald" variant="gradient" gradient="emerald" :on-click="handleClick" />
+          </div>
+        </div>
+
+        <div class="demo-subsection">
+          <h3>Semantic Gradients</h3>
+          <div class="demo-group">
+            <EaButton label="Error" variant="gradient" gradient="error" :on-click="handleClick" />
+            <EaButton label="Warning" variant="gradient" gradient="warning" :on-click="handleClick" />
+            <EaButton label="Info" variant="gradient" gradient="info" :on-click="handleClick" />
+            <EaButton label="Success" variant="gradient" gradient="success" :on-click="handleClick" />
+          </div>
+        </div>
+
+        <div class="demo-subsection">
+          <h3>Special Gradients</h3>
+          <div class="demo-group">
+            <EaButton label="Fire" variant="gradient" gradient="fire" :on-click="handleClick" />
+            <EaButton label="Sky" variant="gradient" gradient="sky" :on-click="handleClick" />
+            <EaButton label="Gold" variant="gradient" gradient="gold" :on-click="handleClick" />
+            <EaButton label="Dark" variant="gradient" gradient="dark" :on-click="handleClick" />
+          </div>
+        </div>
+
+        <div class="demo-subsection">
+          <h3>Gradient Directions</h3>
+          <div class="demo-group">
+            <EaButton label="To Right" variant="gradient" gradient="success" gradient-direction="to-r" :on-click="handleClick" />
+            <EaButton label="To Bottom" variant="gradient" gradient="info" gradient-direction="to-b" :on-click="handleClick" />
+            <EaButton label="To Top Right" variant="gradient" gradient="warning" gradient-direction="to-tr" :on-click="handleClick" />
+            <EaButton label="To Bottom Left" variant="gradient" gradient="error" gradient-direction="to-bl" :on-click="handleClick" />
+          </div>
+        </div>
+
+        <div class="demo-subsection">
+          <h3>Custom Gradient</h3>
+          <div class="demo-group">
+            <EaButton
+              label="Custom"
+              variant="gradient"
+              custom-gradient="linear-gradient(45deg, #667eea 0%, #764ba2 100%)"
+              :on-click="handleClick"
+            />
+          </div>
         </div>
 
         <CodeBlock
@@ -324,7 +364,7 @@
               </tr>
               <tr>
                 <td><code>gradient</code></td>
-                <td>'sunset' | 'ocean' | 'purple' | 'pink' | 'emerald' | 'fire' | 'sky' | 'rainbow' | 'dark' | 'gold'</td>
+                <td>'sunset' | 'ocean' | 'purple' | 'pink' | 'emerald' | 'fire' | 'sky' | 'dark' | 'gold' | 'error' | 'warning' | 'info' | 'success'</td>
                 <td><code>'sunset'</code></td>
                 <td>Predefined gradient type (when variant='gradient')</td>
               </tr>
@@ -519,10 +559,30 @@ const statesCode = `<template>
 </template>`
 
 const gradientCode = `<template>
+  <!-- Basic Gradients -->
   <EaButton label="Sunset" variant="gradient" gradient="sunset" />
   <EaButton label="Ocean" variant="gradient" gradient="ocean" />
   <EaButton label="Purple" variant="gradient" gradient="purple" />
-  <EaButton label="Rainbow" variant="gradient" gradient="rainbow" />
+  <EaButton label="Pink" variant="gradient" gradient="pink" />
+  <EaButton label="Emerald" variant="gradient" gradient="emerald" />
+
+  <!-- Semantic Gradients -->
+  <EaButton label="Error" variant="gradient" gradient="error" />
+  <EaButton label="Warning" variant="gradient" gradient="warning" />
+  <EaButton label="Info" variant="gradient" gradient="info" />
+  <EaButton label="Success" variant="gradient" gradient="success" />
+
+  <!-- Special Gradients -->
+  <EaButton label="Fire" variant="gradient" gradient="fire" />
+  <EaButton label="Sky" variant="gradient" gradient="sky" />
+  <EaButton label="Gold" variant="gradient" gradient="gold" />
+  <EaButton label="Dark" variant="gradient" gradient="dark" />
+
+  <!-- Gradient Directions -->
+  <EaButton label="To Right" variant="gradient" gradient="success" gradient-direction="to-r" />
+  <EaButton label="To Bottom" variant="gradient" gradient="info" gradient-direction="to-b" />
+  <EaButton label="To Top Right" variant="gradient" gradient="warning" gradient-direction="to-tr" />
+  <EaButton label="To Bottom Left" variant="gradient" gradient="error" gradient-direction="to-bl" />
 
   <!-- Custom Gradient -->
   <EaButton
@@ -710,6 +770,19 @@ const advancedCode = `<template>
     color: #64748b;
     margin-bottom: 1rem;
     line-height: 1.5;
+  }
+}
+
+.demo-subsection {
+  margin-bottom: 2.5rem;
+
+  h3 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #374151;
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid #e5e7eb;
   }
 }
 

@@ -17,7 +17,7 @@
     />
 
     <!-- Left icon using EaIcons -->
-    <EaIcons
+    <EaIcon
       v-if="leftIcon && !loading"
       :name="leftIcon"
       :size="iconSizeValue"
@@ -37,7 +37,7 @@
     <slot v-if="!label && !iconOnly" />
 
     <!-- Right icon using EaIcons -->
-    <EaIcons
+    <EaIcon
       v-if="rightIcon && !loading"
       :name="rightIcon"
       :size="iconSizeValue"
@@ -53,7 +53,7 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
 import type { IButtonProps } from './button.types'
-import EaIcons from '../../EaIcon.vue'
+import EaIcon from '../../EaIcon.vue'
 import './button.style.scss'
 
 // Template ref

@@ -209,24 +209,22 @@ const useDatePicker = (props: IDatepickerProps, modelValue: Ref<Date | [Date, Da
     let result = '';
     let valueIndex = 0;
 
+    // Remove all non-numeric characters from input
+    const numericOnly = value.replace(/\D/g, '');
+    let numericIndex = 0;
+
     for (let i = 0; i < format.length; i++) {
-      if (valueIndex >= value.length) break;
+      if (numericIndex >= numericOnly.length) break;
 
       const formatChar = format[i];
-      const valueChar = value[valueIndex];
 
       if (formatChar === 'D' || formatChar === 'M' || formatChar === 'Y') {
-        if (/\d/.test(valueChar)) {
-          result += valueChar;
-          valueIndex++;
-        } else {
-          valueIndex++;
-        }
+        // Add numeric character
+        result += numericOnly[numericIndex];
+        numericIndex++;
       } else {
+        // Add separator (/, -, etc.)
         result += formatChar;
-        if (valueChar === formatChar) {
-          valueIndex++;
-        }
       }
     }
 
@@ -483,8 +481,7 @@ const useDatePicker = (props: IDatepickerProps, modelValue: Ref<Date | [Date, Da
     if (!isCurrentMonth) return;
 
     if (props.range) {
-      const shouldClose = handleRangeSelection(date, closePanel);
-      // Don't call closePanel here - handleRangeSelection handles it
+      handleRangeSelection(date, closePanel);
     } else {
       const noonDate = createDateAtNoonUTC(date);
       const formattedValue = formatValue(noonDate);

@@ -21,7 +21,7 @@
             tabindex="0"
             :value="displayValue"
             :placeholder="placeholder || (range ? 'Select date range' : 'Select date')"
-            @input="!disabled && handleInputChange"
+            @input="!disabled && handleInputChange($event)"
             @keydown="!disabled && handleKeyDown"
             @blur="validateInput"
             :disabled="disabled"

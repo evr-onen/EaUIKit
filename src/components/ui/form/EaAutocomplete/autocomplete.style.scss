@@ -1,15 +1,25 @@
 .ea-autocomplete{
-
+    position: relative;
     *:focus{
         @apply outline-none;
     }
 
-    // label section
     .ea-autocomplete__label{
       
     } 
-
-    // placeholder section
+    
+    &__clear-btn{
+        position: absolute;
+        right: 1rem;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 1.5rem;
+        height: 1.5rem;
+        cursor: pointer;
+        &:hover{
+            @apply text-placeholder;
+        }
+    }
     .ea-autocomplete__placeholder{
         @apply px-[.625rem] border border-borderColor hover:border-placeholder rounded-lg  flex  capitalize
         bg-white min-h-[2.0625rem]  text-[.875rem];
@@ -27,6 +37,7 @@
     &.contentPanelOpen .ea-autocomplete__placeholder{
         @apply border-placeholder;
     }
+
     // dropdown section
     .dropdownPanelWrapper{
         @apply fixed w-full text-placeholder ;

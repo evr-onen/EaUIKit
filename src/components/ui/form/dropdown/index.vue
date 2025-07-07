@@ -44,10 +44,6 @@ watch([isOpen], async() => {
   await nextTick()
   updatePosition()
 })
-
-//NOTE - eger body disinda bir yerde overflow varsa ve o overflow olan yer scroll ise ve onun scrolly degeri degisirse kapanacak panel.
-//  Bunu ayarlayacagiz yada bunun icin prop ekleyecegiz
-
 </script>
 
 <style lang="scss">

@@ -7,10 +7,15 @@
 <script setup lang="ts">
 import { ref, nextTick, computed, watch } from "vue";
 
-// Sabit SVG path - tüm projeler için /assets/svg
-const svgs = (import.meta as unknown as { glob: (pattern: string, options: { query: string; import: string }) => Record<string, () => Promise<string>> }).glob('/assets/svg/*.svg', {
-  query: "?raw",
-  import: "default"
+// İki farklı path'den SVG dosyalarını import etmek için
+const svgsSrc = import.meta.glob('/src/assets/svg/*.svg', {
+  query: '?raw',
+  import: 'default'
+});
+
+const svgsAssets = import.meta.glob('/assets/svg/*.svg', {
+  query: '?raw',
+  import: 'default'
 });
 
 interface IIconPropsType {
@@ -38,29 +43,58 @@ const updateSvgAttributes = () => {
   }
 };
 
-watch(() => props, async () => {
+const loadSvg = async () => {
   svgContent.value = null;
 
   if (props.name) {
-    const svgKey = `/assets/svg/${props.name}.svg`;
+    // Önce /src/assets/svg/ path'ini dene
+    const srcPath = `/src/assets/svg/${props.name}.svg`;
+    // Sonra /assets/svg/ path'ini dene
+    const assetsPath = `/assets/svg/${props.name}.svg`;
 
     try {
-      if (svgs[svgKey]) {
-        svgContent.value = await svgs[svgKey]();
+      let svgModule: string | null = null;
+
+      // İlk önce src path'ini kontrol et
+      if (svgsSrc[srcPath]) {
+        svgModule = await svgsSrc[srcPath]() as string;
+      }
+      // Eğer src path'de bulamazsa assets path'ini dene
+      else if (svgsAssets[assetsPath]) {
+        svgModule = await svgsAssets[assetsPath]() as string;
+      }
+
+      if (svgModule) {
+        svgContent.value = svgModule;
         await nextTick();
         updateSvgAttributes();
       } else {
-        console.warn(`SVG not found: ${svgKey}`);
+        console.warn(`SVG not found: ${props.name}.svg`);
+        console.warn('Available SVGs in /src/assets/svg/:', Object.keys(svgsSrc));
+        console.warn('Available SVGs in /assets/svg/:', Object.keys(svgsAssets));
       }
-    } catch {
-      console.warn(`Failed to load SVG: ${svgKey}`);
+    } catch (error) {
+      console.error(`Failed to load SVG: ${props.name}.svg`, error);
     }
   }
-}, { deep: true, immediate: true });
+};
+
+watch(() => props, loadSvg, { deep: true, immediate: true });
 </script>
 
 <style scoped lang="scss">
-svg path {
-  @apply w-full;
+.svg-wrapper {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  svg {
+    width: 100%;
+    height: 100%;
+
+    path {
+      width: 100%;
+    }
+  }
 }
 </style>

@@ -19,7 +19,7 @@
           v-model="displayValue"
           @focus="!disabled && openPanel()"
           :placeholder="placeholder"
-          @input="!disabled && handleInputChange"
+          @input="!disabled && handleInputChange($event)"
           @blur="validateInput"
           :disabled="disabled"
           :readonly="disabled"

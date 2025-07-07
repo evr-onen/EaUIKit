@@ -67,11 +67,7 @@
           EaCheckbox supports three size options: sm, md (default), and lg. Each size maintains proper proportions and accessibility standards.
         </p>
 
-        <div class="demo-group">
-          <button @click="activateSize('sm')" class="btn btn--secondary">Small (sm)</button>
-          <button @click="activateSize('md')" class="btn btn--secondary">Medium (md)</button>
-          <button @click="activateSize('lg')" class="btn btn--secondary">Large (lg)</button>
-        </div>
+
 
         <div class="showcase-grid">
           <div class="showcase-item">
@@ -118,11 +114,7 @@
           Handle different checkbox states including normal, disabled, and error states for comprehensive form validation.
         </p>
 
-        <div class="demo-group">
-          <button @click="toggleState('normal')" class="btn btn--secondary">Normal State</button>
-          <button @click="toggleState('disabled')" class="btn btn--secondary">Disabled State</button>
-          <button @click="toggleState('error')" class="btn btn--secondary">Error State</button>
-        </div>
+
 
         <div class="showcase-grid">
           <div class="showcase-item">
@@ -419,14 +411,7 @@ const settings = reactive({
   screenReader: false
 })
 
-// Methods
-const activateSize = (size: string) => {
-  console.log(`Activated ${size} size demo`)
-}
 
-const toggleState = (state: string) => {
-  console.log(`Toggled ${state} state demo`)
-}
 
 const validateForm = () => {
   formValidation.showErrors = true

@@ -1,109 +1,250 @@
 // Base button styles
 .ea-button {
-  @apply 
-    inline-flex items-center justify-center gap-2
-    border border-transparent cursor-pointer
-    font-medium text-center leading-tight
-    transition-all duration-200 ease-in-out
-    focus:outline-none focus:ring-2 focus:ring-offset-2
-    select-none relative overflow-hidden;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border: 1px solid transparent;
+  cursor: pointer;
+  font-weight: 500;
+  text-align: center;
+  line-height: 1.25;
+  transition: all 0.2s ease-in-out;
+  outline: none;
+  user-select: none;
+  position: relative;
+  overflow: hidden;
+
+  // Focus ring
+  &:focus {
+    outline: 2px solid transparent;
+    outline-offset: 2px;
+    box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.5);
+  }
 
   // Disable text selection
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
-  user-select: none;
 
   // Size variants
   &--xs {
-    @apply px-2 py-1 text-xs min-h-[24px];
+    padding: 0.25rem 0.5rem;
+    font-size: 0.75rem;
+    line-height: 1rem;
+    min-height: 24px;
   }
 
   &--sm {
-    @apply px-3 py-1.5 text-sm min-h-[32px];
+    padding: 0.375rem 0.75rem;
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+    min-height: 32px;
   }
 
   &--md {
-    @apply px-4 py-2 text-sm min-h-[40px];
+    padding: 0.5rem 1rem;
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+    min-height: 40px;
   }
 
   &--lg {
-    @apply px-6 py-3 text-base min-h-[48px];
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+    line-height: 1.5rem;
+    min-height: 48px;
   }
 
   &--xl {
-    @apply px-8 py-4 text-lg min-h-[56px];
+    padding: 1rem 2rem;
+    font-size: 1.125rem;
+    line-height: 1.75rem;
+    min-height: 56px;
   }
 
   // Color variants
   &--primary {
-    @apply bg-blue-600 text-white border-blue-600
-           hover:bg-blue-700 hover:border-blue-700
-           focus:ring-blue-500
-           active:bg-blue-800;
+    background-color: rgb(37, 99, 235);
+    color: white;
+    border-color: rgb(37, 99, 235);
+
+    &:hover {
+      background-color: rgb(29, 78, 216);
+      border-color: rgb(29, 78, 216);
+    }
+
+    &:focus {
+      box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.5);
+    }
+
+    &:active {
+      background-color: rgb(30, 64, 175);
+    }
   }
 
   &--secondary {
-    @apply bg-gray-600 text-white border-gray-600
-           hover:bg-gray-700 hover:border-gray-700
-           focus:ring-gray-500
-           active:bg-gray-800;
+    background-color: rgb(75, 85, 99);
+    color: white;
+    border-color: rgb(75, 85, 99);
+
+    &:hover {
+      background-color: rgb(55, 65, 81);
+      border-color: rgb(55, 65, 81);
+    }
+
+    &:focus {
+      box-shadow: 0 0 0 2px rgba(107, 114, 128, 0.5);
+    }
+
+    &:active {
+      background-color: rgb(31, 41, 55);
+    }
   }
 
   &--success {
-    @apply bg-green-600 text-white border-green-600
-           hover:bg-green-700 hover:border-green-700
-           focus:ring-green-500
-           active:bg-green-800;
+    background-color: rgb(22, 163, 74);
+    color: white;
+    border-color: rgb(22, 163, 74);
+
+    &:hover {
+      background-color: rgb(21, 128, 61);
+      border-color: rgb(21, 128, 61);
+    }
+
+    &:focus {
+      box-shadow: 0 0 0 2px rgba(34, 197, 94, 0.5);
+    }
+
+    &:active {
+      background-color: rgb(22, 101, 52);
+    }
   }
 
   &--danger {
-    @apply bg-red-600 text-white border-red-600
-           hover:bg-red-700 hover:border-red-700
-           focus:ring-red-500
-           active:bg-red-800;
+    background-color: rgb(220, 38, 38);
+    color: white;
+    border-color: rgb(220, 38, 38);
+
+    &:hover {
+      background-color: rgb(185, 28, 28);
+      border-color: rgb(185, 28, 28);
+    }
+
+    &:focus {
+      box-shadow: 0 0 0 2px rgba(248, 113, 113, 0.5);
+    }
+
+    &:active {
+      background-color: rgb(153, 27, 27);
+    }
   }
 
   &--warning {
-    @apply bg-yellow-500 text-white border-yellow-500
-           hover:bg-yellow-600 hover:border-yellow-600
-           focus:ring-yellow-400
-           active:bg-yellow-700;
+    background-color: rgb(234, 179, 8);
+    color: white;
+    border-color: rgb(234, 179, 8);
+
+    &:hover {
+      background-color: rgb(202, 138, 4);
+      border-color: rgb(202, 138, 4);
+    }
+
+    &:focus {
+      box-shadow: 0 0 0 2px rgba(250, 204, 21, 0.5);
+    }
+
+    &:active {
+      background-color: rgb(161, 98, 7);
+    }
   }
 
   &--info {
-    @apply bg-cyan-600 text-white border-cyan-600
-           hover:bg-cyan-700 hover:border-cyan-700
-           focus:ring-cyan-500
-           active:bg-cyan-800;
+    background-color: rgb(8, 145, 178);
+    color: white;
+    border-color: rgb(8, 145, 178);
+
+    &:hover {
+      background-color: rgb(14, 116, 144);
+      border-color: rgb(14, 116, 144);
+    }
+
+    &:focus {
+      box-shadow: 0 0 0 2px rgba(34, 211, 238, 0.5);
+    }
+
+    &:active {
+      background-color: rgb(21, 94, 117);
+    }
   }
 
   &--ghost {
-    @apply bg-transparent text-gray-700 border-transparent
-           hover:bg-gray-100 hover:text-gray-900
-           focus:ring-gray-500
-           active:bg-gray-200;
+    background-color: transparent;
+    color: rgb(55, 65, 81);
+    border-color: transparent;
+
+    &:hover {
+      background-color: rgb(243, 244, 246);
+      color: rgb(17, 24, 39);
+    }
+
+    &:focus {
+      box-shadow: 0 0 0 2px rgba(107, 114, 128, 0.5);
+    }
+
+    &:active {
+      background-color: rgb(229, 231, 235);
+    }
   }
 
   &--outline {
-    @apply bg-transparent text-gray-700 border-gray-300
-           hover:bg-gray-50 hover:border-gray-400
-           focus:ring-gray-500
-           active:bg-gray-100;
+    background-color: transparent;
+    color: rgb(55, 65, 81);
+    border-color: rgb(209, 213, 219);
+
+    &:hover {
+      background-color: rgb(249, 250, 251);
+      border-color: rgb(156, 163, 175);
+    }
+
+    &:focus {
+      box-shadow: 0 0 0 2px rgba(107, 114, 128, 0.5);
+    }
+
+    &:active {
+      background-color: rgb(243, 244, 246);
+    }
   }
 
   &--text {
-    @apply bg-transparent text-blue-600 border-transparent
-           hover:bg-blue-50 hover:text-blue-700
-           focus:ring-blue-500
-           active:bg-blue-100;
+    background-color: transparent;
+    color: rgb(37, 99, 235);
+    border-color: transparent;
+
+    &:hover {
+      background-color: rgb(239, 246, 255);
+      color: rgb(29, 78, 216);
+    }
+
+    &:focus {
+      box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.5);
+    }
+
+    &:active {
+      background-color: rgb(219, 234, 254);
+    }
   }
 
   // Gradient variants
   &--gradient {
-    @apply text-white border-transparent
-           focus:ring-purple-500
-           relative overflow-hidden;
+    color: white;
+    border-color: transparent;
+    position: relative;
+    overflow: hidden;
+
+    &:focus {
+      box-shadow: 0 0 0 2px rgba(168, 85, 247, 0.5);
+    }
 
     // Ensure content is above the overlay
     * {
@@ -117,7 +258,7 @@
     i {
       text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5), 0 1px 2px rgba(0, 0, 0, 0.3);
       font-weight: 600;
-      opacity: 1 !important; // Force full opacity
+      opacity: 1 !important;
       color: inherit;
     }
 
@@ -129,7 +270,7 @@
 
     // Ripple for gradient buttons - Above everything
     .ea-ripple {
-      z-index: 15 !important; // Higher than overlay and content
+      z-index: 15 !important;
     }
 
     &::before {
@@ -142,7 +283,7 @@
       background: inherit;
       transition: opacity 0.2s ease-in-out;
       opacity: 1;
-      z-index: 1; // Behind content but above background
+      z-index: 1;
     }
 
     &:hover::before {
@@ -161,10 +302,13 @@
       }
     }
 
-    &.ea-button--gradient-rainbow {
+    &.ea-button--gradient-error,
+    &.ea-button--gradient-warning,
+    &.ea-button--gradient-info,
+    &.ea-button--gradient-success {
       .ea-button-text, span, i {
-        text-shadow: 0 1px 4px rgba(0, 0, 0, 0.7), 0 1px 3px rgba(0, 0, 0, 0.5);
-        font-weight: 700;
+        text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5), 0 1px 2px rgba(0, 0, 0, 0.3);
+        font-weight: 600;
         opacity: 1 !important;
       }
     }
@@ -172,7 +316,7 @@
     &.ea-button--gradient-gold {
       .ea-button-text, span, i {
         text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6), 0 1px 2px rgba(0, 0, 0, 0.4);
-        color: #1f2937 !important; // Dark text for better contrast on gold
+        color: #1f2937 !important;
         opacity: 1 !important;
       }
     }
@@ -189,22 +333,22 @@
     // Override loading state opacity issues
     &.ea-button--loading {
       .ea-button-text {
-        opacity: 0 !important; // Only hide text when loading
+        opacity: 0 !important;
       }
       
       .ea-spinner {
-        opacity: 1 !important; // Keep spinner visible
+        opacity: 1 !important;
         position: absolute;
         top: 50%;
         left: 50%;
-        margin-left: -8px; /* Half of width (16px / 2) */
-        margin-top: -8px;  /* Half of height (16px / 2) */
-        z-index: 20; // Higher than overlay
+        margin-left: -8px;
+        margin-top: -8px;
+        z-index: 20;
         animation: ea-spinner-spin 1s linear infinite;
         
         &.ea-spinner-sm {
-          margin-left: -6px; /* Half of width (12px / 2) */
-          margin-top: -6px;  /* Half of height (12px / 2) */
+          margin-left: -6px;
+          margin-top: -6px;
         }
       }
       
@@ -301,12 +445,56 @@
       &.ea-button--gradient-to-bl { background: linear-gradient(to bottom left, #0ea5e9 0%, #0284c7 100%); }
     }
 
-    &.ea-button--gradient-rainbow {
-      background: linear-gradient(135deg, #ff0000 0%, #ff8000 16.66%, #ffff00 33.33%, #80ff00 50%, #00ff80 66.66%, #0080ff 83.33%, #8000ff 100%);
-      &.ea-button--gradient-to-r { background: linear-gradient(to right, #ff0000 0%, #ff8000 16.66%, #ffff00 33.33%, #80ff00 50%, #00ff80 66.66%, #0080ff 83.33%, #8000ff 100%); }
-      &.ea-button--gradient-to-l { background: linear-gradient(to left, #ff0000 0%, #ff8000 16.66%, #ffff00 33.33%, #80ff00 50%, #00ff80 66.66%, #0080ff 83.33%, #8000ff 100%); }
-      &.ea-button--gradient-to-t { background: linear-gradient(to top, #ff0000 0%, #ff8000 16.66%, #ffff00 33.33%, #80ff00 50%, #00ff80 66.66%, #0080ff 83.33%, #8000ff 100%); }
-      &.ea-button--gradient-to-b { background: linear-gradient(to bottom, #ff0000 0%, #ff8000 16.66%, #ffff00 33.33%, #80ff00 50%, #00ff80 66.66%, #0080ff 83.33%, #8000ff 100%); }
+    // Error gradient - Red tones
+    &.ea-button--gradient-error {
+      background: linear-gradient(135deg, #ef4444 0%, #dc2626 50%, #991b1b 100%);
+      &.ea-button--gradient-to-r { background: linear-gradient(to right, #ef4444 0%, #dc2626 50%, #991b1b 100%); }
+      &.ea-button--gradient-to-l { background: linear-gradient(to left, #ef4444 0%, #dc2626 50%, #991b1b 100%); }
+      &.ea-button--gradient-to-t { background: linear-gradient(to top, #ef4444 0%, #dc2626 50%, #991b1b 100%); }
+      &.ea-button--gradient-to-b { background: linear-gradient(to bottom, #ef4444 0%, #dc2626 50%, #991b1b 100%); }
+      &.ea-button--gradient-to-tr { background: linear-gradient(to top right, #ef4444 0%, #dc2626 50%, #991b1b 100%); }
+      &.ea-button--gradient-to-tl { background: linear-gradient(to top left, #ef4444 0%, #dc2626 50%, #991b1b 100%); }
+      &.ea-button--gradient-to-br { background: linear-gradient(to bottom right, #ef4444 0%, #dc2626 50%, #991b1b 100%); }
+      &.ea-button--gradient-to-bl { background: linear-gradient(to bottom left, #ef4444 0%, #dc2626 50%, #991b1b 100%); }
+    }
+
+    // Warning gradient - Orange/Yellow tones
+    &.ea-button--gradient-warning {
+      background: linear-gradient(135deg, #f59e0b 0%, #eab308 50%, #ca8a04 100%);
+      &.ea-button--gradient-to-r { background: linear-gradient(to right, #f59e0b 0%, #eab308 50%, #ca8a04 100%); }
+      &.ea-button--gradient-to-l { background: linear-gradient(to left, #f59e0b 0%, #eab308 50%, #ca8a04 100%); }
+      &.ea-button--gradient-to-t { background: linear-gradient(to top, #f59e0b 0%, #eab308 50%, #ca8a04 100%); }
+      &.ea-button--gradient-to-b { background: linear-gradient(to bottom, #f59e0b 0%, #eab308 50%, #ca8a04 100%); }
+      &.ea-button--gradient-to-tr { background: linear-gradient(to top right, #f59e0b 0%, #eab308 50%, #ca8a04 100%); }
+      &.ea-button--gradient-to-tl { background: linear-gradient(to top left, #f59e0b 0%, #eab308 50%, #ca8a04 100%); }
+      &.ea-button--gradient-to-br { background: linear-gradient(to bottom right, #f59e0b 0%, #eab308 50%, #ca8a04 100%); }
+      &.ea-button--gradient-to-bl { background: linear-gradient(to bottom left, #f59e0b 0%, #eab308 50%, #ca8a04 100%); }
+    }
+
+    // Info gradient - Blue/Cyan tones
+    &.ea-button--gradient-info {
+      background: linear-gradient(135deg, #06b6d4 0%, #0891b2 50%, #0e7490 100%);
+      &.ea-button--gradient-to-r { background: linear-gradient(to right, #06b6d4 0%, #0891b2 50%, #0e7490 100%); }
+      &.ea-button--gradient-to-l { background: linear-gradient(to left, #06b6d4 0%, #0891b2 50%, #0e7490 100%); }
+      &.ea-button--gradient-to-t { background: linear-gradient(to top, #06b6d4 0%, #0891b2 50%, #0e7490 100%); }
+      &.ea-button--gradient-to-b { background: linear-gradient(to bottom, #06b6d4 0%, #0891b2 50%, #0e7490 100%); }
+      &.ea-button--gradient-to-tr { background: linear-gradient(to top right, #06b6d4 0%, #0891b2 50%, #0e7490 100%); }
+      &.ea-button--gradient-to-tl { background: linear-gradient(to top left, #06b6d4 0%, #0891b2 50%, #0e7490 100%); }
+      &.ea-button--gradient-to-br { background: linear-gradient(to bottom right, #06b6d4 0%, #0891b2 50%, #0e7490 100%); }
+      &.ea-button--gradient-to-bl { background: linear-gradient(to bottom left, #06b6d4 0%, #0891b2 50%, #0e7490 100%); }
+    }
+
+    // Success gradient - Green tones
+    &.ea-button--gradient-success {
+      background: linear-gradient(135deg, #22c55e 0%, #16a34a 50%, #15803d 100%);
+      &.ea-button--gradient-to-r { background: linear-gradient(to right, #22c55e 0%, #16a34a 50%, #15803d 100%); }
+      &.ea-button--gradient-to-l { background: linear-gradient(to left, #22c55e 0%, #16a34a 50%, #15803d 100%); }
+      &.ea-button--gradient-to-t { background: linear-gradient(to top, #22c55e 0%, #16a34a 50%, #15803d 100%); }
+      &.ea-button--gradient-to-b { background: linear-gradient(to bottom, #22c55e 0%, #16a34a 50%, #15803d 100%); }
+      &.ea-button--gradient-to-tr { background: linear-gradient(to top right, #22c55e 0%, #16a34a 50%, #15803d 100%); }
+      &.ea-button--gradient-to-tl { background: linear-gradient(to top left, #22c55e 0%, #16a34a 50%, #15803d 100%); }
+      &.ea-button--gradient-to-br { background: linear-gradient(to bottom right, #22c55e 0%, #16a34a 50%, #15803d 100%); }
+      &.ea-button--gradient-to-bl { background: linear-gradient(to bottom left, #22c55e 0%, #16a34a 50%, #15803d 100%); }
     }
 
     &.ea-button--gradient-dark {
@@ -352,142 +540,160 @@
 
   // Rounded variants
   &--rounded-none {
-    @apply rounded-none;
+    border-radius: 0;
   }
 
   &--rounded-sm {
-    @apply rounded-sm;
+    border-radius: 0.125rem;
   }
 
   &--rounded-md {
-    @apply rounded-md;
+    border-radius: 0.375rem;
   }
 
   &--rounded-lg {
-    @apply rounded-lg;
+    border-radius: 0.5rem;
   }
 
   &--rounded-full {
-    @apply rounded-full;
+    border-radius: 9999px;
   }
 
   // Shadow variants
   &--shadow-none {
-    @apply shadow-none;
+    box-shadow: none;
   }
 
   &--shadow-sm {
-    @apply shadow-sm;
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
   }
 
   &--shadow-md {
-    @apply shadow-md;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
   }
 
   &--shadow-lg {
-    @apply shadow-lg;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
   }
 
   &--shadow-xl {
-    @apply shadow-xl;
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
   }
 
   // State modifiers
   &--full-width {
-    @apply w-full;
+    width: 100%;
   }
 
   &--icon-only {
-    @apply p-2;
+    padding: 0.5rem;
     
-    &.ea-button--xs { @apply p-1; }
-    &.ea-button--sm { @apply p-1.5; }
-    &.ea-button--md { @apply p-2; }
-    &.ea-button--lg { @apply p-3; }
-    &.ea-button--xl { @apply p-4; }
+    &.ea-button--xs { padding: 0.25rem; }
+    &.ea-button--sm { padding: 0.375rem; }
+    &.ea-button--md { padding: 0.5rem; }
+    &.ea-button--lg { padding: 0.75rem; }
+    &.ea-button--xl { padding: 1rem; }
   }
 
   &--loading {
-    @apply cursor-not-allowed;
+    cursor: not-allowed;
     position: relative;
     
     .ea-button-text {
-      @apply opacity-0;
+      opacity: 0;
     }
     
     // Hide all content except spinner when loading
     .ea-button-icon,
     .svg-wrapper {
-      @apply opacity-0;
+      opacity: 0;
     }
   }
 
   &--disabled {
-    @apply cursor-not-allowed opacity-50;
+    cursor: not-allowed;
+    opacity: 0.5;
     
     &:hover,
     &:active,
     &:focus {
-      @apply transform-none shadow-none;
+      transform: none;
+      box-shadow: none;
     }
   }
 
   &--animated {
     &:hover:not(.ea-button--disabled):not(.ea-button--loading) {
-      @apply transform -translate-y-0.5 shadow-lg;
+      transform: translateY(-2px);
+      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
     }
 
     &:active:not(.ea-button--disabled):not(.ea-button--loading) {
-      @apply transform translate-y-0 shadow-md;
+      transform: translateY(0);
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
     }
   }
 
   // Icon styles
   .ea-button-icon {
     &--sm {
-      @apply w-3 h-3;
+      width: 0.75rem;
+      height: 0.75rem;
     }
 
     &--md {
-      @apply w-4 h-4;
+      width: 1rem;
+      height: 1rem;
     }
 
     &--lg {
-      @apply w-5 h-5;
+      width: 1.25rem;
+      height: 1.25rem;
     }
   }
 
   // Loading spinner
   .ea-spinner {
-    @apply w-4 h-4 border-2 border-current border-t-transparent rounded-full;
+    width: 1rem;
+    height: 1rem;
+    border: 2px solid currentColor;
+    border-top-color: transparent;
+    border-radius: 50%;
     position: absolute;
     top: 50%;
     left: 50%;
-    margin-left: -8px; /* Half of width (16px / 2) */
-    margin-top: -8px;  /* Half of height (16px / 2) */
+    margin-left: -8px;
+    margin-top: -8px;
     z-index: 10;
     animation: ea-spinner-spin 1s linear infinite;
     
     &.ea-spinner-sm {
-      @apply w-3 h-3;
-      margin-left: -6px; /* Half of width (12px / 2) */
-      margin-top: -6px;  /* Half of height (12px / 2) */
+      width: 0.75rem;
+      height: 0.75rem;
+      margin-left: -6px;
+      margin-top: -6px;
     }
   }
 
   // Button text
   .ea-button-text {
-    @apply transition-opacity duration-200;
+    transition: opacity 0.2s ease-in-out;
   }
 
   // Responsive adjustments
   @media (max-width: 640px) {
     &--lg {
-      @apply px-4 py-2.5 text-sm min-h-[44px];
+      padding: 0.625rem 1rem;
+      font-size: 0.875rem;
+      line-height: 1.25rem;
+      min-height: 44px;
     }
 
     &--xl {
-      @apply px-6 py-3 text-base min-h-[52px];
+      padding: 0.75rem 1.5rem;
+      font-size: 1rem;
+      line-height: 1.5rem;
+      min-height: 52px;
     }
   }
 
@@ -506,7 +712,6 @@
   animation: ea-ripple-animation 0.25s linear;
   pointer-events: none;
   z-index: 10;
-  // Default color will be set by parent button context
 
   // Ripple sizes
   &--sm {
@@ -567,9 +772,24 @@
   --ripple-color: rgba(255, 255, 255, 0.9) !important;
 }
 
-.ea-button.ea-button--gradient.ea-button--gradient-rainbow .ea-ripple {
-  background-color: rgba(255, 255, 255, 0.95) !important;
-  --ripple-color: rgba(255, 255, 255, 0.95) !important;
+.ea-button.ea-button--gradient.ea-button--gradient-error .ea-ripple {
+  background-color: rgba(255, 255, 255, 0.9) !important;
+  --ripple-color: rgba(255, 255, 255, 0.9) !important;
+}
+
+.ea-button.ea-button--gradient.ea-button--gradient-warning .ea-ripple {
+  background-color: rgba(255, 255, 255, 0.9) !important;
+  --ripple-color: rgba(255, 255, 255, 0.9) !important;
+}
+
+.ea-button.ea-button--gradient.ea-button--gradient-info .ea-ripple {
+  background-color: rgba(255, 255, 255, 0.9) !important;
+  --ripple-color: rgba(255, 255, 255, 0.9) !important;
+}
+
+.ea-button.ea-button--gradient.ea-button--gradient-success .ea-ripple {
+  background-color: rgba(255, 255, 255, 0.9) !important;
+  --ripple-color: rgba(255, 255, 255, 0.9) !important;
 }
 
 .ea-button.ea-button--gradient.ea-button--gradient-gold .ea-ripple {

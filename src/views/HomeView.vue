@@ -6,29 +6,17 @@
     </div>
     <div class="overflow-y-auto h-[300px]  ea-scroll-bar">
       <h4>Yapilacaklar</h4>
-      <p>* Sayfa sayfa proplari tet etmek ve fixlemek lazim Ayrica demo sayfasi yoksa eklemeli tr ise en ye cevirmeliyiz</p>
-      <p>* Sayfalardaki demolar tek bir type olacak. Birbirinden tutatsiz sayfa olmamasi lazim</p>
-      <p>* code lari temize cekmek gerekiyor</p>
-      <p>* Library yapip icons componenti test edilmeli. svg lerin tutulacagi yeri env de belirtmeliyiz. Yada bi config dosyasi yarrattirip oraya yazdirmaliyiz.</p>
-      <p>* Componentlerdeki classnamesleri yazmaliyiz. buna gore style dosyalarini kullanmaliyiz. tum bu css dosyalarini bir yerde toplamaliyiz. Cunku bunlari library olarak eklendigimiz projeye aktarip bu cssleri overright etmesi lazim. Boylelikle default bir style yapisi olup styles oalrak istedigi cssleri yazma ozgurlugunu vermis oluruz </p>
+      <p>* entegre edilen projeye style dosyalarini kaydedip overright etmesini sagla.</p>
     </div>
-    <EaIcons name="bars" class="text-red-100  border" size="100px" />
+    <EaIcon name="bars" class="text-red-500  border" size="100px" />
 
-    <div class="transform -translate-y-1/2">
-      <div class="fixed top-0 left-0">
-          <TextInput class="w-[200px]" label="Button Example" left-icon="bars"/>
-        </div>
-      </div>
+
   </div>
 </template>
 
 
 <script setup lang="ts">
-import EaIcons from '@/components/ui/EaIcon.vue';
-import EaButton from '@/components/ui/form/EaButton/index.vue';
-import TextInput from './textInput.vue';
-// import Icon from '@/components/ui/inputs/index.vue';
-
+import EaIcon from '@/components/ui/EaIcon.vue';
 </script>
 
 <style>

@@ -3,6 +3,7 @@
 @use './scroll-animations.css';
 
 // Component styles
+@use '../components/ui/form/EaBadge/badge.style.scss';
 @use '../components/ui/form/EaButton/button.style.scss';
 @use '../components/ui/form/EaTextInput/textinput.style.scss';
 @use '../components/ui/form/EaSelect/select.style.scss';
