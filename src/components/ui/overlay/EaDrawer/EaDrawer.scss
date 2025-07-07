@@ -111,8 +111,8 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 32px;
-    height: 32px;
+    width: 40px;
+    height: 40px;
     border: none;
     background: none;
     color: #6b7280;
@@ -131,8 +131,8 @@
     }
 
     svg {
-      width: 20px;
-      height: 20px;
+      width: 30px;
+      height: 30px;
     }
   }
 
@@ -226,7 +226,7 @@
 
     .ea-drawer__close {
       color: #9ca3af;
-
+      
       &:hover {
         background: #374151;
         color: #f3f4f6;
