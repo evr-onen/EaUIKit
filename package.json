@@ -1,6 +1,6 @@
 {
   "name": "ea-kit",
-  "version": "1.4.0",
+  "version": "1.5.0",
   "description": "A comprehensive Vue 3 UI component library with TypeScript support",
   "type": "module",
   "main": "./dist/ea-kit.umd.js",
@@ -18,12 +18,19 @@
     "./dist/ea-kit.css": "./dist/ea-kit.css",
     "./style.css": "./dist/ea-kit.css"
   },
-  "keywords": ["vue", "vue3", "ui", "components", "typescript", "library"],
+  "keywords": [
+    "vue",
+    "vue3",
+    "ui",
+    "components",
+    "typescript",
+    "library"
+  ],
   "author": "evrenonen",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/evr-onen/EaUIKit.git"
+    "url": "git+https://github.com/evr-onen/EaUIKit.git"
   },
   "bugs": {
     "url": "https://github.com/evr-onen/EaUIKit/issues"

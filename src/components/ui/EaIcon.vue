@@ -7,17 +7,6 @@
 <script setup lang="ts">
 import { ref, nextTick, computed, watch } from "vue";
 
-// İki farklı path'den SVG dosyalarını import etmek için
-const svgsSrc = import.meta.glob('/src/assets/svg/*.svg', {
-  query: '?raw',
-  import: 'default'
-});
-
-const svgsAssets = import.meta.glob('/assets/svg/*.svg', {
-  query: '?raw',
-  import: 'default'
-});
-
 interface IIconPropsType {
   name: string;
   size?: string;
@@ -47,31 +36,23 @@ const loadSvg = async () => {
   svgContent.value = null;
 
   if (props.name) {
-    // Önce /src/assets/svg/ path'ini dene
-    const srcPath = `/src/assets/svg/${props.name}.svg`;
-    // Sonra /assets/svg/ path'ini dene
-    const assetsPath = `/assets/svg/${props.name}.svg`;
-
     try {
-      let svgModule: string | null = null;
-
-      // İlk önce src path'ini kontrol et
-      if (svgsSrc[srcPath]) {
-        svgModule = await svgsSrc[srcPath]() as string;
-      }
-      // Eğer src path'de bulamazsa assets path'ini dene
-      else if (svgsAssets[assetsPath]) {
-        svgModule = await svgsAssets[assetsPath]() as string;
-      }
-
-      if (svgModule) {
-        svgContent.value = svgModule;
+      // Dynamic import using fetch API
+      const response = await fetch(`/src/assets/svg/${props.name}.svg`);
+      if (response.ok) {
+        svgContent.value = await response.text();
         await nextTick();
         updateSvgAttributes();
       } else {
-        console.warn(`SVG not found: ${props.name}.svg`);
-        console.warn('Available SVGs in /src/assets/svg/:', Object.keys(svgsSrc));
-        console.warn('Available SVGs in /assets/svg/:', Object.keys(svgsAssets));
+        // Fallback path
+        const fallbackResponse = await fetch(`/assets/svg/${props.name}.svg`);
+        if (fallbackResponse.ok) {
+          svgContent.value = await fallbackResponse.text();
+          await nextTick();
+          updateSvgAttributes();
+        } else {
+          console.warn(`SVG not found: ${props.name}.svg`);
+        }
       }
     } catch (error) {
       console.error(`Failed to load SVG: ${props.name}.svg`, error);
