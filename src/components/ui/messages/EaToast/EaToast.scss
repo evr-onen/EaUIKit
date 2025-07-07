@@ -11,7 +11,7 @@
 
 // Toast Item - BEM Block
 .toast {
-  background: rgb(var(--gray-50)) !important;
+  background: rgb(var(--gray-50, 249 250 251)) !important;
   border-radius: 12px;
   box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12), 0 4px 10px rgba(0, 0, 0, 0.08);
   margin-bottom: 16px;
@@ -19,8 +19,8 @@
   pointer-events: auto;
   transform: translateX(0);
   transition: all 0.3s ease;
-  border-left: 4px solid rgb(var(--gray-300));
-  border: 1px solid rgb(var(--gray-200));
+  border-left: 4px solid rgb(var(--gray-300, 209 213 219));
+  border: 1px solid rgb(var(--gray-200, 229 231 235));
   position: relative;
   z-index: 1;
 
@@ -52,7 +52,7 @@
     flex: 1;
     font-size: 14px;
     line-height: 1.5;
-    color: rgb(var(--gray-800));
+    color: rgb(var(--gray-800, 31 41 55));
     font-weight: 600;
   }
 
@@ -64,102 +64,123 @@
     cursor: pointer;
     padding: 4px;
     border-radius: 4px;
-    color: rgb(var(--gray-500));
+    color: rgb(var(--gray-500, 107 114 128));
     transition: all 0.2s ease;
     
     &:hover {
-      background-color: rgb(var(--gray-200));
-      color: rgb(var(--gray-800));
+      background-color: rgb(var(--gray-200, 229 231 235));
+      color: rgb(var(--gray-800, 31 41 55));
     }
 
     &:focus {
-      outline: 2px solid rgb(var(--info-500));
+      outline: 2px solid rgb(var(--info-500, 59 130 246));
       outline-offset: 2px;
     }
   }
 
   // Toast Type Modifiers - BEM Modifiers
   &--success {
-    background: rgb(var(--success-50)) !important;
-    border-left-color: rgb(var(--success-500)) !important;
+    background: rgb(var(--success-50, 240 253 244)) !important;
+    border-left-color: rgb(var(--success-500, 34 197 94)) !important;
     border-left-width: 6px;
-    border-color: rgb(var(--success-200)) !important;
+    border-color: rgb(var(--success-200, 187 247 208)) !important;
     
     .toast__icon {
-      color: rgb(var(--success-600)) !important;
+      color: rgb(var(--success-600, 22 163 74)) !important;
       
-      svg, svg path {
-        fill: rgb(var(--success-600)) !important;
-        color: rgb(var(--success-600)) !important;
+      svg, svg path, svg circle, svg line {
+        stroke: rgb(var(--success-600, 22 163 74)) !important;
+        color: rgb(var(--success-600, 22 163 74)) !important;
       }
     }
     
     .toast__message {
-      color: rgb(var(--success-800)) !important;
+      color: rgb(var(--success-800, 22 101 52)) !important;
       font-weight: 700;
     }
   }
 
   &--error {
-    background: rgb(var(--danger-50)) !important;
-    border-left-color: rgb(var(--danger-500)) !important;
+    background: rgb(var(--danger-50, 254 242 242)) !important;
+    border-left-color: rgb(var(--danger-500, 239 68 68)) !important;
     border-left-width: 6px;
-    border-color: rgb(var(--danger-200)) !important;
+    border-color: rgb(var(--danger-200, 254 202 202)) !important;
     
     .toast__icon {
-      color: rgb(var(--danger-600)) !important;
+      color: rgb(var(--danger-600, 220 38 38)) !important;
       
-      svg, svg path {
-        fill: rgb(var(--danger-600)) !important;
-        color: rgb(var(--danger-600)) !important;
+      svg, svg path, svg circle, svg line {
+        stroke: rgb(var(--danger-600, 220 38 38)) !important;
+        color: rgb(var(--danger-600, 220 38 38)) !important;
       }
     }
     
     .toast__message {
-      color: rgb(var(--danger-800)) !important;
+      color: rgb(var(--danger-800, 153 27 27)) !important;
       font-weight: 700;
     }
   }
 
   &--warning {
-    background: rgb(var(--warning-50)) !important;
-    border-left-color: rgb(var(--warning-500)) !important;
+    background: rgb(var(--warning-50, 255 251 235)) !important;
+    border-left-color: rgb(var(--warning-500, 245 158 11)) !important;
     border-left-width: 6px;
-    border-color: rgb(var(--warning-200)) !important;
+    border-color: rgb(var(--warning-200, 254 215 170)) !important;
     
     .toast__icon {
-      color: rgb(var(--warning-600)) !important;
+      color: rgb(var(--warning-600, 217 119 6)) !important;
       
-      svg, svg path {
-        fill: rgb(var(--warning-600)) !important;
-        color: rgb(var(--warning-600)) !important;
+      svg, svg path, svg circle, svg line {
+        stroke: rgb(var(--warning-600, 217 119 6)) !important;
+        color: rgb(var(--warning-600, 217 119 6)) !important;
       }
     }
     
     .toast__message {
-      color: rgb(var(--warning-800)) !important;
+      color: rgb(var(--warning-800, 146 64 14)) !important;
       font-weight: 700;
     }
   }
 
   &--info {
-    background: rgb(var(--info-50)) !important;
-    border-left-color: rgb(var(--info-500)) !important;
+    background: rgb(var(--info-50, 239 246 255)) !important;
+    border-left-color: rgb(var(--info-500, 59 130 246)) !important;
     border-left-width: 6px;
-    border-color: rgb(var(--info-200)) !important;
+    border-color: rgb(var(--info-200, 191 219 254)) !important;
     
     .toast__icon {
-      color: rgb(var(--info-600)) !important;
+      color: rgb(var(--info-600, 37 99 235)) !important;
       
-      svg, svg path {
-        fill: rgb(var(--info-600)) !important;
-        color: rgb(var(--info-600)) !important;
+      svg, svg path, svg circle, svg line {
+        stroke: rgb(var(--info-600, 37 99 235)) !important;
+        color: rgb(var(--info-600, 37 99 235)) !important;
       }
     }
     
     .toast__message {
-      color: rgb(var(--info-800)) !important;
+      color: rgb(var(--info-800, 30 64 175)) !important;
       font-weight: 700;
+    }
+  }
+
+  &--custom {
+    background: rgb(var(--gray-50, 249 250 251)) !important;
+    border-left-color: rgb(var(--gray-400, 156 163 175)) !important;
+    border-left-width: 6px;
+    border-color: rgb(var(--gray-200, 229 231 235)) !important;
+    
+    .toast__icon {
+      color: rgb(var(--gray-600, 75 85 99)) !important;
+      
+      svg, svg path, svg circle, svg line {
+        stroke: rgb(var(--gray-600, 75 85 99)) !important;
+        color: rgb(var(--gray-600, 75 85 99)) !important;
+      }
+    }
+    
+    .toast__message {
+      color: rgb(var(--gray-800, 31 41 55)) !important;
+      font-weight: 600;
     }
   }
 }
@@ -240,8 +261,8 @@
       .toast__icon {
         color: rgb(var(--success-200)) !important;
         
-        svg, svg path {
-          fill: rgb(var(--success-200)) !important;
+        svg, svg path, svg circle, svg line {
+          stroke: rgb(var(--success-200)) !important;
           color: rgb(var(--success-200)) !important;
         }
       }
@@ -259,8 +280,8 @@
       .toast__icon {
         color: rgb(var(--danger-200)) !important;
         
-        svg, svg path {
-          fill: rgb(var(--danger-200)) !important;
+        svg, svg path, svg circle, svg line {
+          stroke: rgb(var(--danger-200)) !important;
           color: rgb(var(--danger-200)) !important;
         }
       }
@@ -278,8 +299,8 @@
       .toast__icon {
         color: rgb(var(--warning-200)) !important;
         
-        svg, svg path {
-          fill: rgb(var(--warning-200)) !important;
+        svg, svg path, svg circle, svg line {
+          stroke: rgb(var(--warning-200)) !important;
           color: rgb(var(--warning-200)) !important;
         }
       }
@@ -297,8 +318,8 @@
       .toast__icon {
         color: rgb(var(--info-200)) !important;
         
-        svg, svg path {
-          fill: rgb(var(--info-200)) !important;
+        svg, svg path, svg circle, svg line {
+          stroke: rgb(var(--info-200)) !important;
           color: rgb(var(--info-200)) !important;
         }
       }

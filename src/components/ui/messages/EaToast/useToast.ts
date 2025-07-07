@@ -3,8 +3,12 @@ import { ref } from 'vue'
 export interface ToastMessage {
   id: string
   message: string
-  type: 'success' | 'error' | 'warning' | 'info'
+  type: 'success' | 'error' | 'warning' | 'info' | 'custom'
   duration?: number
+  customIcon?: string // Custom SVG icon HTML string
+  customColor?: string // Custom color for background
+  customIconColor?: string // Custom color for icon
+  customTextColor?: string // Custom color for text
 }
 
 // Global toast state
@@ -37,6 +41,41 @@ export const useToast = () => {
       setTimeout(() => {
         removeToast(id)
       }, duration)
+    }
+
+    return id
+  }
+
+  // Show custom toast function
+  const showCustomToast = (
+    message: string,
+    options: {
+      duration?: number
+      customIcon?: string
+      customColor?: string
+      customIconColor?: string
+      customTextColor?: string
+    } = {}
+  ) => {
+    const id = generateId()
+    const toast: ToastMessage = {
+      id,
+      message,
+      type: 'custom',
+      duration: options.duration || 3000,
+      customIcon: options.customIcon,
+      customColor: options.customColor,
+      customIconColor: options.customIconColor,
+      customTextColor: options.customTextColor
+    }
+
+    toasts.value.push(toast)
+
+    // Auto remove toast after duration
+    if (toast.duration && toast.duration > 0) {
+      setTimeout(() => {
+        removeToast(id)
+      }, toast.duration)
     }
 
     return id
@@ -75,6 +114,7 @@ export const useToast = () => {
   return {
     toasts,
     showToast,
+    showCustomToast,
     removeToast,
     clearAllToasts,
     showSuccess,
