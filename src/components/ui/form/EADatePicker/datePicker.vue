@@ -34,14 +34,14 @@
       <template #panelContent="{ closePanel }">
         <div class="ea-datepicker__panel min-w-[300px]">
           <div class="ea-datepicker__header">
-            <button @click="prevMonth" class="ea-datepicker__nav-btn">
+            <button @click.stop="prevMonth" class="ea-datepicker__nav-btn">
               <ChavronDown class="size-5 rotate-90" />
             </button>
             <div class="ea-datepicker__header-text">
               <span class="year">{{ currentYear }}</span>
               <span class="month">{{ currentMonthName }}</span>
             </div>
-            <button @click="nextMonth" class="ea-datepicker__nav-btn">
+            <button @click.stop="nextMonth" class="ea-datepicker__nav-btn">
               <ChavronDown class="size-5 -rotate-90" />
             </button>
           </div>

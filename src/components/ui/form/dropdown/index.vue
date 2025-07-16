@@ -6,7 +6,7 @@
     <Teleport to="body">
       <div v-if="isOpen && (resultCount !==0)" ref="dropdownPanelRef" class="dropdownPanelWrapper fixed scrollbar-custom flex flex-col"  :class="{'justify-end':isPanelOverflowing }"
         :style="{ top: `${panelPosition.y}px`, left: `${panelPosition.x}px`, width: `${panelWidth ?? panelPosition.width}px`, height: `${panelHeight}px` }"
-        @click.self="props.closeOnSelect ? handleOutsideClick : undefined">
+        @click.stop="props.closeOnSelect ? handleOutsideClick : undefined">
         <div >
           <slot name='panelContent' :closePanel="() => isOpen = false" />
         </div>
