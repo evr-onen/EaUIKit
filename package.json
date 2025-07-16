@@ -1,6 +1,6 @@
 {
   "name": "ea-kit",
-  "version": "1.5.1",
+  "version": "1.5.2",
   "description": "A comprehensive Vue 3 UI component library with TypeScript support",
   "type": "module",
   "main": "./dist/ea-kit.umd.js",
