@@ -5,13 +5,11 @@
   "type": "module",
   "main": "./dist/ea-kit.umd.js",
   "module": "./dist/ea-kit.es.js",
-  "types": "./dist/index.d.ts",
   "files": [
     "dist"
   ],
   "exports": {
     ".": {
-      "types": "./dist/index.d.ts",
       "import": "./dist/ea-kit.es.js",
       "require": "./dist/ea-kit.umd.js"
     },
