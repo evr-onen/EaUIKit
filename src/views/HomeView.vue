@@ -1,24 +1,18 @@
 <template>
   <div class="h-full w-full flex p-8 flex-col gap-4">
     <div class="flex flex-col gap-4">
-      <h4 class="text-2xl font-bold">Ea Design System</h4>
-      <p class="text-gray-500">Ea Design System is a design system for building user interfaces. It is a collection of components, styles, and patterns that can be used to create a consistent and reusable design.</p>
     </div>
     <div class="overflow-y-auto h-[300px]  ea-scroll-bar">
-      <h4>Yapilacaklar</h4>
-      <p>* entegre edilen projeye style dosyalarini kaydedip overright etmesini sagla.</p>
     </div>
-    <EaIcon name="bars" class="text-red-500  border" size="100px" />
-    <EaIcon2 name="bars" class="text-red-500  border" size="100px" />
-
+<EaButton size="sm">qweqwe</EaButton>
+    <EaTextInput loading size="sm" label="qweqwe" />
   </div>
 </template>
 
 
 <script setup lang="ts">
-import EaIcon from '@/components/ui/EaIcon.vue';
-import EaIcon2 from '@/components/ui/EaIcon2.vue';
-
+import EaButton from '@/components/ui/form/EaButton/index.vue';
+import EaTextInput from '@/components/ui/form/EaTextInput/index.vue';
 </script>
 
 <style>

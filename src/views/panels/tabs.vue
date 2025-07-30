@@ -17,7 +17,7 @@
         @tab-change="onTabChange"
       >
         <template #dashboard-icon>
-          qweqwe
+          <Dashboard />
         </template>
         <template #dashboard>
           <div class="tab-content">
@@ -847,6 +847,7 @@ import { ref } from 'vue'
 import Tabs from '@/components/ui/panels/EaTabs/EaTabs.vue'
 import Card from '@/components/ui/panels/EaCard/EaCard.vue'
 import EaButton from '@/components/ui/form/EaButton/index.vue'
+import Dashboard from '@/components/icons/Dashboard.vue'
 
 // Default tabs data
 const defaultTabs = ref([

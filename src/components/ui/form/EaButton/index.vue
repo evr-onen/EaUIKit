@@ -1,232 +1,147 @@
 <template>
-  <button
-    :class="computedClasses"
-    :style="computedStyles"
-    :type="type || 'button'"
-    :disabled="disabled || loading"
-    :aria-label="label || 'Button'"
-    :aria-disabled="disabled || loading"
-    @click="handleClick"
-    ref="buttonRef"
+  <div
+      class="button"
+      :class="[severityStyle, sizeStyle, isLoading && 'isLoading' ]"
   >
-    <!-- Loading spinner -->
-    <div
-      v-if="loading"
-      class="ea-spinner"
-      :class="{ 'ea-spinner-sm': size === 'xs' || size === 'sm' }"
-    />
-
-    <!-- Left icon using EaIcons -->
-    
-    <EaIcon
-      v-if="leftIcon && !loading"
-      :name="leftIcon"
-      :size="iconSizeValue"
-      :color="iconColor"
-      :class="iconClasses"
-    />
-
-    <!-- Prefix icon slot (for custom icons) -->
-    <slot v-if="!loading && !leftIcon" name="prefixIcon" />
-
-    <!-- Button text -->
-    <span v-if="label && !iconOnly" class="ea-button-text">
-      {{ label }}
-    </span>
-
-    <!-- Default slot for custom content -->
-    <slot v-if="!label && !iconOnly" />
-
-    <!-- Right icon using EaIcons -->
-    <EaIcon
-      v-if="rightIcon && !loading"
-      :name="rightIcon"
-      :size="iconSizeValue"
-      :color="iconColor"
-      :class="iconClasses"
-    />
-
-    <!-- Suffix icon slot (for custom icons) -->
-    <slot v-if="!loading && !rightIcon" name="suffixIcon" />
-  </button>
+          <slot name="left-icon" :class="iconClass" />
+          <p>
+              <slot />
+          </p>
+          <span v-if="isLoading" class="isLoading-spinner" name="svg-spinners:ring-resize"  />
+          <slot name="right-icon" :class="iconClass" />
+  </div>
 </template>
 
 <script setup lang="ts">
-import { computed, ref } from 'vue'
-import type { IButtonProps } from './button.types'
-import EaIcon from '../../EaIcon.vue'
-import './button.style.scss'
+import { computed } from 'vue';
 
-// Template ref
-const buttonRef = ref<HTMLButtonElement>()
-
-// Props with defaults
-const props = withDefaults(defineProps<IButtonProps>(), {
-  variant: 'primary',
-  size: 'md',
-  type: 'button',
-  rounded: 'md',
-  shadow: 'sm',
-  animate: true,
-  iconSize: 'md',
-  loading: false,
-  disabled: false,
-  fullWidth: false,
-  iconOnly: false,
-  gradient: 'sunset',
-  gradientDirection: 'to-r',
-  ripple: false,
-  rippleColor: 'rgba(255, 255, 255, 0.8)',
-  rippleSize: 'md'
-})
-
-// Computed classes
-const computedClasses = computed(() => {
-  const classes = ['ea-button']
-
-  // Variant classes
-  if (props.variant === 'gradient') {
-    classes.push('ea-button--gradient')
-    classes.push(`ea-button--gradient-${props.gradient}`)
-    classes.push(`ea-button--gradient-${props.gradientDirection}`)
-  } else {
-    classes.push(`ea-button--${props.variant}`)
-  }
-
-  // Size classes
-  classes.push(`ea-button--${props.size}`)
-
-  // State classes
-  if (props.loading) classes.push('ea-button--loading')
-  if (props.disabled) classes.push('ea-button--disabled')
-  if (props.fullWidth) classes.push('ea-button--full-width')
-  if (props.iconOnly) classes.push('ea-button--icon-only')
-
-  // Styling classes
-  classes.push(`ea-button--rounded-${props.rounded}`)
-  classes.push(`ea-button--shadow-${props.shadow}`)
-
-  if (props.animate) classes.push('ea-button--animated')
-  if (props.ripple) classes.push('ea-button--ripple')
-
-  // Custom classes
-  if (props.buttonClass) classes.push(props.buttonClass)
-
-  return classes
-})
-
-// Computed styles with smart ripple color detection
-const computedStyles = computed(() => {
-  const styles: Record<string, string> = {}
-
-  // Custom gradient override
-  if (props.customGradient) {
-    styles.background = props.customGradient
-  }
-  // Custom solid colors (only if not using gradient variant)
-  else if (props.variant !== 'gradient') {
-    if (props.bgColour) {
-      styles.backgroundColor = props.bgColour
-    }
-  }
-
-  if (props.textColour) {
-    styles.color = props.textColour
-  }
-
-  // Smart ripple color based on variant
-  if (props.ripple) {
-    let rippleColor = props.rippleColor
-
-    // Auto-adjust ripple color based on button variant
-    if (props.rippleColor === 'rgba(255, 255, 255, 0.8)') { // If using default
-      switch (props.variant) {
-        case 'ghost':
-        case 'outline':
-        case 'text':
-          rippleColor = 'rgba(0, 0, 0, 0.15)'
-          break
-        case 'gradient':
-          // For gradients, let CSS handle the color (will be overridden by SCSS)
-          rippleColor = 'rgba(255, 255, 255, 0.9)'
-          break
-        default:
-          // Keep white for solid color buttons
-          rippleColor = 'rgba(255, 255, 255, 0.8)'
-      }
-    }
-
-    styles['--ripple-color'] = rippleColor
-  }
-
-  return styles
-})
-
-// Icon classes
-const iconClasses = computed(() => {
-  const classes = ['ea-button-icon']
-  return classes
-})
-
-// Icon size value - Convert iconSize prop to pixel value for EaIcons
-const iconSizeValue = computed(() => {
-  const sizeMap = {
-    sm: '14px',
-    md: '16px',
-    lg: '20px'
-  }
-  return sizeMap[props.iconSize] || '16px'
-})
-
-// Icon color - Use textColour if provided, otherwise let CSS handle it
-const iconColor = computed(() => {
-  return props.textColour || undefined
-})
-
-// Ripple effect function - Enhanced for gradients
-const createRipple = (event: MouseEvent) => {
-  if (!props.ripple || !buttonRef.value) return
-
-  const button = buttonRef.value
-  const rect = button.getBoundingClientRect()
-
-  // Calculate click position relative to button
-  const x = event.clientX - rect.left
-  const y = event.clientY - rect.top
-
-  // Create ripple element
-  const ripple = document.createElement('span')
-  ripple.className = `ea-ripple ea-ripple--${props.rippleSize}`
-
-  // Set position only - no color for any button type
-  ripple.style.left = `${x}px`
-  ripple.style.top = `${y}px`
-
-  // Let CSS handle all colors via classes and CSS variables
-  // Don't set backgroundColor in JavaScript at all
-
-  // Add to button
-  button.appendChild(ripple)
-
-  // Remove after animation (250ms + 50ms buffer)
-  setTimeout(() => {
-    if (ripple.parentNode) {
-      ripple.parentNode.removeChild(ripple)
-    }
-  }, 300)
+interface buttonPropTypes {
+  severity        ?: 'filled' | 'outlined' | 'ghost'
+  color           ?: 'primary' | 'secondary' | 'tertiary' | 'danger' | 'success'
+  size            ?: 'sm' | 'md' | 'lg'
+  disabled        ?: boolean
+  isLoading       ?: boolean
+  iconClass       ?: string
+  textColor       ?: string
 }
 
-// Click handler
-const handleClick = (event: MouseEvent) => {
-  if (!props.disabled && !props.loading) {
-    // Create ripple effect
-    if (props.ripple) {
-      createRipple(event)
-    }
 
-    // Execute onClick callback
-    props.onClick?.()
-  }
-}
+const props = withDefaults(defineProps<buttonPropTypes>(), {
+  severity            : 'filled',
+  color               : 'primary',
+  size                : 'md',
+  disabled            : false,
+  isLoading           : false,
+  iconClass           : '',
+  textColor           : '#fff'
+})
+
+
+
+const severityStyle = computed(() => {
+  if (props.severity === 'filled') return 'filledStyle'
+  if (props.severity === 'outlined') return 'outlinedStyle'
+  if (props.severity === 'ghost') return 'ghostStyle'
+  return 'filledStyle'
+})
+
+const sizeStyle = computed(() => {
+  if (props.size === 'sm') return 'smallStyle'
+  if (props.size === 'md') return 'mediumStyle'
+  if (props.size === 'lg') return 'largeStyle'
+  return 'mediumStyle'
+})
+
+const buttonColor = computed(() => {
+  if (props.color === 'primary') return 'var(--primary-500)'
+  if (props.color === 'secondary') return 'var(--secondary-500)'
+  if (props.color === 'tertiary') return 'var(--tertiary-500)'
+  if (props.color === 'danger') return 'var(--danger-500)'
+  if (props.color === 'success') return 'var(--success-500)'
+  return 'var(--primary-500)'
+})
+
+const buttonTextColor = computed(() => {
+  if (props.textColor) return props.textColor
+  return '#fff'
+})
+
 </script>
 
+<style scoped>
+.button{
+  text-transform: capitalize;
+  width: fit-content;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: none;
+  white-space: nowrap;
+  background-color: inherit;
+  user-select: none;
+  position: relative;
+
+  .isLoading-spinner{
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+  }
+}
+
+/* Event Styles */
+.button:hover{
+  filter: brightness(0.9);
+}
+
+.button:active{
+  filter: brightness(0.5);
+}
+
+/* isLoading Styles */
+.button.isLoading{
+  cursor: not-allowed;
+
+  p{
+          opacity: 0;
+  }
+}
+
+/* Severity Styles */
+.button.filledStyle{
+  background-color: v-bind(buttonColor);
+  color: v-bind(buttonTextColor);
+}
+
+.button.outlinedStyle{
+  background-color: inherit;
+  color: v-bind(buttonColor);
+  border: 1px solid v-bind(buttonColor);
+}
+
+/* Size Styles */
+.button.smallStyle{
+  font-size: .875rem;
+  font-weight: 500;
+  height: 2.25rem;
+  padding: 0 16px;
+}
+
+.button.mediumStyle{
+  font-size: 1rem;
+  font-weight: 500;
+  height: 2.75rem;
+  padding: 0 16px;
+}
+
+.button.largeStyle{
+  font-size: 1.125rem;
+  font-weight: 500;
+  height: 3.5rem;
+  padding: 0 24px;
+}
+</style>
