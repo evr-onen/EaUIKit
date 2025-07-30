@@ -16,6 +16,9 @@
         :tabs="defaultTabs"
         @tab-change="onTabChange"
       >
+        <template #dashboard-icon>
+          qweqwe
+        </template>
         <template #dashboard>
           <div class="tab-content">
             <Card

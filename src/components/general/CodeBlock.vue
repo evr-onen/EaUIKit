@@ -8,7 +8,7 @@
           @click="toggleCode"
           :title="isVisible ? 'Hide Code' : 'Show Code'"
         >
-          <EaIcons name="chavron-down" size="16" :class="{ 'rotate-180': isVisible }" />
+        <ChavronDown :class="{ 'rotate-180': isVisible }" class="size-4"/>
           {{ isVisible ? 'Hide' : 'Show' }}
         </button>
         <button
@@ -16,7 +16,8 @@
           @click="copyCode"
           :title="copyText"
         >
-          <EaIcons :name="copied ? 'check' : 'copy'" size="16" />
+          <Copy v-if="copied" class="size-4"/>
+          <Check v-else class="size-4"/>
           {{ copied ? 'Copied' : 'Copy' }}
         </button>
       </div>
@@ -30,7 +31,9 @@
 
 <script setup lang="ts">
 import { ref, computed } from 'vue'
-import EaIcons from '@/components/ui/EaIcon.vue'
+import ChavronDown from '@/assets/icons/chavron-down.vue'
+import Copy from '@/assets/icons/copy.vue'
+import Check from '@/assets/icons/check.vue'
 
 interface Props {
   code: string

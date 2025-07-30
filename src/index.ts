@@ -37,7 +37,7 @@ export { default as EaFileManagement } from './components/ui/file-management/ind
 export { default as FileItem } from './components/ui/file-management/FileItem.vue'
 
 // General Components
-export { default as EaIcon } from './components/ui/EaIcon.vue'
+// export { default as EaIcon } from './components/ui/EaIcon.vue'
 export { default as CodeBlock } from './components/general/CodeBlock.vue'
 
 // Composables

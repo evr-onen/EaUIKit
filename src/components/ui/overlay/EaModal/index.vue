@@ -21,7 +21,7 @@
               @click="handleClose"
               aria-label="Close modal"
             >
-              <EaIcons name="cross" size="24" />
+              <Cross class="size-6" />
             </button>
           </div>
 
@@ -64,9 +64,8 @@
 <script setup lang="ts">
 import { computed, onMounted, onUnmounted, watch } from 'vue'
 import { useModal } from './useModal'
-import EaIcons from '@/components/ui/EaIcon.vue'
 import EaButton from '@/components/ui/form/EaButton/index.vue'
-
+import Cross from '@/assets/icons/cross.vue'
 interface Props {
   // Modal state
   modelValue?: boolean

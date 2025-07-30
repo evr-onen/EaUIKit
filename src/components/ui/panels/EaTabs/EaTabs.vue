@@ -11,7 +11,11 @@
           @click="setActiveTab(index)"
           :disabled="tab.disabled"
         >
-          <EaIcons v-if="tab.icon" :name="tab.icon" class="ea-tabs__icon h-full " :class="tab.iconClass" />
+          <div v-if="$slots.tabIcon" class="ea-tabs__icon h-full" :class="tab.iconClass">
+            <!-- <slot :name="`${tab.id}-icon`"/> -->
+
+          </div>
+          <!-- <EaIcons v-else-if="tab.icon" :name="tab.icon" class="ea-tabs__icon h-full "  /> -->
           <span class="ea-tabs__label">
             <!-- Invisible bold text to maintain width -->
             <span class="ea-tabs__label-bold">{{ tab.label }}</span>
@@ -44,7 +48,7 @@
 
 <script setup lang="ts">
 import { ref, computed, onMounted, nextTick } from 'vue'
-import EaIcons from '@/components/ui/EaIcon.vue'
+// import EaIcons from '@/components/ui/EaIcon.vue'
 
 // Types
 interface Tab {

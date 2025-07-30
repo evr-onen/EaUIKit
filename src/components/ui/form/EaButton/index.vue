@@ -17,6 +17,7 @@
     />
 
     <!-- Left icon using EaIcons -->
+    
     <EaIcon
       v-if="leftIcon && !loading"
       :name="leftIcon"

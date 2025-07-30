@@ -9,7 +9,7 @@
       <p>* entegre edilen projeye style dosyalarini kaydedip overright etmesini sagla.</p>
     </div>
     <EaIcon name="bars" class="text-red-500  border" size="100px" />
-
+    <EaIcon2 name="bars" class="text-red-500  border" size="100px" />
 
   </div>
 </template>
@@ -17,6 +17,8 @@
 
 <script setup lang="ts">
 import EaIcon from '@/components/ui/EaIcon.vue';
+import EaIcon2 from '@/components/ui/EaIcon2.vue';
+
 </script>
 
 <style>

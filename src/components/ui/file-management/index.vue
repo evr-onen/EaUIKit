@@ -44,7 +44,7 @@
         @dragleave.prevent="handleDragLeave"
         @drop.prevent="handleDrop"
       >
-        <EaIcons name="plus" class="text-5xl text-gray-500" />
+        <Plus class="text-5xl text-gray-500"/>
       </div>
     </div>
 
@@ -95,8 +95,7 @@ import { ref, computed, onMounted, watch } from 'vue';
 import { useFileManagement } from './useFileManagement';
 import type { FileData } from './useFileManagement';
 import FileItem from './FileItem.vue';
-import EaIcons from '../EaIcon.vue';
-
+import Plus from '@/assets/icons/plus.vue';
 
 // Initialize
 const props = withDefaults(defineProps<{
