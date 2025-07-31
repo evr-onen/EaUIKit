@@ -3,7 +3,7 @@ export interface ITextinputProps{
   size                   ?: SizeType
   label                  ?: string
   placeholder            ?: string
-  modelValue            ?: string | number
+  modelValue             ?: string | number
 
   // Style classes
   classLabel             ?: string
@@ -27,7 +27,7 @@ export interface ITextinputProps{
   disabled               ?: boolean
   readonly               ?: boolean
   required               ?: boolean
-  loading                ?: boolean
+  isLoading              ?: boolean
 
   // Messages
   errorMessage           ?: string

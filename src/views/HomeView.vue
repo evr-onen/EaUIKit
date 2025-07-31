@@ -4,7 +4,7 @@
     </div>
     <div class="overflow-y-auto h-[300px]  ea-scroll-bar">
     </div>
-<EaButton size="sm">qweqwe</EaButton>
+    <EaButton size="sm" isLoading>qweqwe</EaButton>
     <EaTextInput loading size="sm" label="qweqwe" />
   </div>
 </template>

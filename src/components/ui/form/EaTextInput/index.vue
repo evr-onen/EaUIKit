@@ -8,7 +8,7 @@
     <!-- Input Container -->
     <div class="ea-textinput__input-container flex items-center" :class="[classInputContainer, `size-${size}`]">
       <!-- Prefix Icon -->
-      <div v-if="prefixIcon && !loading" class="ea-textinput__prefix-icon"  :class="classPrefixIcon">
+      <div v-if="prefixIcon && !isLoading" class="ea-textinput__prefix-icon"  :class="classPrefixIcon">
 
          <slot name="prefixIcon" />
 
@@ -16,7 +16,7 @@
 
             <!-- Loading Icon -->
       <svg
-        v-if="loading"
+        v-if="isLoading"
         class=""
         xmlns="http://www.w3.org/2000/svg"
         width="24" height="24"
@@ -125,7 +125,7 @@ const props = withDefaults(defineProps<Omit<ITextinputProps, 'modelValue'>>(), {
   disabled: false,
   readonly: false,
   required: false,
-  loading: false,
+  isLoading: false,
   clearable: false,
   showCounter: false,
   debounce: 0,
@@ -155,7 +155,7 @@ const textInputClasses = computed(() => ({
   'ea-textinput--disabled': props.disabled,
   'ea-textinput--readonly': props.readonly,
   'ea-textinput--required': props.required,
-  'ea-textinput--loading': props.loading,
+  'ea-textinput--loading': props.isLoading,
 }));
 
 const inputType = computed(() => {

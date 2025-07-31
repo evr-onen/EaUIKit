@@ -82,7 +82,7 @@ import Dropdown from '@/components/ui/form/dropdown/index.vue';
 import EaBadge from '@/components/ui/form/EaBadge/EaBadge.vue';
 import "./autocomplete.style.scss"
 import { watch } from 'vue';
-import useAutocomplate from './useAutocomplate';
+import useAutocomplate from './useAutocomplete';
 
 const props = withDefaults(defineProps<ISelectProps>(), {
   optionLabel   : 'name',

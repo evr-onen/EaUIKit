@@ -37,7 +37,6 @@ export { default as EaFileManagement } from './components/ui/file-management/ind
 export { default as FileItem } from './components/ui/file-management/FileItem.vue'
 
 // General Components
-// export { default as EaIcon } from './components/ui/EaIcon.vue'
 export { default as CodeBlock } from './components/general/CodeBlock.vue'
 
 // Composables
@@ -58,7 +57,7 @@ export { useDialog } from './components/ui/overlay/EaDialog/useDialog'
 
 // Form composables
 export { default as useDropdown } from './components/ui/form/dropdown/useDropdown'
-export { default as useAutocomplate } from './components/ui/form/EaAutocomplete/useAutocomplate'
+export { default as useAutocomplete } from './components/ui/form/EaAutocomplete/useAutocomplete'
 export { default as useMultiselect } from './components/ui/form/EaMultiselect/useMultiselect'
 export { default as useSelect } from './components/ui/form/EaSelect/useSelect'
 export { default as useRadioButtons } from './components/ui/form/EaRadioButtons/useRadioButtons'
